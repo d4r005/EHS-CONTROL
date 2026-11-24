@@ -57,9 +57,18 @@ Los registros se guardan en `localStorage` del navegador, por equipo y por naveg
 - **Restauración:** *Cargar respaldo* en el mismo apartado.
 - Exporta con frecuencia: limpiar el navegador borra los registros.
 
-## Siguiente paso: multiusuario
+## Supabase
 
-Para varios coordinadores, varias sucursales y evidencias compartidas, el almacenamiento debe moverse a Supabase (Postgres + Storage) en lugar de `localStorage`. Proyecto previsto: `brhnoixerulcdpvtoxra`.
+Proyecto: `brhnoixerulcdpvtoxra` (us-west-2). Esquema versionado en `supabase/migrations/`.
+
+| Tabla | Contenido |
+|---|---|
+| `ehs_centros` | Razón social, centro de trabajo, responsable, año |
+| `ehs_estado` | Estado completo del sistema por centro (`data` jsonb: org, normas, docs, hallazgos, incidentes, químicos, capacitación, comisión) |
+| `ehs_respaldos` | Historial de respaldos JSON |
+| `ehs_cobertura` (vista) | Conteo de registros, hallazgos, incidentes y capacitaciones por centro |
+
+Las tres tablas tienen RLS activo y solo permiten acceso a usuarios autenticados; la clave anónima no lee ni escribe. Falta conectar la app: hoy sigue usando `localStorage`.
 
 ## Notas de vigencia
 
