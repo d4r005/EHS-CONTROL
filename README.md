@@ -43,19 +43,30 @@ Aplicación web de un solo archivo (`index.html`), sin dependencias externas ni 
 3. Sin build: es un solo `index.html` autocontenido.
 4. Opcional: conecta este repositorio para que cada commit publique.
 
-### GitHub Pages
+### Cloudflare Pages (sitio en producción)
+
+- URL: https://ehs-control.pages.dev
+- Proyecto de tipo *Direct Upload*: se sube el contenido de esta carpeta.
+- Opcional recomendado: en Cloudflare, *Connect to Git* apuntando a este repositorio (`main`), para que cada push publique solo.
+
+### GitHub Pages (alternativa)
 
 1. Settings → Pages → Source: *Deploy from a branch*.
 2. Branch `main`, carpeta `/ (root)`.
 3. El sitio queda en `https://d4r005.github.io/EHS-CONTROL/`.
 
+## Acceso
+
+La app pide iniciar sesión con Supabase Auth (correo y contraseña). Los usuarios se administran en Supabase → Authentication → Users. Sin sesión no se puede ver ni editar nada.
+
 ## Datos
 
-Los registros se guardan en `localStorage` del navegador, por equipo y por navegador.
+Los registros se guardan en Supabase y se sincronizan entre equipos al iniciar sesión. `localStorage` queda solo como caché local para arrancar rápido.
 
 - **Respaldo:** Organización y datos → *Descargar respaldo (.json)*.
 - **Restauración:** *Cargar respaldo* en el mismo apartado.
-- Exporta con frecuencia: limpiar el navegador borra los registros.
+- Los cambios se empujan solos ~0.7 s después de cada edición; el indicador junto al correo muestra *Guardado* / *Guardando…* / *Sin guardar*.
+- Conflicto: gana la última escritura. Si dos coordinadores editan el mismo centro al mismo tiempo, se pierde la versión anterior del que guardó primero.
 
 ## Supabase
 
@@ -68,7 +79,9 @@ Proyecto: `brhnoixerulcdpvtoxra` (us-west-2). Esquema versionado en `supabase/mi
 | `ehs_respaldos` | Historial de respaldos JSON |
 | `ehs_cobertura` (vista) | Conteo de registros, hallazgos, incidentes y capacitaciones por centro |
 
-Las tres tablas tienen RLS activo y solo permiten acceso a usuarios autenticados; la clave anónima no lee ni escribe. Falta conectar la app: hoy sigue usando `localStorage`.
+Las tres tablas tienen RLS activo y solo permiten acceso a usuarios autenticados; con la clave anónima la API responde `permission denied`. La app ya está conectada: inicia sesión, lee y escribe en `ehs_estado` del centro correspondiente.
+
+La clave publicable (`sb_publishable_…`) va embebida en `index.html` porque es pública por diseño; la seguridad depende de RLS y del login, nunca de esa clave. La `service_role` **no** debe aparecer en el repo.
 
 ## Notas de vigencia
 
@@ -80,6 +93,9 @@ Las tres tablas tienen RLS activo y solo permiten acceso a usuarios autenticados
 
 ```
 .
-├── index.html   # aplicación completa (UI, catálogo normativo, formatos, almacenamiento)
+├── index.html                      # aplicación completa (UI, catálogo normativo, formatos, auth y sincronización)
+├── supabase/migrations/
+│   ├── 0001_init.sql               # tablas, RLS y vista de cobertura
+│   └── 0002_grants.sql             # permisos del rol authenticated
 └── README.md
 ```
