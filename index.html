@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EHS Control · Sistema de Gestión EHS</title>
+<style>
+:root{
+  --ink:#0f172a; --ink-2:#334155; --muted:#64748b; --line:#e2e8f0;
+  --bg:#f5f6f8; --card:#ffffff; --accent:#0f766e; --accent-2:#14b8a6;
+  --warn:#b45309; --warn-bg:#fef3c7; --danger:#b91c1c; --danger-bg:#fee2e2;
+  --ok:#15803d; --ok-bg:#dcfce7; --info:#1d4ed8; --info-bg:#dbeafe;
+  --nav:#0e1726; --nav-2:#1a2739;
+  --r:10px; --sh:0 1px 2px rgba(15,23,42,.06),0 1px 3px rgba(15,23,42,.08);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--ink); font-size:14px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+button,input,select,textarea{font-family:inherit;font-size:14px}
+a{color:var(--accent)}
+
+/* ---------- layout ---------- */
+.app{display:flex;min-height:100vh}
+.side{
+  width:236px;flex:0 0 236px;background:var(--nav);color:#cbd5e1;
+  display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.brand{padding:18px 18px 14px;border-bottom:1px solid rgba(255,255,255,.07)}
+.brand .logo{display:flex;align-items:center;gap:9px}
+.brand .mark{
+  width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--accent-2),var(--accent));
+  display:grid;place-items:center;color:#062a26;font-weight:800;font-size:13px;letter-spacing:-.5px
+}
+.brand h1{font-size:14.5px;margin:0;color:#fff;font-weight:650;letter-spacing:-.2px}
+.brand small{display:block;color:#7b8ba3;font-size:11px;margin-top:2px}
+.nav{padding:10px 8px;flex:1}
+.nav .grp{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:#5d6d84;padding:12px 10px 6px;font-weight:700}
+.nav button{
+  display:flex;align-items:center;gap:9px;width:100%;background:none;border:0;color:#c3cfdd;
+  padding:8px 10px;border-radius:8px;cursor:pointer;text-align:left;font-size:13.2px;margin-bottom:1px
+}
+.nav button:hover{background:var(--nav-2);color:#fff}
+.nav button.on{background:rgba(20,184,166,.14);color:#fff;box-shadow:inset 2px 0 0 var(--accent-2)}
+.nav .ico{width:16px;text-align:center;opacity:.85;font-size:13px}
+.nav .badge{margin-left:auto;background:rgba(255,255,255,.1);color:#dbe6f0;font-size:10.5px;padding:1px 6px;border-radius:20px;font-weight:600}
+.nav .badge.alert{background:rgba(185,28,28,.3);color:#fecaca}
+.side .foot{padding:10px 16px 14px;border-top:1px solid rgba(255,255,255,.07);font-size:11px;color:#66788f}
+
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{
+  background:#fff;border-bottom:1px solid var(--line);padding:12px 24px;
+  display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:20
+}
+.top h2{font-size:16px;margin:0;font-weight:650;letter-spacing:-.2px}
+.top .sub{color:var(--muted);font-size:12.5px}
+.top .right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.content{padding:22px 24px 60px;max-width:1320px;width:100%}
+
+/* ---------- atoms ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
+.card.pad{padding:18px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1100px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}.side{display:none}.content{padding:16px}}
+
+h3.sec{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 10px;font-weight:700}
+.kpi{padding:15px 16px}
+.kpi .lbl{font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}
+.kpi .val{font-size:27px;font-weight:700;letter-spacing:-.8px;margin:5px 0 1px;font-variant-numeric:tabular-nums}
+.kpi .hint{font-size:12px;color:var(--muted)}
+.kpi.warn .val{color:var(--warn)} .kpi.danger .val{color:var(--danger)} .kpi.ok .val{color:var(--ok)}
+
+.btn{
+  display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);
+  color:var(--ink-2);padding:7px 12px;border-radius:8px;cursor:pointer;font-weight:550;font-size:13px;
+  transition:.12s
+}
+.btn:hover{border-color:#cbd5e1;background:#f8fafc}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:#0d6b63}
+.btn.ghost{background:transparent;border-color:transparent}
+.btn.sm{padding:4px 9px;font-size:12px}
+.btn.danger{color:var(--danger);border-color:#fecaca}
+.btn.danger:hover{background:var(--danger-bg)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:650;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.pill.danger{background:var(--danger-bg);color:var(--danger)}
+.pill.info{background:var(--info-bg);color:var(--info)}
+.pill.mute{background:#f1f5f9;color:var(--muted)}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{
+  text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
+  font-weight:700;padding:9px 10px;border-bottom:1px solid var(--line);background:#fbfcfd;white-space:nowrap
+}
+td{padding:9px 10px;border-bottom:1px solid #eef2f6;vertical-align:top}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#fafbfc}
+td.num{font-variant-numeric:tabular-nums;text-align:right}
+
+input[type=text],input[type=date],input[type=number],select,textarea{
+  width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink);
+  outline:none;transition:.12s
+}
+input:focus,select:focus,textarea:focus{border-color:var(--accent-2);box-shadow:0 0 0 3px rgba(20,184,166,.14)}
+textarea{resize:vertical;min-height:64px;line-height:1.5}
+label.fld{display:block;margin-bottom:10px}
+label.fld span{display:block;font-size:11.5px;font-weight:650;color:var(--ink-2);margin-bottom:4px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1;min-width:150px}
+
+.empty{padding:36px 20px;text-align:center;color:var(--muted)}
+.empty .big{font-size:26px;opacity:.35;margin-bottom:6px}
+.hr{height:1px;background:var(--line);margin:16px 0}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+.tag{font-size:11px;background:#f1f5f9;color:var(--ink-2);padding:1px 6px;border-radius:5px;font-weight:600;white-space:nowrap}
+
+.bar{height:7px;background:#eef2f6;border-radius:20px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);border-radius:20px}
+
+.modal-wrap{position:fixed;inset:0;background:rgba(15,23,42,.45);display:grid;place-items:center;z-index:60;padding:20px}
+.modal{background:#fff;border-radius:14px;max-width:720px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 20px 60px rgba(15,23,42,.3)}
+.modal .mh{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.modal .mh h3{margin:0;font-size:15px}
+.modal .mb{padding:18px 20px}
+.modal .mf{padding:13px 20px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end;background:#fbfcfd;border-radius:0 0 14px 14px}
+
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;
+  padding:10px 16px;border-radius:9px;font-size:13px;z-index:90;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+
+/* ---------- print ---------- */
+#printRoot{display:none}
+@media print{
+  @page{size:letter portrait;margin:14mm 13mm}
+  body{background:#fff}
+  .app,.toast,.modal-wrap{display:none !important}
+  #printRoot{display:block}
+  .pdoc{font-size:10.5pt;color:#000}
+  .pdoc h1{font-size:14pt;margin:0 0 2px}
+  .pdoc h2{font-size:11pt;margin:14px 0 6px;border-bottom:1.4px solid #000;padding-bottom:3px;text-transform:uppercase;letter-spacing:.04em}
+  .pdoc table{font-size:9pt}
+  .pdoc th,.pdoc td{border:1px solid #000;padding:4px 6px;background:#fff !important;color:#000}
+  .pdoc th{background:#eee !important;font-size:8pt}
+  .pdoc .phead{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;border-bottom:2.5px solid #000;padding-bottom:8px;margin-bottom:10px}
+  .pdoc .pbox{border:1px solid #000;padding:4px 7px;font-size:8.5pt}
+  .pdoc .meta{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid #000;border-bottom:0;margin-bottom:0}
+  .pdoc .meta div{border-right:1px solid #000;border-bottom:1px solid #000;padding:4px 7px;font-size:9pt}
+  .pdoc .meta div:nth-child(3n){border-right:0}
+  .pdoc .meta b{display:block;font-size:7pt;text-transform:uppercase;letter-spacing:.05em;color:#333}
+  .pdoc .item{display:grid;grid-template-columns:26px 1fr 62px;gap:6px;border-bottom:1px solid #ccc;padding:4px 2px;align-items:start}
+  .pdoc .item .ref{font-size:7.5pt;color:#555}
+  .pdoc .item .ans{font-size:8.5pt;font-weight:700;text-align:center;border:1px solid #000;padding:1px 0}
+  .pdoc .sig{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+  .pdoc .sig div{border-top:1px solid #000;padding-top:3px;font-size:8pt;text-align:center}
+  .pdoc .fill{border-bottom:1px solid #000;display:inline-block;min-width:120px}
+  .pdoc .note{font-size:8pt;color:#333;margin-top:6px}
+  .pdoc .avoid{break-inside:avoid}
+  tr{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="logo">
+        <div class="mark">EH</div>
+        <div>
+          <h1>EHS Control</h1>
+          <small id="brandSub">Seguridad · Higiene · Ambiente</small>
+        </div>
+      </div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="foot">
+      <div id="footOrg">—</div>
+      <div style="margin-top:3px;opacity:.7">Marco: STPS · ISO 14001/45001</div>
+    </div>
+  </aside>
+  <div class="main">
+    <div class="top">
+      <div>
+        <h2 id="pageTitle">Panel</h2>
+        <div class="sub" id="pageSub"></div>
+      </div>
+      <div class="right" id="topActions"></div>
+    </div>
+    <div class="content" id="view"></div>
+  </div>
+</div>
+<div id="printRoot"></div>
+<div id="modalHost"></div>
+<div id="toastHost"></div>
+<script>
+/* =====================================================================
+   EHS CONTROL — Sistema de gestión de Seguridad, Higiene y Ambiente
+   Catálogo normativo vigente (STPS, 41 NOM) + ISO 14001 / 45001 + IMSS
+   ===================================================================== */
+
+const NORMAS = [
+/* --- Seguridad --- */
+{k:'NOM-001-STPS-2008',t:'Edificios, locales e instalaciones',g:'Seguridad',a:true,
+ r:['Condiciones de orden y limpieza permanentes en todas las áreas','Elementos estructurales, techos, paredes y pisos sin daños ni fugas','Escaleras, barandillas y plataformas con protección y señalización','Programa de mantenimiento documentado para instalaciones'],
+ e:['Programa anual de mantenimiento','Bitácoras de mantenimiento','Recorrido de verificación de instalaciones'],f:['EHS-F-001']},
+{k:'NOM-002-STPS-2010',t:'Prevención y protección contra incendios',g:'Seguridad',a:true,
+ r:['Determinación del grado de riesgo de incendio por área','Extintores del tipo y capacidad correctos, señalizados y vigentes','Detección/alarma y rutas de evacuación señalizadas y despejadas','Brigadas de emergencia capacitadas y equipadas','Simulacros al menos anuales con registro'],
+ e:['Determinación de grado de riesgo','Inventario y revisión de extintores','Programa y acta de simulacros','Listado y constancias de brigadas'],f:['EHS-F-002','EHS-F-003']},
+{k:'NOM-004-STPS-1999',t:'Sistemas y dispositivos de seguridad en maquinaria',g:'Seguridad',a:true,
+ r:['Guardas y dispositivos de protección en partes móviles','Paros de emergencia accesibles y funcionales','Procedimiento de bloqueo y etiquetado para mantenimiento','Capacitación específica al personal que opera maquinaria'],
+ e:['Inventario de maquinaria con resguardo','Verificación de guardas y paros','Procedimiento LOTO y registros de aplicación'],f:['EHS-F-004','EHS-F-021']},
+{k:'NOM-005-STPS-1998',t:'Manejo, transporte y almacenamiento de sustancias peligrosas',g:'Seguridad',a:true,
+ r:['Inventario actualizado de sustancias peligrosas por área','Hojas de datos de seguridad (SDS) disponibles en español','Almacenamiento compatible, con contención y ventilación','Capacitación y equipo de protección para su manejo'],
+ e:['Inventario de sustancias','SDS por sustancia','Verificación de almacén de químicos','Constancias de capacitación'],f:['EHS-F-005','EHS-F-012']},
+{k:'NOM-006-STPS-2023',t:'Almacenamiento y manejo de materiales mediante maquinaria',g:'Seguridad',a:true,
+ r:['Programa de seguridad para el manejo de materiales con maquinaria','Montacargas operados solo por personal certificado y autorizado','Revisión preoperacional de equipos de izaje y transporte','Estanterías y racks con capacidad señalizada e inspección','Zonas de tránsito y maniobra delimitadas'],
+ e:['Programa de seguridad de manejo de materiales','Licencias/certificados de operadores','Checklist preoperacional de montacargas','Inspección de racks y estanterías'],f:['EHS-F-006']},
+{k:'NOM-009-STPS-2011',t:'Trabajos en altura',g:'Seguridad',a:true,
+ r:['Análisis de riesgo y permiso de trabajo antes de cada tarea en altura','Sistemas de protección contra caídas certificados y con inspección','Personal capacitado y autorizado para trabajos en altura','Plan de rescate y atención de emergencias'],
+ e:['Permisos de trabajo en altura','Inspección de arnés, líneas y anclajes','Constancias del personal autorizado','Plan de rescate'],f:['EHS-F-007']},
+{k:'NOM-020-STPS-2011',t:'Recipientes sujetos a presión y calderas',g:'Seguridad',a:true,
+ r:['Registro e inventario de recipientes y calderas','Válvulas de seguridad calibradas y vigentes','Programa de inspección y mantenimiento con personal autorizado','Operación por personal capacitado'],
+ e:['Inventario de recipientes','Certificados de válvulas','Bitácora de operación y mantenimiento'],f:['EHS-F-016']},
+{k:'NOM-022-STPS-2015',t:'Electricidad estática',g:'Seguridad',a:true,
+ r:['Sistemas de tierra y continuidad en equipos, ductos y tanques','Control de estática en áreas con atmósferas inflamables','Verificación con equipo calibrado y registro de resultados','Medidas para personal (calzado, ropa, pulseras)'],
+ e:['Medición de resistencia de tierras','Registro de continuidad','Plano de sistema de tierras'],f:['EHS-F-017']},
+{k:'NOM-027-STPS-2008',t:'Soldadura y corte',g:'Seguridad',a:true,
+ r:['Permiso de trabajo para soldadura y corte en áreas de riesgo','Equipo de protección personal específico y protección para terceros','Ventilación o extracción en espacios cerrados','Personal capacitado y áreas delimitadas'],
+ e:['Permisos de soldadura','Constancias del personal','Verificación de equipos de soldadura'],f:['EHS-F-020']},
+{k:'NOM-029-STPS-2011',t:'Mantenimiento de instalaciones eléctricas',g:'Seguridad',a:true,
+ r:['Programa de mantenimiento a instalaciones eléctricas','Trabajos con equipo desenergizado y bloqueo/etiquetado','Personal autorizado (arcos eléctricos, distancias de seguridad)','Señalización de tableros y áreas eléctricas'],
+ e:['Programa de mantenimiento eléctrico','Registros LOTO','Autorizaciones del personal','Diagramas unifilares'],f:['EHS-F-021']},
+{k:'NOM-033-STPS-2015',t:'Trabajos en espacios confinados',g:'Seguridad',a:true,
+ r:['Identificación y señalización de espacios confinados','Permiso de entrada con monitoreo de atmósfera previo','Vigía permanente y equipo de rescate disponible','Personal capacitado y autorizado'],
+ e:['Inventario de espacios confinados','Permisos de entrada','Registros de monitoreo','Constancias de capacitación'],f:['EHS-F-023']},
+{k:'NOM-034-STPS-2016',t:'Acceso y desarrollo de actividades de trabajadores con discapacidad',g:'Seguridad',a:false,
+ r:['Identificación de puestos y áreas accesibles','Condiciones de accesibilidad en rutas, sanitarios y salidas','Ajustes razonables documentados'],e:['Diagnóstico de accesibilidad','Registro de ajustes razonables'],f:['EHS-F-027']},
+/* --- Salud --- */
+{k:'NOM-010-STPS-2014',t:'Agentes químicos contaminantes del ambiente laboral',g:'Salud',a:true,
+ r:['Reconocimiento y evaluación de agentes químicos por área','Muestreo con laboratorio acreditado cuando se exceda el límite','Controles de ingeniería y EPP para exposición','Vigilancia médica y comunicación de resultados'],
+ e:['Estudio de reconocimiento','Informes de muestreo de laboratorio acreditado','Programa de control de exposición','Certificados médicos'],f:['EHS-F-008']},
+{k:'NOM-011-STPS-2001',t:'Ruido',g:'Salud',a:true,
+ r:['Evaluación de niveles de ruido por área y puesto','Programa de conservación auditiva donde se exceda 85 dB(A)','Señalización de áreas con ruido alto y EPP auditivo','Audiometrías y vigilancia médica'],
+ e:['Estudio de ruido','Programa de conservación auditiva','Audiometrías','Señalización de áreas'],f:['EHS-F-009']},
+{k:'NOM-012-STPS-2012',t:'Radiaciones ionizantes',g:'Salud',a:false,
+ r:['Licencia y control de fuentes','Dosimetría y vigilancia médica'],e:['Licencia COFEPRIS','Dosimetrías'],f:[]},
+{k:'NOM-013-STPS-1993',t:'Radiaciones no ionizantes',g:'Salud',a:false,
+ r:['Evaluación de exposición','Controles y señalización'],e:['Evaluación de exposición'],f:[]},
+{k:'NOM-014-STPS-2000',t:'Presiones ambientales anormales',g:'Salud',a:false,
+ r:['Evaluación de exposición','Vigilancia médica'],e:['Evaluación','Certificados médicos'],f:[]},
+{k:'NOM-015-STPS-2001',t:'Condiciones térmicas elevadas o abatidas',g:'Salud',a:true,
+ r:['Evaluación de condiciones térmicas por área y temporada','Medidas de control (hidratación, descansos, ventilación)','Capacitación en golpe de calor e hipotermia'],
+ e:['Evaluación térmica','Programa de control','Constancias de capacitación'],f:['EHS-F-010']},
+{k:'NOM-024-STPS-2001',t:'Vibraciones',g:'Salud',a:true,
+ r:['Evaluación de exposición a vibración en puestos con herramienta o maquinaria','Controles y vigilancia médica'],e:['Evaluación de vibración','Certificados médicos'],f:[]},
+{k:'NOM-025-STPS-2008',t:'Iluminación',g:'Salud',a:true,
+ r:['Evaluación de iluminación por área y tarea','Niveles mínimos según actividad (tabla de la NOM)','Mantenimiento de luminarias y registro de mediciones'],
+ e:['Estudio de iluminación con luxómetro calibrado','Plano de luminarias','Programa de mantenimiento'],f:['EHS-F-018']},
+{k:'NOM-035-STPS-2018',t:'Factores de riesgo psicosocial en el trabajo',g:'Salud',a:true,
+ r:['Política de prevención de riesgos psicosociales y entorno favorable','Identificación y análisis de factores de riesgo psicosocial','Evaluación del entorno organizacional (guías I, II y III según centro)','Medidas de prevención, acciones y difusión a la plantilla','Atención de acontecimientos traumáticos severos'],
+ e:['Política firmada y difundida','Resultados de la evaluación','Programa de intervención','Registros de difusión y canal de denuncia'],f:['EHS-F-024']},
+{k:'NOM-036-STPS-2018',t:'Factores de riesgo ergonómico — Parte 1: manejo manual de cargas',g:'Salud',a:true,
+ r:['Identificación de tareas con manejo manual de cargas','Evaluación de riesgo ergonómico (levantamiento, transporte, empuje)','Medidas de control: mecánicos, administrativos y EPP','Capacitación y vigilancia médica específica'],
+ e:['Matriz de tareas con carga','Evaluación ergonómica','Programa de control','Constancias de capacitación'],f:['EHS-F-025']},
+/* --- Organización --- */
+{k:'NOM-017-STPS-2024',t:'Equipo de protección personal — selección, uso y manejo',g:'Organización',a:true,
+ r:['Análisis de riesgos por puesto que determine el EPP requerido','EPP certificado y adecuado al riesgo, con reposición programada','Entrega con acuse de recibo y capacitación de uso','Supervisión del uso y conservación; registro de reposiciones'],
+ e:['Matriz de EPP por puesto','Acuses de entrega','Constancias de capacitación','Registro de inspección de EPP'],f:['EHS-F-011']},
+{k:'NOM-018-STPS-2015',t:'Comunicación de peligros y riesgos por sustancias químicas',g:'Organización',a:true,
+ r:['Sistema de identificación y comunicación de peligros (GHS)','Etiquetado de todos los recipientes, incluidos los de trasvase','SDS en español accesibles en el punto de uso','Capacitación en peligros, pictogramas y primeros auxilios'],
+ e:['Inventario con clasificación GHS','Etiquetas implementadas','SDS accesibles','Constancias de capacitación'],f:['EHS-F-012','EHS-F-005']},
+{k:'NOM-019-STPS-2011',t:'Comisiones de seguridad e higiene',g:'Organización',a:true,
+ r:['Constitución de la comisión con acta y registro ante la STPS (SIRET, cuando aplique)','Comisión integrada por representantes del patrón y de las personas trabajadoras, vigente','Programa anual de recorridos de verificación y actas por recorrido','Seguimiento de las condiciones reportadas hasta su cierre','Capacitación de las personas integrantes de la comisión'],
+ e:['Acta de constitución','Registro de la comisión','Programa anual de recorridos','Actas de recorrido con seguimiento'],f:['EHS-F-013','EHS-F-014','EHS-F-015']},
+{k:'NOM-026-STPS-2008',t:'Colores y señales de seguridad e higiene',g:'Organización',a:true,
+ r:['Señalización de seguridad, obligación, prohibición y advertencia','Identificación de tuberías y áreas de riesgo','Señales en buen estado, legibles y en el lugar correcto'],
+ e:['Inventario de señales','Recorrido de verificación de señalización'],f:['EHS-F-019']},
+{k:'NOM-028-STPS-2012',t:'Seguridad en procesos y equipos con sustancias químicas',g:'Organización',a:true,
+ r:['Análisis de riesgo de procesos que manejan sustancias peligrosas','Diagramas de flujo y balance de materiales','Programa de mantenimiento y de administración de cambios','Investigación de incidentes con sustancias químicas'],
+ e:['Análisis de riesgo de proceso','Diagramas actualizados','Programa de administración de cambios'],f:['EHS-F-005']},
+{k:'NOM-030-STPS-2009',t:'Servicios preventivos de seguridad y salud en el trabajo',g:'Organización',a:true,
+ r:['Diagnóstico de seguridad y salud en el trabajo vigente','Designación del responsable de los servicios preventivos','Programa de servicios preventivos con actividades y responsables','Botiquín, primeros auxilios y atención de emergencias','Exámenes médicos de ingreso y periódicos'],
+ e:['Diagnóstico de SST','Nombramiento del responsable','Programa de servicios preventivos','Botiquín y constancias de primeros auxilios'],f:['EHS-F-022']},
+/* --- Específicas --- */
+{k:'NOM-003-STPS-2023',t:'Actividades agrícolas — condiciones de SST',g:'Específicas',a:false,r:['Aplica a centros con actividad agrícola'],e:[],f:[]},
+{k:'NOM-008-STPS-2013',t:'Aprovechamiento forestal maderable',g:'Específicas',a:false,r:['Aplica a centros con actividad forestal'],e:[],f:[]},
+{k:'NOM-016-STPS-2001',t:'Operación y mantenimiento de ferrocarriles',g:'Específicas',a:false,r:['Aplica a operación ferroviaria'],e:[],f:[]},
+{k:'NOM-023-STPS-2012',t:'Trabajos en minas subterráneas y a cielo abierto',g:'Específicas',a:false,r:['Aplica a minería'],e:[],f:[]},
+{k:'NOM-031-STPS-2011',t:'Construcción — condiciones de seguridad y salud',g:'Específicas',a:false,
+ r:['Programa de seguridad y salud para la obra','Estudios de mecánica de suelos y protección de excavaciones'],e:['Programa de obra','Permisos'],f:[]},
+{k:'NOM-032-STPS-2008',t:'Minas subterráneas de carbón',g:'Específicas',a:false,r:['Aplica a minería de carbón'],e:[],f:[]},
+{k:'NOM-037-STPS-2023',t:'Teletrabajo — condiciones de seguridad y salud',g:'Específicas',a:true,
+ r:['Política de teletrabajo y listado de personas teletrabajadoras','Lista de verificación de condiciones del lugar de trabajo remoto','Derecho a la desconexión y mecanismos de contacto','Exámenes médicos y capacitación para teletrabajo','Registro de insumos entregados'],
+ e:['Política de teletrabajo','Listado de teletrabajadores','Listas de verificación firmadas','Acuses de insumos'],f:['EHS-F-026']},
+/* --- Sistemas de gestión --- */
+{k:'ISO 45001:2018',t:'Sistema de gestión de seguridad y salud en el trabajo',g:'Sistemas',a:true,
+ r:['Contexto, partes interesadas y alcance del sistema','Identificación de peligros y evaluación de riesgos (IPER)','Requisitos legales y otros, evaluados periódicamente','Objetivos de SST con seguimiento y programas','Consulta y participación de las personas trabajadoras','Preparación y respuesta ante emergencias','Investigación de incidentes y acciones correctivas','Auditoría interna y revisión por la dirección'],
+ e:['IPER vigente','Matriz legal','Programa de objetivos','Actas de participación','Auditorías y revisión por la dirección'],f:['EHS-F-031','EHS-F-032','EHS-F-033']},
+{k:'ISO 14001:2015',t:'Sistema de gestión ambiental',g:'Sistemas',a:true,
+ r:['Identificación de aspectos e impactos ambientales','Requisitos legales ambientales aplicables y su evaluación','Control operacional de residuos, emisiones y descargas','Plan de respuesta ante emergencias ambientales','Monitoreo, medición y evaluación del desempeño','Auditoría interna y revisión por la dirección'],
+ e:['Matriz de aspectos e impactos','Matriz legal ambiental','Registros de residuos y manifiestos','Monitoreos','Auditorías'],f:['EHS-F-028','EHS-F-029','EHS-F-030']},
+{k:'IMSS / STPS — trámites',t:'Avisos y documentos ante IMSS y STPS',g:'Sistemas',a:true,
+ r:['Aviso ST-7 de accidente de trabajo dentro de 72 horas','Aviso ST-2 (alta de empresa) y ST-3 (modificaciones) actualizados','DC-3 de habilidades emitida por agente capacitador registrado','DC-5 y constancias de capacitación con lista de asistencia','Registro de comisión de seguridad e higiene ante la STPS'],
+ e:['ST-7 por evento','Acuses ST-2/ST-3','DC-3 emitidas','Listas de asistencia firmadas'],f:['EHS-F-034','EHS-F-035']}
+];
+
+/* etiquetas cortas para listados */
+const normKey = k => k.replace(/^(NOM-|ISO )/,'').replace(/-STPS/,'');
+</script>
+<script>
+/* =====================================================================
+   BIBLIOTECA DE FORMATOS
+   tipo: check (lista de verificación) · tabla (registro) · acta (documento)
+   ===================================================================== */
+const CAMPOS_BASE = [['fecha','Fecha','date'],['area','Área / ubicación'],['resp','Realizó (nombre y puesto)'],['turno','Turno','sel:Matutino|Vespertino|Nocturno|Mixto']];
+const FIRMAS_BASE = ['Realizó — Coordinación EHS','Revisó — Jefe de área','Vo. Bo. — Gerencia'];
+
+const FORMATOS = [
+{c:'EHS-F-001',n:'Inspección de edificios, locales e instalaciones',nk:'NOM-001-STPS-2008',tipo:'check',frec:'Semestral',
+ p:'Verificar las condiciones físicas y de mantenimiento de las instalaciones del centro de trabajo.',
+ sec:[
+  {t:'Estructura y acabados',ref:'Edificios',it:[
+   'Techos, losas y muros sin grietas, filtraciones ni humedad aparente',
+   'Pisos firmes, sin hundimientos, agrietamientos ni desniveles sin señalizar',
+   'Columnas y elementos estructurales sin daño, corrosión o sobrecarga',
+   'Ventanas y domos íntegros, con sujeción y sin riesgo de caída de vidrio']},
+  {t:'Circulaciones y escaleras',ref:'Rutas',it:[
+   'Escaleras con huella y peralte uniformes, sin obstrucciones',
+   'Barandales y pasamanos completos, firmes y a la altura requerida',
+   'Rampas con superficie antiderrapante y pendiente adecuada',
+   'Rutas de circulación y salidas libres de material, tarimas y obstáculos',
+   'Iluminación suficiente en pasillos, escaleras y salidas']},
+  {t:'Orden y limpieza',ref:'5S',it:[
+   'Áreas de trabajo libres de herramientas y material fuera de lugar',
+   'Residuos y desperdicios en contenedores identificados y con tapa',
+   'Sustancias derramadas atendidas de inmediato y con registro',
+   'Almacenamiento en altura estable, señalizado y sin exceder capacidad',
+   'Sanitarios, vestidores y comedor limpios y funcionales']},
+  {t:'Servicios y mantenimiento',ref:'Mantenimiento',it:[
+   'Programa anual de mantenimiento vigente y con avance documentado',
+   'Bitácoras de mantenimiento actualizadas y firmadas',
+   'Instalaciones eléctricas sin cables expuestos ni conexiones improvisadas',
+   'Drenajes y alcantarillado sin obstrucción ni olores',
+   'Techos y bajantes pluviales con mantenimiento antes de temporada de lluvias']}
+ ],firmas:FIRMAS_BASE},
+
+{c:'EHS-F-002',n:'Revisión de extintores y equipo contra incendio',nk:'NOM-002-STPS-2010',tipo:'tabla',frec:'Mensual',
+ p:'Registro mensual del estado, ubicación y vigencia del equipo de protección contra incendio.',
+ campos:[['fecha','Fecha','date'],['area','Área'],['resp','Realizó'],['mes','Mes de revisión']],
+ cols:[['id','No. / ID'],['ubi','Ubicación'],['tipo','Tipo y capacidad'],['pres','Presión / peso OK'],['sello','Sello y seguro'],['manguera','Manguera / boquilla'],['senal','Señalización y acceso'],['recarga','Última recarga'],['obs','Observaciones']],
+ nFilas:8,firmas:FIRMAS_BASE},
+
+{c:'EHS-F-003',n:'Acta de simulacro y brigadas de emergencia',nk:'NOM-002-STPS-2010',tipo:'acta',frec:'Anual',
+ p:'Documentar el desarrollo del simulacro, tiempos de evacuación y desempeño de las brigadas.',
+ campos:[['fecha','Fecha','date'],['area','Alcance del simulacro'],['resp','Coordinador del simulacro'],['hipo','Hipótesis / escenario']],
+ bloques:[{t:'Brigadas participantes y funciones',rows:5},{t:'Desarrollo del simulacro y tiempos (alarma, desalojo, conteo, regreso)',rows:5},{t:'Resultados y desviaciones observadas',rows:5},{t:'Acciones de mejora con responsable y fecha',rows:4}],
+ firmas:['Coordinación EHS','Jefe de brigadas','Gerencia']},
+
+{c:'EHS-F-004',n:'Verificación de guardas y dispositivos de seguridad en maquinaria',nk:'NOM-004-STPS-1999',tipo:'check',frec:'Mensual',
+ p:'Comprobar que la maquinaria conserva sus resguardos y dispositivos de seguridad operativos.',
+ campos:[['fecha','Fecha','date'],['area','Área / línea'],['maq','Máquina / equipo (ID)'],['resp','Realizó']],
+ sec:[
+  {t:'Resguardos',it:[
+   'Guardas fijas colocadas y sujetas con herramienta en partes móviles',
+   'Guardas móviles con enclavamiento funcional',
+   'Sin guardas retiradas, anuladas o modificadas por producción',
+   'Puntos de atrapamiento, corte y cizallamiento protegidos']},
+  {t:'Dispositivos de seguridad',it:[
+   'Paros de emergencia accesibles, identificados y funcionales',
+   'Cortinas de luz, alfombras o sensores operando',
+   'Sistema de bloqueo con candado propio disponible para mantenimiento',
+   'Protección en transmisiones: bandas, cadenas, engranes y poleas']},
+  {t:'Operación',it:[
+   'Procedimiento de operación seguro disponible en el punto de uso',
+   'Personal operando capacitado y autorizado para ese equipo',
+   'EPP requerido por la máquina disponible y en uso',
+   'Señalización de riesgo en la máquina y su perímetro']}
+ ],firmas:FIRMAS_BASE},
+
+{c:'EHS-F-005',n:'Inventario de sustancias químicas peligrosas',nk:'NOM-005-STPS-1998',tipo:'tabla',frec:'Semestral',
+ p:'Inventario por área con clasificación de peligro, cantidad y condiciones de almacenamiento.',
+ campos:[['fecha','Fecha de corte','date'],['area','Área / almacén'],['resp','Responsable del inventario']],
+ cols:[['nom','Sustancia / producto'],['prov','Proveedor'],['sds','SDS en español'],['ghs','Pictograma GHS'],['cant','Cantidad y unidad'],['ubi','Ubicación'],['cont','Contención / ventilación'],['epp','EPP requerido'],['obs','Observaciones']],
+ nFilas:10,
+ firmas:['Coordinación EHS','Almacén','Jefe de área']},
+
+{c:'EHS-F-006',n:'Checklist preoperacional de montacargas y equipo de manejo de materiales',nk:'NOM-006-STPS-2023',tipo:'check',frec:'Diario',
+ p:'Verificación diaria antes de operar montacargas, grúas o equipo de izaje.',
+ campos:[['fecha','Fecha','date'],['equipo','Equipo / No. económico'],['operador','Operador (nombre y licencia)'],['hrs','Horómetro / turno']],
+ sec:[
+  {t:'Condición del equipo',it:[
+   'Llantas en buen estado y con presión adecuada',
+   'Horquillas sin fisuras, desgaste excesivo ni deformación',
+   'Frenos de servicio y de estacionamiento funcionales',
+   'Dirección sin juego excesivo ni ruidos anormales',
+   'Alarma de retroceso, claxon y torreta funcionando',
+   'Cinturón de seguridad y respaldo presentes y en buen estado']},
+  {t:'Energía y fluidos',it:[
+   'Nivel de aceite hidráulico, motor y refrigerante dentro de rango',
+   'Sin fugas visibles de aceite, combustible o hidráulico',
+   'Batería sujeta, con tapas y sin derrames (eléctricos)',
+   'Cargador de batería en área ventilada y con equipo de emergencia']},
+  {t:'Operación segura',it:[
+   'Capacidad de carga visible y no excedida',
+   'Rutas y zonas de maniobra delimitadas y libres',
+   'Operador usa cinturón y EPP (casco, calzado, chaleco)',
+   'Procedimiento para carga en racks y apilamiento respetado']}
+ ],
+ firmas:['Operador','Supervisor de turno','Coordinación EHS']},
+
+{c:'EHS-F-007',n:'Permiso de trabajo en altura',nk:'NOM-009-STPS-2011',tipo:'check',frec:'Por evento',
+ p:'Autorización previa para trabajos a 1.8 m o más sobre el nivel inferior.',
+ campos:[['fecha','Fecha','date'],['area','Área / ubicación'],['tarea','Trabajo a realizar'],['alt','Altura aproximada (m)'],['resp','Solicitante'],['autoriza','Quien autoriza']],
+ sec:[
+  {t:'Planeación',it:[
+   'Análisis de riesgo del trabajo elaborado y revisado con el ejecutante',
+   'Personal capacitado y autorizado para trabajos en altura',
+   'Plan de rescate definido y equipo disponible',
+   'Área delimitada y señalizada en piso; control de terceros']},
+  {t:'Equipo de protección contra caídas',it:[
+   'Arnés de cuerpo completo inspeccionado y vigente',
+   'Línea de vida o eslinga con absorbedor de energía sin daño',
+   'Punto de anclaje identificado y con capacidad verificada',
+   'Casco con barbiquejo y calzado antiderrapante',
+   'Andamio o plataforma armado, nivelado y con barandales']},
+  {t:'Condiciones del entorno',it:[
+   'Condiciones climáticas permiten el trabajo (viento, lluvia, tormenta)',
+   'Sin riesgo eléctrico o con distancia de seguridad respetada',
+   'Herramientas aseguradas contra caída de objetos',
+   'Vigía o persona de apoyo asignada en piso']}
+ ],
+ firmas:['Solicitante','Coordinación EHS','Autorizó el trabajo']},
+
+{c:'EHS-F-008',n:'Registro de evaluación de agentes químicos en el ambiente laboral',nk:'NOM-010-STPS-2014',tipo:'tabla',frec:'Anual / por cambio',
+ p:'Concentración por agente y área, comparada con el límite máximo permissible (LMP).',
+ campos:[['fecha','Fecha de muestreo','date'],['lab','Laboratorio acreditado'],['area','Área'],['resp','Responsable del estudio']],
+ cols:[['ag','Agente químico'],['pue','Puesto / área'],['met','Método y norma de referencia'],['res','Resultado (mg/m³ o ppm)'],['lmp','LMP'],['cum','Cumple'],['ctrl','Control requerido'],['obs','Observaciones']],
+ nFilas:6,
+ firmas:['Coordinación EHS','Laboratorio','Gerencia']},
+
+{c:'EHS-F-009',n:'Evaluación de niveles de ruido por área',nk:'NOM-011-STPS-2001',tipo:'tabla',frec:'Anual / por cambio',
+ p:'Nivel de exposición a ruido por puesto, con acciones según el resultado.',
+ campos:[['fecha','Fecha','date'],['equipo','Equipo de medición / calibración'],['resp','Realizó']],
+ cols:[['area','Área / puesto'],['fuente','Fuente de ruido'],['db','Nivel dB(A)'],['t','Tiempo de exposición'],['nec','¿Requiere conservación auditiva?'],['med','Medida de control'],['obs','Observaciones']],
+ nFilas:8,firmas:['Coordinación EHS','Servicio médico','Gerencia']},
+
+{c:'EHS-F-010',n:'Evaluación de condiciones térmicas',nk:'NOM-015-STPS-2001',tipo:'check',frec:'Temporada',
+ p:'Evaluación de exposición a calor o frío y medidas de control implementadas.',
+ campos:[['fecha','Fecha','date'],['area','Área'],['cond','Condición','sel:Calor|Frío'],['resp','Realizó']],
+ sec:[
+  {t:'Evaluación',it:[
+   'Temperatura y humedad medidas en el área y registradas',
+   'Tiempo de exposición por puesto determinado',
+   'Puestos y personas con mayor exposición identificados',
+   'Resultado comparado con los valores de referencia de la NOM']},
+  {t:'Controles',it:[
+   'Ventilación, extracción o aislamiento de la fuente de calor',
+   'Pausas, rotación o periodos de recuperación establecidos',
+   'Agua e hidratación disponible y accesible',
+   'Área de descanso con temperatura adecuada',
+   'Personal capacitado en golpe de calor e hipotermia',
+   'Vigilancia médica para puestos con exposición']}
+ ],firmas:FIRMAS_BASE},
+
+{c:'EHS-F-011',n:'Matriz y entrega de equipo de protección personal por puesto',nk:'NOM-017-STPS-2024',tipo:'tabla',frec:'Semestral',
+ p:'EPP determinado por análisis de riesgo y acuse de entrega a cada persona trabajadora.',
+ campos:[['fecha','Fecha','date'],['area','Área'],['resp','Responsable de EPP']],
+ cols:[['pue','Puesto'],['riesgo','Riesgo identificado'],['epp','EPP requerido'],['cert','Certificación / marca'],['cant','Cantidad'],['vida','Vida útil / reposición'],['firma','Nombre y firma de recibido']],
+ nFilas:10,
+ firmas:['Coordinación EHS','Almacén','Jefe de área']},
+
+{c:'EHS-F-012',n:'Verificación de etiquetado GHS y disponibilidad de SDS',nk:'NOM-018-STPS-2015',tipo:'check',frec:'Trimestral',
+ p:'Comprobar la comunicación de peligros en todos los puntos donde hay sustancias químicas.',
+ campos:[['fecha','Fecha','date'],['area','Área'],['resp','Realizó']],
+ sec:[
+  {t:'Etiquetado',it:[
+   'Todos los recipientes originales conservan la etiqueta del proveedor',
+   'Recipientes de trasvase etiquetados con nombre y pictograma',
+   'Etiquetas legibles, en español y con palabras de advertencia',
+   'Pictogramas GHS correctos según el peligro de la sustancia']},
+  {t:'Hojas de datos de seguridad',it:[
+   'SDS en español disponible para el 100% del inventario',
+   'SDS accesible en el punto de uso (física o digital)',
+   'SDS vigente (versión actual del proveedor)',
+   'Personal sabe cómo consultar la SDS y qué hacer en caso de contacto']},
+  {t:'Capacitación',it:[
+   'Personal expuesto capacitado en peligros y primeros auxilios',
+   'Constancias disponibles y vigentes',
+   'Simulacros o prácticas de derrame realizados']}
+ ],firmas:FIRMAS_BASE},
+
+{c:'EHS-F-013',n:'Acta de constitución de la comisión de seguridad e higiene',nk:'NOM-019-STPS-2011',tipo:'acta',frec:'Por periodo',
+ p:'Documento de constitución, integración y vigencia de la comisión.',
+ campos:[['fecha','Fecha de constitución','date'],['centro','Centro de trabajo'],['periodo','Periodo de vigencia'],['resp','Coordinador de la comisión']],
+ bloques:[{t:'Integrantes (nombre, puesto, representación: patrón / personas trabajadoras)',rows:8},{t:'Acuerdos de constitución (funciones, periodicidad de recorridos, capacitación)',rows:5},{t:'Registro y difusión (STPS, tablero, medios internos)',rows:3}],
+ firmas:['Representante del patrón','Representante de las personas trabajadoras','Coordinación EHS']},
+
+{c:'EHS-F-014',n:'Acta de recorrido de verificación de la comisión',nk:'NOM-019-STPS-2011',tipo:'check',frec:'Mensual',
+ p:'Recorrido mensual con condiciones detectadas y seguimiento hasta su cierre.',
+ campos:[['fecha','Fecha del recorrido','date'],['area','Áreas recorridas'],['resp','Quienes participaron']],
+ sec:[
+  {t:'Condiciones del recorrido',it:[
+   'Orden y limpieza en las áreas visitadas',
+   'Instalaciones eléctricas y cableado en condiciones seguras',
+   'Resguardos y dispositivos de seguridad de maquinaria en su lugar',
+   'Almacenamiento estable, señalizado y sin exceder capacidad',
+   'Rutas de evacuación y salidas libres y señalizadas',
+   'Extintores y equipo de emergencia accesibles y vigentes',
+   'Sustancias químicas almacenadas de forma compatible y etiquetadas',
+   'EPP en uso conforme a la matriz por puesto',
+   'Señalización de seguridad completa y legible',
+   'Botiquín completo y con medicamentos vigentes']}
+ ],
+ firmas:['Representante del patrón','Representante de las personas trabajadoras','Coordinación EHS']},
+
+{c:'EHS-F-015',n:'Programa anual de recorridos y actividades de la comisión',nk:'NOM-019-STPS-2011',tipo:'tabla',frec:'Anual',
+ p:'Calendarización de recorridos, capacitación y seguimiento de la comisión.',
+ campos:[['anio','Año'],['centro','Centro de trabajo'],['resp','Coordinador de la comisión']],
+ cols:[['mes','Mes'],['fecha','Fecha programada'],['area','Área a recorrer'],['resp','Responsable'],['real','Realizado (fecha)'],['acta','Acta No.'],['obs','Observaciones']],
+ nFilas:12,firmas:['Representante del patrón','Representante de las personas trabajadoras','Coordinación EHS']}
+];
+</script>
+<script>
+FORMATOS.push(
+{c:'EHS-F-016',n:'Revisión de recipientes sujetos a presión y calderas',nk:'NOM-020-STPS-2011',tipo:'tabla',frec:'Mensual',
+ p:'Inventario y verificación de válvulas, instrumentos y vigencia de la calibración.',
+ campos:[['fecha','Fecha','date'],['area','Área / casa de máquinas'],['resp','Realizó']],
+ cols:[['id','Equipo / ID'],['tipo','Tipo (caldera, tanque, autoclave)'],['pres','Presión de operación'],['valv','Válvula de seguridad (calibración)'],['man','Manómetro OK'],['niv','Control de nivel'],['fuga','Sin fugas / corrosión'],['obs','Observaciones']],
+ nFilas:6,firmas:['Operador','Mantenimiento','Coordinación EHS']},
+
+{c:'EHS-F-017',n:'Verificación de sistema de tierras y electricidad estática',nk:'NOM-022-STPS-2015',tipo:'tabla',frec:'Anual',
+ p:'Medición de resistencia de tierras y continuidad en equipos y áreas con riesgo de ignición.',
+ campos:[['fecha','Fecha','date'],['equipo','Equipo de medición / calibración'],['resp','Realizó']],
+ cols:[['pto','Punto / equipo'],['tipo','Tipo (tierra, continuidad, puente)'],['lec','Lectura (Ω)'],['lim','Límite requerido'],['cum','Cumple'],['accion','Acción requerida'],['obs','Observaciones']],
+ nFilas:8,firmas:['Mantenimiento eléctrico','Coordinación EHS','Gerencia']},
+
+{c:'EHS-F-018',n:'Medición de iluminación por área',nk:'NOM-025-STPS-2008',tipo:'tabla',frec:'Anual',
+ p:'Niveles de iluminación por área y tarea comparados con los mínimos de la norma.',
+ campos:[['fecha','Fecha','date'],['equipo','Luxómetro / calibración'],['resp','Realizó']],
+ cols:[['area','Área / tarea'],['act','Actividad'],['req','Nivel requerido (lux)'],['med','Nivel medido (lux)'],['cum','Cumple'],['accion','Acción'],['obs','Observaciones']],
+ nFilas:8,firmas:['Coordinación EHS','Mantenimiento','Gerencia']},
+
+{c:'EHS-F-019',n:'Verificación de colores y señales de seguridad',nk:'NOM-026-STPS-2008',tipo:'check',frec:'Trimestral',
+ p:'Estado, ubicación y correcta aplicación de la señalización del centro de trabajo.',
+ campos:[['fecha','Fecha','date'],['area','Áreas verificadas'],['resp','Realizó']],
+ sec:[
+  {t:'Señalización general',it:[
+   'Señales de prohibición, obligación, advertencia e información presentes donde corresponde',
+   'Señales legibles, sin deterioro, sin obstrucciones y a la altura correcta',
+   'Señalización de salidas y rutas de evacuación completa y visible',
+   'Identificación de áreas de riesgo: eléctrica, altura, química, ruido',
+   'Identificación de tuberías por color conforme a la norma',
+   'Equipo contra incendio y de emergencia señalizado',
+   'Demarcación de pasillos, áreas de almacenamiento y maniobras']}
+ ],firmas:FIRMAS_BASE},
+
+{c:'EHS-F-020',n:'Permiso de soldadura y corte',nk:'NOM-027-STPS-2008',tipo:'check',frec:'Por evento',
+ p:'Autorización de trabajos en caliente con control de ignición y protección del entorno.',
+ campos:[['fecha','Fecha','date'],['area','Área / equipo'],['tarea','Trabajo a realizar'],['resp','Solicitante'],['autoriza','Quien autoriza']],
+ sec:[
+  {t:'Antes del trabajo',it:[
+   'Área libre de material combustible en radio de 11 m o protegida',
+   'Permiso de trabajo en caliente vigente y visible',
+   'Equipo de soldadura y cables sin daño; conexión a tierra',
+   'Cilindros sujetos, verticales y con válvula antirretroceso',
+   'Ventilación o extracción suficiente en el área',
+   'Extintor disponible y vigente en el punto de trabajo',
+   'Vigía contra incendio asignado y capacitado']},
+  {t:'Protección personal',it:[
+   'Careta o máscara con filtro adecuado al proceso',
+   'Guantes de carnaza, mandil, polainas y ropa de algodón',
+   'Protección para terceros: pantallas, cortinas, señalización',
+   'Personal capacitado y autorizado']},
+  {t:'Después del trabajo',it:[
+   'Área revisada 30 minutos después de terminar (vigilancia contra ignición)',
+   'Equipo apagado, válvulas cerradas y cables resguardados']}
+ ],firmas:['Solicitante','Coordinación EHS','Autorizó el trabajo']},
+
+{c:'EHS-F-021',n:'Registro de bloqueo y etiquetado (LOTO)',nk:'NOM-029-STPS-2011',tipo:'tabla',frec:'Por evento',
+ p:'Control de energías peligrosas durante mantenimiento de maquinaria e instalaciones.',
+ campos:[['fecha','Fecha','date'],['equipo','Equipo / instalación'],['tarea','Trabajo de mantenimiento'],['resp','Responsable del bloqueo']],
+ cols:[['energia','Tipo de energía'],['pto','Punto de bloqueo'],['candado','No. de candado / etiqueta'],['quien','Quién coloca'],['hora','Hora de bloqueo'],['lib','Verificación de energía cero'],['retiro','Hora de retiro']],
+ nFilas:6,
+ firmas:['Ejecutante','Mantenimiento','Coordinación EHS']},
+
+{c:'EHS-F-022',n:'Diagnóstico de servicios preventivos y botiquín',nk:'NOM-030-STPS-2009',tipo:'check',frec:'Trimestral',
+ p:'Verificación de las condiciones para la prestación de servicios preventivos de SST.',
+ campos:[['fecha','Fecha','date'],['area','Centro de trabajo'],['resp','Responsable de servicios preventivos']],
+ sec:[
+  {t:'Organización',it:[
+   'Diagnóstico de seguridad y salud en el trabajo vigente',
+   'Responsable de los servicios preventivos designado por escrito',
+   'Programa de servicios preventivos con actividades y responsables',
+   'Exámenes médicos de ingreso y periódicos aplicados',
+   'Registro de personas con restricciones o recomendaciones médicas']},
+  {t:'Atención de emergencias',it:[
+   'Botiquín completo, limpio y con medicamentos vigentes',
+   'Personal capacitado en primeros auxilios por turno',
+   'Fichas médicas y datos de contacto de emergencia accesibles',
+   'Procedimiento de atención y traslado a servicios médicos',
+   'Números de emergencia visibles en áreas de trabajo']},
+  {t:'Vigilancia',it:[
+   'Registro de atención de lesiones y padecimientos',
+   'Seguimiento a casos y reincorporaciones',
+   'Indicadores de salud revisados con la gerencia']}
+ ],
+ firmas:['Responsable de servicios preventivos','Servicio médico','Gerencia']},
+
+{c:'EHS-F-023',n:'Permiso de entrada a espacio confinado',nk:'NOM-033-STPS-2015',tipo:'check',frec:'Por evento',
+ p:'Autorización y control de entrada a espacios confinados con monitoreo de atmósfera.',
+ campos:[['fecha','Fecha','date'],['esp','Espacio confinado (ID)'],['tarea','Trabajo a realizar'],['entra','Persona que entra'],['vigia','Vigía asignado'],['autoriza','Quien autoriza']],
+ sec:[
+  {t:'Antes de entrar',it:[
+   'Espacio identificado, señalizado y bloqueado contra energías',
+   'Monitoreo de atmósfera previo: O₂ 19.5–23.5%, LEL < 10%, H₂S y CO dentro de límite',
+   'Ventilación mecánica operando durante toda la entrada',
+   'Equipo de rescate y comunicación disponibles en el exterior',
+   'Permiso firmado y vigente por el tiempo de la tarea']},
+  {t:'Durante la entrada',it:[
+   'Vigía permanente en el exterior sin ausentarse',
+   'Monitoreo continuo de atmósfera registrado',
+   'Arnés con línea de vida y equipo de izaje disponible',
+   'EPP específico: respirador, arnés, casco, calzado',
+   'Sin herramientas o equipos que generen ignición cuando aplique']},
+  {t:'Al terminar',it:[
+   'Personas y herramientas retiradas y contabilizadas',
+   'Espacio cerrado y asegurado; permiso cerrado y archivado']}
+ ],
+ firmas:['Quien entra','Vigía','Coordinación EHS']},
+
+{c:'EHS-F-024',n:'Registro de aplicación de la evaluación de factores de riesgo psicosocial',nk:'NOM-035-STPS-2018',tipo:'tabla',frec:'Anual',
+ p:'Control de aplicación de cuestionarios, resultados por área y acciones de intervención.',
+ campos:[['fecha','Fecha de aplicación','date'],['inst','Guía aplicada','sel:Guía I|Guía II|Guía III'],['alcance','Alcance (centro / área)'],['resp','Responsable de la aplicación']],
+ cols:[['area','Área / departamento'],['n','Personas encuestadas'],['dom','Dominio con riesgo alto'],['niv','Nivel de riesgo'],['acc','Acción de intervención'],['resp2','Responsable'],['fecha2','Fecha compromiso'],['est','Estado']],
+ nFilas:8,
+ firmas:['Coordinación EHS','Recursos Humanos','Gerencia']},
+
+{c:'EHS-F-025',n:'Evaluación ergonómica de manejo manual de cargas',nk:'NOM-036-STPS-2018',tipo:'tabla',frec:'Anual / por cambio',
+ p:'Evaluación por tarea con método aplicado, nivel de riesgo y medidas de control.',
+ campos:[['fecha','Fecha','date'],['area','Área'],['metodo','Método','sel:MAC|NIOSH|REBA|RULA|Otro'],['resp','Evaluador']],
+ cols:[['tarea','Tarea / puesto'],['peso','Peso manejado (kg)'],['frec','Frecuencia'],['dist','Distancia / altura'],['niv','Nivel de riesgo'],['med','Medida de control'],['resp2','Responsable'],['fecha2','Fecha compromiso']],
+ nFilas:8,
+ firmas:['Evaluador ergonómico','Coordinación EHS','Gerencia']},
+
+{c:'EHS-F-026',n:'Lista de verificación de condiciones de teletrabajo',nk:'NOM-037-STPS-2023',tipo:'check',frec:'Por ingreso / anual',
+ p:'Verificación del lugar de trabajo remoto y acuerdos con la persona teletrabajadora.',
+ campos:[['fecha','Fecha','date'],['persona','Nombre de la persona teletrabajadora'],['puesto','Puesto'],['resp','Quien verifica']],
+ sec:[
+  {t:'Lugar de trabajo',it:[
+   'Espacio de trabajo suficiente, ventilado e iluminado',
+   'Superficie de trabajo estable y a la altura adecuada',
+   'Silla con soporte lumbar y ajustable',
+   'Contactos eléctricos y cableado en condiciones seguras',
+   'Sin riesgos de caída, golpes o atrapamiento en el espacio']},
+  {t:'Organización y salud',it:[
+   'Política de teletrabajo entregada y firmada',
+   'Horario y mecanismos de contacto definidos',
+   'Derecho a la desconexión informado',
+   'Pausas y ejercicios recomendados difundidos',
+   'Examen médico aplicado conforme a la NOM-030']},
+  {t:'Recursos',it:[
+   'Equipo de cómputo y periféricos proporcionados',
+   'Apoyo para servicios de internet y electricidad documentado',
+   'Insumos entregados con acuse']}
+ ],
+ firmas:['Persona teletrabajadora','Recursos Humanos','Coordinación EHS']},
+
+{c:'EHS-F-027',n:'Diagnóstico de accesibilidad para personas con discapacidad',nk:'NOM-034-STPS-2016',tipo:'check',frec:'Anual',
+ p:'Condiciones de acceso y desarrollo de actividades en el centro de trabajo.',
+ campos:[['fecha','Fecha','date'],['area','Áreas evaluadas'],['resp','Realizó']],
+ sec:[
+  {t:'Acceso y circulación',it:[
+   'Rutas accesibles de 1.20 m mínimo y libres de obstáculos',
+   'Rampas con pendiente adecuada, barandales y superficie antiderrapante',
+   'Puertas con ancho suficiente y mecanismos de fácil operación',
+   'Estacionamiento reservado y señalizado cerca del acceso']},
+  {t:'Servicios',it:[
+   'Sanitarios accesibles con barras de apoyo y espacio de transferencia',
+   'Señalización con pictogramas y lectura fácil',
+   'Alarmas con aviso visual y sonoro',
+   'Rutas de evacuación consideran apoyo para personas con discapacidad']},
+  {t:'Puesto de trabajo',it:[
+   'Puesto ajustado o con ajustes razonables documentados',
+   'Herramientas y equipo accesibles',
+   'Personal informado sobre el protocolo de apoyo']}
+ ],
+ firmas:['Coordinación EHS','Recursos Humanos','Gerencia']}
+);
+</script>
+<script>
+FORMATOS.push(
+{c:'EHS-F-028',n:'Matriz de identificación de aspectos e impactos ambientales',nk:'ISO 14001:2015',tipo:'tabla',frec:'Anual / por cambio',
+ p:'Aspectos ambientales por actividad, impacto asociado y significancia.',
+ campos:[['fecha','Fecha de actualización','date'],['area','Proceso / área'],['resp','Responsable del análisis']],
+ cols:[['act','Actividad / proceso'],['asp','Aspecto ambiental'],['imp','Impacto ambiental'],['cond','Condición (normal / anormal / emergencia)'],['p','Probabilidad (1-5)'],['s','Severidad (1-5)'],['sig','Significativo'],['ctrl','Control operacional']],
+ nFilas:10,
+ firmas:['Coordinación EHS','Gerencia de operaciones','Dirección']},
+
+{c:'EHS-F-029',n:'Matriz de requisitos legales aplicables (EHS)',nk:'ISO 14001:2015',tipo:'tabla',frec:'Semestral',
+ p:'Identificación y evaluación del cumplimiento de requisitos legales y otros.',
+ campos:[['fecha','Fecha de evaluación','date'],['alcance','Alcance'],['resp','Responsable legal']],
+ cols:[['req','Requisito / disposición'],['tipo','Tipo (STPS, SEMARNAT, IMSS, otro)'],['apl','Aplica a'],['evid','Evidencia de cumplimiento'],['est','Cumplimiento'],['accion','Acción requerida'],['resp2','Responsable'],['fecha2','Fecha compromiso']],
+ nFilas:10,
+ firmas:['Coordinación EHS','Jurídico','Dirección']},
+
+{c:'EHS-F-030',n:'Control y manifiesto de residuos peligrosos',nk:'ISO 14001:2015',tipo:'tabla',frec:'Mensual',
+ p:'Registro de generación, almacenamiento y entrega de residuos peligrosos al transportista autorizado.',
+ campos:[['fecha','Periodo','date'],['area','Área generadora'],['resp','Responsable de residuos']],
+ cols:[['res','Residuo (clave CRETIB)'],['cant','Cantidad (kg / L)'],['env','Envase / estado'],['alm','Almacén temporal y fecha de ingreso'],['man','No. de manifiesto'],['trans','Transportista / destino'],['fecha2','Fecha de entrega'],['obs','Observaciones']],
+ nFilas:8,
+ firmas:['Responsable de residuos','Coordinación EHS','Gerencia']},
+
+{c:'EHS-F-031',n:'Identificación de peligros y evaluación de riesgos (IPER)',nk:'ISO 45001:2018',tipo:'tabla',frec:'Anual / por cambio',
+ p:'Matriz de peligros por actividad con evaluación de riesgo y controles por jerarquía.',
+ campos:[['fecha','Fecha de actualización','date'],['area','Proceso / área'],['resp','Responsable del análisis']],
+ cols:[['act','Actividad / tarea'],['pel','Peligro'],['riesgo','Riesgo / consecuencia'],['exp','Personas expuestas'],['p','Probabilidad (1-5)'],['s','Severidad (1-5)'],['nr','Nivel de riesgo'],['ctrl','Controles (eliminar / sustituir / ingeniería / admin / EPP)'],['resp2','Responsable']],
+ nFilas:12,
+ firmas:['Coordinación EHS','Jefe de área','Dirección']},
+
+{c:'EHS-F-032',n:'Investigación de incidentes y accidentes de trabajo',nk:'ISO 45001:2018',tipo:'acta',frec:'Por evento',
+ p:'Investigación de causa raíz, acciones correctivas y cierre del evento.',
+ campos:[['fecha','Fecha del evento','date'],['folio','Folio del evento'],['area','Área'],['lesion','Tipo de lesión / daño'],['st7','¿Requiere aviso ST-7?','sel:Sí|No|Por determinar'],['resp','Investigador']],
+ bloques:[{t:'Descripción del evento (qué, cómo, dónde, cuándo, quién)',rows:5},{t:'Causas inmediatas (actos y condiciones inseguras)',rows:4},{t:'Causa raíz (5 porqués / análisis)',rows:4},{t:'Acciones correctivas y preventivas (responsable y fecha)',rows:5},{t:'Verificación de eficacia y cierre',rows:3}],
+ firmas:['Investigador','Jefe de área','Coordinación EHS','Gerencia']},
+
+{c:'EHS-F-033',n:'Programa y registro de auditoría interna EHS',nk:'ISO 45001:2018',tipo:'tabla',frec:'Anual',
+ p:'Programación de auditorías internas del sistema de gestión y sus resultados.',
+ campos:[['anio','Año'],['alcance','Alcance del programa'],['resp','Coordinador del programa de auditoría']],
+ cols:[['fecha','Fecha'],['proc','Proceso / cláusula'],['aud','Auditor'],['hall','Hallazgos'],['tipo','Tipo (NC mayor / NC menor / observación)'],['accion','Acción'],['resp2','Responsable'],['cierre','Fecha de cierre']],
+ nFilas:8,
+ firmas:['Auditor líder','Coordinación EHS','Dirección']},
+
+{c:'EHS-F-034',n:'Guía de llenado y control del aviso ST-7',nk:'IMSS / STPS — trámites',tipo:'check',frec:'Por evento',
+ p:'Verificación de datos y oportunidad del aviso de accidente o enfermedad de trabajo.',
+ campos:[['fecha','Fecha del accidente','date'],['folio','Folio interno'],['trab','Nombre de la persona trabajadora'],['nss','Número de seguridad social'],['resp','Quien elabora']],
+ sec:[
+  {t:'Datos del aviso',it:[
+   'Registro patronal y razón social correctos',
+   'NSS, CURP y nombre completo de la persona trabajadora verificados',
+   'Fecha, hora y lugar exactos del accidente',
+   'Tipo de accidente y parte del cuerpo afectada',
+   'Descripción del evento redactada de forma objetiva',
+   'Aviso presentado dentro de las 72 horas siguientes']},
+  {t:'Seguimiento',it:[
+   'Copia del acuse del aviso archivada',
+   'Atención médica y calificación de probable riesgo de trabajo en curso',
+   'Investigación interna del evento realizada',
+   'Acciones correctivas definidas y en seguimiento',
+   'Indicadores de siniestralidad actualizados']}
+ ],
+ firmas:['Quien elabora','Recursos Humanos','Coordinación EHS']},
+
+{c:'EHS-F-035',n:'Registro de constancias DC-3 y capacitación',nk:'IMSS / STPS — trámites',tipo:'tabla',frec:'Mensual',
+ p:'Control de cursos, agentes capacitadores y emisión de constancias de habilidades.',
+ campos:[['fecha','Periodo','date'],['area','Área'],['resp','Responsable de capacitación']],
+ cols:[['curso','Curso / tema'],['norma','Norma o requisito que atiende'],['fecha2','Fecha del curso'],['hrs','Horas'],['agente','Agente capacitador / registro'],['persona','Persona capacitada'],['dc3','DC-3 emitida'],['calif','Evaluación']],
+ nFilas:10,
+ firmas:['Instructor','Recursos Humanos','Coordinación EHS']},
+
+{c:'EHS-F-036',n:'Matriz de detección de necesidades de capacitación EHS',nk:'IMSS / STPS — trámites',tipo:'tabla',frec:'Anual',
+ p:'Necesidades de capacitación por puesto y norma, con programa anual.',
+ campos:[['anio','Año'],['alcance','Alcance'],['resp','Responsable de capacitación']],
+ cols:[['pue','Puesto'],['tema','Tema requerido'],['norma','Norma / requisito'],['n','Personas'],['modal','Modalidad'],['fecha','Fecha programada'],['est','Estado'],['obs','Observaciones']],
+ nFilas:10,
+ firmas:['Recursos Humanos','Coordinación EHS','Gerencia']},
+
+{c:'EHS-F-037',n:'Recorrido gerencial de seguridad (comportamiento seguro)',nk:'ISO 45001:2018',tipo:'check',frec:'Semanal',
+ p:'Observación de comportamientos y condiciones en piso, con retroalimentación inmediata.',
+ campos:[['fecha','Fecha','date'],['area','Área'],['resp','Quien realiza el recorrido'],['acomp','Acompañantes']],
+ sec:[
+  {t:'Comportamientos observados',it:[
+   'Uso correcto de EPP conforme a la tarea',
+   'Respeto de rutas peatonales y zonas de tránsito de montacargas',
+   'Herramientas correctas para la tarea y en buen estado',
+   'Postura y manejo manual de cargas adecuados',
+   'Bloqueo de energías antes de intervenir equipos',
+   'Uso de barandales y puntos de anclaje en altura']},
+  {t:'Condiciones del área',it:[
+   'Orden y limpieza durante la operación',
+   'Señalización y demarcación visibles',
+   'Iluminación y ventilación adecuadas',
+   'Almacenamiento seguro y sin sobrecarga',
+   'Equipo de emergencia accesible']},
+  {t:'Cierre del recorrido',it:[
+   'Retroalimentación positiva y correctiva brindada en el momento',
+   'Hallazgos registrados en el sistema con responsable',
+   'Compromisos acordados con el jefe de área']}
+ ],
+ firmas:['Quien realizó el recorrido','Jefe de área','Coordinación EHS']}
+);
+</script>
+<script>
+/* ============================ ESTADO ============================ */
+const KEY='ehs.control.v2';
+const uid=()=>Math.random().toString(36).slice(2,10);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const hoy=()=>new Date().toISOString().slice(0,10);
+const fmtD=d=>{ if(!d) return '—'; const p=String(d).slice(0,10).split('-'); return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:d; };
+const fdate=d=>fmtD(d);
+
+const DEFAULTS={
+  org:{nombre:'North America Flooring / SHELSER S. de R.L. de C.V.',centro:'Sucursal Escobedo',resp:'Dario Robles Trujillo',puesto:'Coordinador de Seguridad, Higiene y Medio Ambiente',anio:new Date().getFullYear()},
+  normas:{},docs:[],hallazgos:[],incidentes:[],quimicos:[],capacitacion:[],comision:[]
+};
+let DB=load();
+
+function load(){
+  try{ const raw=localStorage.getItem(KEY); if(raw){ const d=JSON.parse(raw); return Object.assign({},DEFAULTS,d,{org:Object.assign({},DEFAULTS.org,d.org||{})}); } }catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULTS));
+}
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(DB)); }catch(e){ toast('No se pudo guardar: almacenamiento lleno'); } }
+function toast(m){ const h=document.getElementById('toastHost'); h.innerHTML=`<div class="toast">${esc(m)}</div>`; clearTimeout(window.__t); window.__t=setTimeout(()=>h.innerHTML='',2200); }
+
+/* ============================ NAVEGACIÓN ============================ */
+const VIEWS=[
+  {g:'Operación',items:[
+    {id:'panel',t:'Panel',ico:'◧'},
+    {id:'formatos',t:'Formatos',ico:'▤'},
+    {id:'registros',t:'Registros',ico:'▣'},
+    {id:'hallazgos',t:'Hallazgos',ico:'⚑'},
+    {id:'incidentes',t:'Incidentes',ico:'⚠'},
+  ]},
+  {g:'Cumplimiento',items:[
+    {id:'normas',t:'Marco normativo',ico:'§'},
+    {id:'comision',t:'Comisión SST',ico:'⚖'},
+    {id:'quimicos',t:'Sustancias químicas',ico:'⚗'},
+    {id:'capacitacion',t:'Capacitación',ico:'✎'},
+  ]},
+  {g:'Sistema',items:[
+    {id:'datos',t:'Organización y datos',ico:'⚙'},
+  ]}
+];
+let VIEW='panel';
+
+function normAplica(k){ const o=DB.normas[k]; if(o&&typeof o.aplica==='boolean') return o.aplica; const n=NORMAS.find(x=>x.k===k); return n?n.a:false; }
+function docsDe(k){ return DB.docs.filter(d=>d.nk===k); }
+function hallAbiertos(k){ return DB.hallazgos.filter(h=>h.norma===k&&h.estado!=='Cerrado'); }
+function estadoNorma(k){
+  const ab=hallAbiertos(k);
+  const venc=ab.filter(h=>h.fechaComp&&h.fechaComp<hoy());
+  if(venc.length) return {c:'danger',t:`${venc.length} vencido(s)`};
+  if(ab.length) return {c:'warn',t:`${ab.length} abierto(s)`};
+  if(docsDe(k).length) return {c:'ok',t:'Con evidencia'};
+  return {c:'mute',t:'Sin evidencia'};
+}
+function badge(n){ return n>0?`<span class="badge ${n>0?'alert':''}">${n}</span>`:''; }
+
+function renderNav(){
+  const abiertos=DB.hallazgos.filter(h=>h.estado!=='Cerrado').length;
+  const vencidos=DB.hallazgos.filter(h=>h.estado!=='Cerrado'&&h.fechaComp&&h.fechaComp<hoy()).length;
+  const incAb=DB.incidentes.filter(i=>i.estado!=='Cerrada').length;
+  document.getElementById('nav').innerHTML=VIEWS.map(g=>`<div class="grp">${g.g}</div>`+g.items.map(it=>{
+    let b='';
+    if(it.id==='hallazgos'&&abiertos) b=`<span class="badge ${vencidos?'alert':''}">${abiertos}</span>`;
+    if(it.id==='incidentes'&&incAb) b=`<span class="badge">${incAb}</span>`;
+    return `<button class="${VIEW===it.id?'on':''}" onclick="go('${it.id}')"><span class="ico">${it.ico}</span>${it.t}${b}</button>`;
+  }).join('')).join('');
+  document.getElementById('footOrg').textContent=DB.org.centro||'—';
+  document.getElementById('brandSub').textContent=(DB.org.nombre||'').split('/')[0].trim()||'Seguridad · Higiene · Ambiente';
+}
+
+const TITLES={panel:['Panel','Resumen de cumplimiento y pendientes'],formatos:['Formatos','Biblioteca de formatos por norma'],registros:['Registros','Documentos generados y archivados'],hallazgos:['Hallazgos','Condiciones y acciones en seguimiento'],incidentes:['Incidentes','Registro e investigación de eventos'],normas:['Marco normativo','NOM de la STPS vigentes, ISO 14001 / 45001 y trámites IMSS'],comision:['Comisión de seguridad e higiene','NOM-019-STPS-2011'],quimicos:['Sustancias químicas','NOM-005 / NOM-018 — inventario y SDS'],capacitacion:['Capacitación','DC-3 y matriz de necesidades'],datos:['Organización y datos','Configuración y respaldo']};
+
+function go(v){ VIEW=v; try{history.replaceState(null,'','#'+v)}catch(e){} renderNav(); const [t,s]=TITLES[v]||['','']; document.getElementById('pageTitle').textContent=t; document.getElementById('pageSub').textContent=s; document.getElementById('topActions').innerHTML=''; document.getElementById('view').innerHTML=({panel:vPanel,formatos:vFormatos,registros:vRegistros,hallazgos:vHallazgos,incidentes:vIncidentes,normas:vNormas,comision:vComision,quimicos:vQuimicos,capacitacion:vCapacitacion,datos:vDatos}[v]||(()=>''))(); window.scrollTo(0,0); }
+
+/* ============================ PANEL ============================ */
+function vPanel(){
+  const apl=NORMAS.filter(n=>normAplica(n.k));
+  const conEv=apl.filter(n=>docsDe(n.k).length).length;
+  const cob=apl.length?Math.round(conEv/apl.length*100):0;
+  const ab=DB.hallazgos.filter(h=>h.estado!=='Cerrado');
+  const venc=ab.filter(h=>h.fechaComp&&h.fechaComp<hoy());
+  const anio=DB.org.anio||new Date().getFullYear();
+  const incAnio=DB.incidentes.filter(i=>(i.fecha||'').startsWith(String(anio)));
+  const conIncap=incAnio.filter(i=>Number(i.dias)>0).length;
+  const dc3=DB.capacitacion.filter(c=>c.dc3==='Sí').length;
+  const docsAnio=DB.docs.filter(d=>(d.fecha||'').startsWith(String(anio)));
+  const ult=DB.docs.slice().sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||'')).slice(0,6);
+  const criticas=apl.map(n=>({n,e:estadoNorma(n.k)})).filter(x=>x.e.c==='danger'||x.e.c==='mute').slice(0,6);
+
+  return `
+  <div class="grid g4" style="margin-bottom:16px">
+    <div class="card kpi ${cob>=70?'ok':cob>=40?'warn':'danger'}">
+      <div class="lbl">Cobertura de evidencia</div><div class="val">${cob}%</div>
+      <div class="bar" style="margin-top:6px"><i style="width:${cob}%;background:${cob>=70?'var(--ok)':cob>=40?'var(--warn)':'var(--danger)'}"></i></div>
+      <div class="hint" style="margin-top:6px">${conEv} de ${apl.length} normas con registro</div>
+    </div>
+    <div class="card kpi ${venc.length?'danger':ab.length?'warn':'ok'}">
+      <div class="lbl">Hallazgos abiertos</div><div class="val">${ab.length}</div>
+      <div class="hint">${venc.length} vencidos · ${ab.filter(h=>h.prioridad==='Alta').length} de prioridad alta</div>
+    </div>
+    <div class="card kpi ${incAnio.length?'warn':'ok'}">
+      <div class="lbl">Incidentes ${anio}</div><div class="val">${incAnio.length}</div>
+      <div class="hint">${conIncap} con días de incapacidad</div>
+    </div>
+    <div class="card kpi">
+      <div class="lbl">Registros ${anio}</div><div class="val">${docsAnio.length}</div>
+      <div class="hint">${dc3} DC-3 registradas</div>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card pad">
+      <h3 class="sec">Normas que requieren atención</h3>
+      ${criticas.length?criticas.map(x=>`
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #eef2f6">
+          <div style="flex:1;min-width:0">
+            <div style="font-weight:600;font-size:13px">${esc(x.n.k)}</div>
+            <div class="small muted" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(x.n.t)}</div>
+          </div>
+          <span class="pill ${x.e.c}">${x.e.t}</span>
+        </div>`).join(''):'<div class="empty small">Todo con evidencia registrada.</div>'}
+      <div style="margin-top:12px"><button class="btn sm" onclick="go('normas')">Ver marco normativo →</button></div>
+    </div>
+
+    <div class="card pad">
+      <h3 class="sec">Últimos registros</h3>
+      ${ult.length?ult.map(d=>`
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #eef2f6;cursor:pointer" onclick="abrirDoc('${d.id}')">
+          <div style="flex:1;min-width:0">
+            <div style="font-weight:600;font-size:13px">${esc(d.n)}</div>
+            <div class="small muted">${esc(d.c)} · ${fdate(d.fecha)} · ${esc(d.f&&d.f.area?d.f.area:'—')}</div>
+          </div>
+          <span class="pill mute">Abrir</span>
+        </div>`).join(''):'<div class="empty small">Aún no hay registros. Crea uno desde <b>Formatos</b>.</div>'}
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button class="btn sm primary" onclick="go('formatos')">Nuevo formato</button>
+        <button class="btn sm" onclick="go('registros')">Ver todos</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card pad" style="margin-top:16px">
+    <h3 class="sec">Accesos rápidos</h3>
+    <div class="grid g4">
+      ${[['EHS-F-014','Acta de recorrido de la comisión'],['EHS-F-004','Guardas y dispositivos en maquinaria'],['EHS-F-011','Entrega de EPP por puesto'],['EHS-F-032','Investigación de incidente']].map(([c,t])=>`
+        <button class="btn" style="justify-content:flex-start;text-align:left;height:100%" onclick="nuevoDoc('${c}')">
+          <span class="mono" style="color:var(--accent);font-weight:700">${c}</span><br><span class="small">${t}</span></button>`).join('')}
+    </div>
+  </div>`;
+}
+
+/* ============================ NORMAS ============================ */
+function vNormas(){
+  const grupos=['Seguridad','Salud','Organización','Específicas','Sistemas'];
+  return grupos.map(g=>{
+    const ns=NORMAS.filter(n=>n.g===g);
+    if(!ns.length) return '';
+    const apl=ns.filter(n=>normAplica(n.k)).length;
+    return `<div class="card" style="margin-bottom:16px;overflow:hidden">
+      <div style="padding:13px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:#fbfcfd">
+        <h3 class="sec" style="margin:0">${g}</h3>
+        <span class="tag">${apl} de ${ns.length} aplicables</span>
+      </div>
+      <table><thead><tr><th style="width:190px">Norma</th><th>Título</th><th style="width:90px">Aplica</th><th style="width:80px">Formatos</th><th style="width:110px">Estado</th><th style="width:60px"></th></tr></thead><tbody>
+      ${ns.map(n=>{const e=estadoNorma(n.k);const a=normAplica(n.k);const fd=FORMATOS.filter(f=>f.nk===n.k);
+        return `<tr style="opacity:${a?1:.5}">
+          <td class="mono" style="font-weight:600">${esc(n.k)}</td>
+          <td>${esc(n.t)}${a?'':''}</td>
+          <td><input type="checkbox" ${a?'checked':''} onchange="toggleNorma('${n.k}',this.checked)" style="width:16px;height:16px;cursor:pointer"></td>
+          <td class="small muted">${fd.length?fd.length+' disponibles':'—'}</td>
+          <td>${a?`<span class="pill ${e.c}">${e.t}</span>`:'<span class="pill mute">No aplica</span>'}</td>
+          <td><button class="btn sm ghost" onclick="verNorma('${n.k}')">Ver</button></td>
+        </tr>`}).join('')}
+      </tbody></table></div>`;
+  }).join('')+`<div class="card pad"><div class="small muted">Vigencia verificada contra el marco normativo de la STPS: 35 NOM de aplicación en los centros de trabajo (las de producto no se incluyen), más ISO 14001, ISO 45001 y los trámites del IMSS. Notas de actualización: <b>NOM-017-STPS-2024</b> sustituye a la de 2008; <b>NOM-006-STPS-2023</b> sustituye a la de 2000; la <b>NOM-005-STPS-2025</b> está publicada como proyecto y sustituirá a la NOM-005-STPS-1998. Confirma la publicación definitiva en el DOF antes de actualizar tus formatos.</div></div>`;
+}
+function toggleNorma(k,v){ DB.normas[k]=Object.assign({},DB.normas[k],{aplica:v}); save(); go('normas'); }
+function verNorma(k){
+  const n=NORMAS.find(x=>x.k===k); if(!n) return;
+  const fd=FORMATOS.filter(f=>f.nk===k);
+  const docs=docsDe(k), hs=hallAbiertos(k);
+  modal(`<b class="mono">${esc(n.k)}</b> — ${esc(n.t)}`,`
+    <p class="small muted" style="margin-top:0">${esc(n.g)} · ${normAplica(k)?'Aplicable':'No aplicable'} al centro de trabajo</p>
+    <h3 class="sec">Requisitos clave</h3>
+    <ul style="margin:0 0 14px;padding-left:18px">${(n.r||[]).map(r=>`<li style="margin-bottom:4px">${esc(r)}</li>`).join('')||'<li class="muted">Sin requisitos capturados.</li>'}</ul>
+    ${(n.e&&n.e.length)?`<h3 class="sec">Evidencias que debe conservar</h3><ul style="margin:0 0 14px;padding-left:18px">${n.e.map(e=>`<li style="margin-bottom:4px">${esc(e)}</li>`).join('')}</ul>`:''}
+    <h3 class="sec">Formatos vinculados</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+      ${fd.length?fd.map(f=>`<button class="btn sm" onclick="cerrarModal();nuevoDoc('${f.c}')"><span class="mono">${f.c}</span> · ${esc(f.n)}</button>`).join(''):'<span class="small muted">Sin formatos en la biblioteca.</span>'}
+    </div>
+    <div class="row">
+      <div class="card pad" style="box-shadow:none"><div class="lbl small muted">Registros</div><div style="font-size:20px;font-weight:700">${docs.length}</div></div>
+      <div class="card pad" style="box-shadow:none"><div class="lbl small muted">Hallazgos abiertos</div><div style="font-size:20px;font-weight:700">${hs.length}</div></div>
+    </div>`,`<button class="btn" onclick="cerrarModal()">Cerrar</button>`);
+}
+</script>
+<script>
+/* ============================ FORMATOS ============================ */
+function vFormatos(){
+  const q=(window.__q||'').toLowerCase();
+  const list=FORMATOS.filter(f=>!q||(f.n+f.c+f.nk).toLowerCase().includes(q));
+  const grupos=[...new Set(list.map(f=>f.nk))];
+  return `<div class="card pad" style="margin-bottom:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <input type="text" placeholder="Buscar formato por nombre, código o norma…" value="${esc(window.__q||'')}" oninput="window.__q=this.value;document.getElementById('view').innerHTML=vFormatos()" style="max-width:420px">
+      <span class="small muted">${list.length} formatos</span>
+      <div style="margin-left:auto"><button class="btn sm" onclick="go('registros')">Ver registros →</button></div>
+    </div>`+
+  grupos.map(g=>{
+    const fs=list.filter(f=>f.nk===g);
+    return `<div style="margin-bottom:18px">
+      <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:8px">
+        <h3 class="sec" style="margin:0">${esc(g)}</h3><span class="tag">${fs.length}</span>
+      </div>
+      <div class="grid g3">
+        ${fs.map(f=>`<div class="card pad" style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="mono" style="color:var(--accent);font-weight:700;font-size:12px">${f.c}</span>
+            <span class="tag">${f.frec}</span>
+          </div>
+          <div style="font-weight:600;font-size:13.5px;line-height:1.35">${esc(f.n)}</div>
+          <div class="small muted" style="flex:1">${esc(f.p)}</div>
+          <div style="display:flex;gap:6px;margin-top:4px">
+            <button class="btn sm primary" onclick="nuevoDoc('${f.c}')">Llenar</button>
+            <button class="btn sm" onclick="previewFormato('${f.c}')">Ver</button>
+          </div>
+        </div>`).join('')}
+      </div></div>`;
+  }).join('');
+}
+function previewFormato(c){
+  const f=FORMATOS.find(x=>x.c===c); if(!f) return;
+  const body=f.tipo==='check'
+    ? f.sec.map(s=>`<div style="margin-bottom:10px"><div style="font-weight:650;font-size:12.5px;margin-bottom:4px">${esc(s.t)}</div>
+        <ol style="margin:0;padding-left:20px" class="small">${s.it.map(i=>`<li style="margin-bottom:2px">${esc(i)}</li>`).join('')}</ol></div>`).join('')
+    : f.tipo==='tabla'
+      ? `<div class="small">Columnas: ${f.cols.map(c=>esc(c[1])).join(' · ')}</div>`
+      : `<div class="small">${f.bloques.map(b=>esc(b.t)).join(' · ')}</div>`;
+  modal(`${f.c} — ${esc(f.n)}`,`
+    <p class="small muted" style="margin-top:0">${esc(f.nk)} · ${esc(f.frec)}<br>${esc(f.p)}</p>
+    ${body}
+    <div class="hr"></div><div class="small muted">Firmas: ${(f.firmas||FIRMAS_BASE).join(' · ')}</div>`,
+    `<button class="btn" onclick="cerrarModal()">Cerrar</button><button class="btn primary" onclick="cerrarModal();nuevoDoc('${f.c}')">Llenar ahora</button>`);
+}
+
+/* ============================ EDITOR DE DOCUMENTO ============================ */
+let OPEN=null;
+function nuevoDoc(c){
+  const f=FORMATOS.find(x=>x.c===c); if(!f) return;
+  const d={id:uid(),c:f.c,n:f.n,nk:f.nk,tipo:f.tipo,fecha:hoy(),estado:'Abierto',creado:new Date().toISOString(),f:{fecha:hoy()},it:{},ob:{},tb:[],bl:{}};
+  if(f.tipo==='tabla'){ d.tb=Array.from({length:f.nFilas||6},()=>f.cols.map(()=>'')); }
+  if(f.tipo==='acta'){ f.bloques.forEach((b,i)=>d.bl[i]=''); }
+  DB.docs.push(d); save(); abrirDoc(d.id);
+}
+function abrirDoc(id){ OPEN=id; const d=DB.docs.find(x=>x.id===id); if(!d) return go('registros');
+  VIEW='doc'; renderNav(); document.getElementById('pageTitle').textContent=d.c;
+  document.getElementById('pageSub').textContent=d.n+' · '+d.nk;
+  document.getElementById('topActions').innerHTML=`<button class="btn sm" onclick="go('registros')">← Registros</button>`;
+  document.getElementById('view').innerHTML=vDoc(); window.scrollTo(0,0); }
+
+function vDoc(){
+  const d=DB.docs.find(x=>x.id===OPEN); if(!d) return '<div class="empty">Documento no encontrado.</div>';
+  const f=FORMATOS.find(x=>x.c===d.c)||{campos:CAMPOS_BASE,sec:[],firmas:FIRMAS_BASE};
+  const campos=f.campos||CAMPOS_BASE;
+  const nc=Object.values(d.it||{}).filter(v=>v==='NC').length;
+  const resp=Object.values(d.it||{}).filter(v=>v==='C').length;
+  const total=Object.keys(d.it||{}).length;
+
+  let cuerpo='';
+  if(d.tipo==='check'){
+    cuerpo=(f.sec||[]).map((s,si)=>`
+      <div class="card" style="margin-bottom:12px;overflow:hidden">
+        <div style="padding:10px 14px;background:#fbfcfd;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center">
+          <b style="font-size:13px">${esc(s.t)}</b>${s.ref?`<span class="tag">${esc(s.ref)}</span>`:''}
+          <span class="small muted" style="margin-left:auto">${s.it.length} puntos</span>
+        </div>
+        ${s.it.map((t,ii)=>{ const k=`s${si}i${ii}`; const val=(d.it||{})[k]||'';
+          return `<div style="display:grid;grid-template-columns:1fr 132px;gap:10px;padding:9px 14px;border-bottom:1px solid #eef2f6;align-items:center">
+            <div>
+              <div style="font-size:13px">${esc(t)}</div>
+              ${val==='NC'?`<input type="text" placeholder="Describe la condición encontrada (genera hallazgo)" value="${esc((d.ob||{})[k]||'')}" oninput="setOb('${d.id}','${k}',this.value)" style="margin-top:6px;font-size:12.5px;border-color:#fecaca;background:#fff7f7">`:''}
+            </div>
+            <div style="display:flex;gap:4px;justify-content:flex-end">
+              ${['C','NC','NA'].map(o=>`<button class="btn sm" onclick="setIt('${d.id}','${k}','${o}')" style="min-width:40px;justify-content:center;${val===o?`background:${o==='C'?'var(--ok-bg)':o==='NC'?'var(--danger-bg)':'#eef2f6'};border-color:${o==='C'?'#86efac':o==='NC'?'#fecaca':'#cbd5e1'};font-weight:700`:''}">${o}</button>`).join('')}
+            </div>
+          </div>`}).join('')}
+      </div>`).join('');
+  } else if(d.tipo==='tabla'){
+    cuerpo=`<div class="card" style="overflow:auto">
+      <table><thead><tr>${f.cols.map(c=>`<th style="min-width:110px">${esc(c[1])}</th>`).join('')}<th style="width:36px"></th></tr></thead>
+      <tbody>${d.tb.map((row,ri)=>`<tr>${f.cols.map((c,ci)=>`<td style="padding:4px"><input type="text" value="${esc(row[ci]||'')}" oninput="setTb('${d.id}',${ri},${ci},this.value)" style="border:0;background:transparent;padding:4px"></td>`).join('')}
+        <td style="padding:4px"><button class="btn sm ghost" onclick="delFila('${d.id}',${ri})" title="Eliminar fila">✕</button></td></tr>`).join('')}</tbody></table>
+      <div style="padding:10px 14px;border-top:1px solid var(--line)"><button class="btn sm" onclick="addFila('${d.id}')">+ Agregar fila</button></div>
+    </div>`;
+  } else {
+    cuerpo=`<div class="card pad">${(f.bloques||[]).map((b,i)=>`
+      <label class="fld"><span>${esc(b.t)}</span>
+        <textarea rows="${b.rows||4}" oninput="setBl('${d.id}',${i},this.value)">${esc((d.bl||{})[i]||'')}</textarea>
+      </label>`).join('')}</div>`;
+  }
+
+  return `
+  <div class="card pad" style="margin-bottom:14px">
+    <div class="row">
+      ${campos.map(c=>{
+        const [k,lbl,type]=c;
+        const val=(d.f||{})[k]||'';
+        if(type==='date') return `<label class="fld" style="max-width:170px"><span>${esc(lbl)}</span><input type="date" value="${esc(val)}" oninput="setF('${d.id}','${k}',this.value)"></label>`;
+        if(type&&type.startsWith('sel:')) return `<label class="fld" style="max-width:200px"><span>${esc(lbl)}</span><select onchange="setF('${d.id}','${k}',this.value)"><option value="">—</option>${type.slice(4).split('|').map(o=>`<option ${val===o?'selected':''}>${esc(o)}</option>`).join('')}</select></label>`;
+        return `<label class="fld" style="min-width:170px"><span>${esc(lbl)}</span><input type="text" value="${esc(val)}" oninput="setF('${d.id}','${k}',this.value)"></label>`;
+      }).join('')}
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
+    <span class="small muted">${d.tipo==='check'?`${total?resp+nc+Object.values(d.it).filter(v=>v==='NA').length:0} de ${(f.sec||[]).reduce((a,s)=>a+s.it.length,0)} evaluados · <b style="color:var(--danger)">${nc} NC</b>`:'Registro'}</span>
+    <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
+      <select onchange="setEstado('${d.id}',this.value)" style="width:auto"><option ${d.estado==='Abierto'?'selected':''}>Abierto</option><option ${d.estado==='Cerrado'?'selected':''}>Cerrado</option></select>
+      ${nc?`<button class="btn sm" onclick="genHallazgos('${d.id}')">Generar ${nc} hallazgo(s)</button>`:''}
+      <button class="btn sm primary" onclick="imprimir('${d.id}')">Imprimir / PDF</button>
+      <button class="btn sm danger" onclick="borrarDoc('${d.id}')">Eliminar</button>
+    </div>
+  </div>
+  ${cuerpo}
+  <div class="card pad" style="margin-top:12px">
+    <h3 class="sec">Firmas</h3>
+    <div class="grid g3">${(f.firmas||FIRMAS_BASE).map(s=>`<div style="border-top:1px solid var(--line);padding-top:6px;text-align:center;font-size:12px" class="muted">${esc(s)}</div>`).join('')}</div>
+  </div>`;
+}
+function doc_(id){ return DB.docs.find(x=>x.id===id); }
+function setF(id,k,v){ const d=doc_(id); d.f[k]=v; if(k==='fecha') d.fecha=v; save(); }
+function setIt(id,k,v){ const d=doc_(id); d.it[k]=(d.it[k]===v?'':v); save(); document.getElementById('view').innerHTML=vDoc(); }
+function setOb(id,k,v){ const d=doc_(id); d.ob[k]=v; save(); }
+function setTb(id,r,c,v){ const d=doc_(id); d.tb[r][c]=v; save(); }
+function addFila(id){ const d=doc_(id); const f=FORMATOS.find(x=>x.c===d.c); d.tb.push(f.cols.map(()=>'')); save(); document.getElementById('view').innerHTML=vDoc(); }
+function delFila(id,r){ const d=doc_(id); d.tb.splice(r,1); save(); document.getElementById('view').innerHTML=vDoc(); }
+function setBl(id,i,v){ const d=doc_(id); d.bl[i]=v; save(); }
+function setEstado(id,v){ const d=doc_(id); d.estado=v; save(); }
+function borrarDoc(id){ if(!confirm('¿Eliminar este registro? No se puede deshacer.')) return; DB.docs=DB.docs.filter(d=>d.id!==id); save(); go('registros'); }
+
+function genHallazgos(id){
+  const d=doc_(id); const f=FORMATOS.find(x=>x.c===d.c);
+  let n=0;
+  (f.sec||[]).forEach((s,si)=>s.it.forEach((t,ii)=>{
+    const k=`s${si}i${ii}`; if(d.it[k]!=='NC') return;
+    if(DB.hallazgos.some(h=>h.docId===id&&h.item===k)) return;
+    DB.hallazgos.push({id:uid(),folio:'H-'+String(DB.hallazgos.length+1).padStart(3,'0'),desc:t,detalle:(d.ob||{})[k]||'',norma:d.nk,origen:`${d.c} · ${d.n}`,area:(d.f||{}).area||'',resp:'',fecha:hoy(),fechaComp:'',prioridad:'Media',estado:'Abierto',docId:id,item:k});
+    n++;
+  }));
+  save(); toast(n?`${n} hallazgo(s) generado(s)`:'No hay nuevos hallazgos por generar'); renderNav();
+}
+
+/* ============================ IMPRESIÓN ============================ */
+function imprimir(id){
+  const d=doc_(id); const f=FORMATOS.find(x=>x.c===d.c)||{};
+  const campos=f.campos||CAMPOS_BASE;
+  const meta=campos.map(c=>{const raw=(d.f||{})[c[0]]||'—';const val=c[2]==='date'?fdate(raw):raw;return `<div><b>${esc(c[1])}</b>${esc(val)}</div>`;}).join('');
+  let cuerpo='';
+  if(d.tipo==='check'){
+    cuerpo=(f.sec||[]).map((s,si)=>`<div class="avoid" style="margin-top:10px"><h2>${esc(s.t)}</h2>
+      ${s.it.map((t,ii)=>{const k=`s${si}i${ii}`;const v=(d.it||{})[k]||'';const ob=(d.ob||{})[k]||'';
+        return `<div class="item"><div class="ref"></div><div>${esc(t)}${ob?`<div style="font-size:8pt;font-style:italic">Obs.: ${esc(ob)}</div>`:''}</div><div class="ans">${v==='C'?'C':v==='NC'?'NC':v==='NA'?'N/A':''}</div></div>`}).join('')}
+      </div>`).join('')+`<div class="note">C = Cumple · NC = No cumple · N/A = No aplica</div>`;
+  } else if(d.tipo==='tabla'){
+    cuerpo=`<table style="margin-top:10px"><thead><tr>${f.cols.map(c=>`<th>${esc(c[1])}</th>`).join('')}</tr></thead>
+      <tbody>${d.tb.map(r=>`<tr>${f.cols.map((c,ci)=>`<td style="height:22px">${esc(r[ci]||'')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  } else {
+    cuerpo=(f.bloques||[]).map((b,i)=>{const txt=(d.bl||{})[i]||'';
+      return `<div class="avoid" style="margin-top:10px"><h2>${esc(b.t)}</h2>
+        ${txt?`<div style="font-size:9.5pt;white-space:pre-wrap;border:1px solid #999;padding:6px;min-height:40px">${esc(txt)}</div>`
+             :`<div style="border:1px solid #999;min-height:${(b.rows||4)*22}px"></div>`}</div>`}).join('');
+  }
+  const firmas=(f.firmas||FIRMAS_BASE).map(s=>`<div>${esc(s)}<div style="height:34px"></div></div>`).join('');
+  document.getElementById('printRoot').innerHTML=`
+  <div class="pdoc">
+    <div class="phead">
+      <div>
+        <h1>${esc(DB.org.nombre||'')}</h1>
+        <div style="font-size:8.5pt">${esc(DB.org.centro||'')}</div>
+        <div style="font-size:8.5pt">Sistema de gestión de Seguridad, Higiene y Ambiente</div>
+      </div>
+      <div style="text-align:right">
+        <div class="pbox"><b>${esc(d.c)}</b></div>
+        <div style="font-size:8pt;margin-top:3px">${esc(d.nk)}</div>
+        <div style="font-size:7.5pt">Rev. 01 · ${esc(new Date().getFullYear())}</div>
+      </div>
+    </div>
+    <div style="font-size:12pt;font-weight:700;margin-bottom:6px">${esc(d.n)}</div>
+    <div class="meta">${meta}</div>
+    ${cuerpo}
+    <div class="sig">${firmas}</div>
+    <div class="note">Documento generado con EHS Control · ${esc(DB.org.resp||'')} · ${esc(DB.org.puesto||'')}</div>
+  </div>`;
+  window.print();
+}
+</script>
+<script>
+/* ============================ MODAL ============================ */
+function modal(title,body,footer){
+  document.getElementById('modalHost').innerHTML=`<div class="modal-wrap" onclick="if(event.target===this)cerrarModal()">
+    <div class="modal"><div class="mh"><h3>${title}</h3><div style="margin-left:auto"><button class="btn sm ghost" onclick="cerrarModal()">✕</button></div></div>
+    <div class="mb">${body}</div>${footer?`<div class="mf">${footer}</div>`:''}</div></div>`;
+}
+function cerrarModal(){ document.getElementById('modalHost').innerHTML=''; }
+
+/* ============================ REGISTROS ============================ */
+function vRegistros(){
+  const q=(window.__rq||'').toLowerCase();
+  let list=DB.docs.slice().sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||''));
+  if(q) list=list.filter(d=>(d.n+d.c+d.nk+((d.f||{}).area||'')).toLowerCase().includes(q));
+  const abiertos=list.filter(d=>d.estado==='Abierto').length;
+  return `<div class="card pad" style="margin-bottom:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <input type="text" placeholder="Buscar registro…" value="${esc(window.__rq||'')}" oninput="window.__rq=this.value;document.getElementById('view').innerHTML=vRegistros()" style="max-width:360px">
+      <span class="tag">${list.length} registros · ${abiertos} abiertos</span>
+      <div style="margin-left:auto"><button class="btn sm primary" onclick="go('formatos')">+ Nuevo</button></div>
+    </div>
+    <div class="card" style="overflow:hidden">
+    ${list.length?`<table><thead><tr><th>Código</th><th>Formato</th><th>Norma</th><th>Fecha</th><th>Área</th><th>NC</th><th>Estado</th><th></th></tr></thead><tbody>
+      ${list.map(d=>{const nc=Object.values(d.it||{}).filter(v=>v==='NC').length;
+        return `<tr>
+          <td class="mono" style="font-weight:600">${esc(d.c)}</td>
+          <td>${esc(d.n)}</td>
+          <td class="small muted">${esc(d.nk)}</td>
+          <td class="small">${fdate(d.fecha)}</td>
+          <td class="small">${esc((d.f||{}).area||'—')}</td>
+          <td class="num">${nc?`<span class="pill danger">${nc}</span>`:'—'}</td>
+          <td><span class="pill ${d.estado==='Cerrado'?'ok':'info'}">${esc(d.estado)}</span></td>
+          <td style="white-space:nowrap;text-align:right">
+            <button class="btn sm" onclick="abrirDoc('${d.id}')">Abrir</button>
+            <button class="btn sm ghost" onclick="imprimir('${d.id}')" title="Imprimir">⎙</button>
+          </td></tr>`}).join('')}
+    </tbody></table>`:`<div class="empty"><div class="big">▤</div>Aún no hay registros.<br><button class="btn sm primary" style="margin-top:10px" onclick="go('formatos')">Ir a formatos</button></div>`}
+    </div>`;
+}
+
+/* ============================ HALLAZGOS ============================ */
+function vHallazgos(){
+  const list=DB.hallazgos.slice().sort((a,b)=>(a.estado==='Cerrado')-(b.estado==='Cerrado')||(b.fecha||'').localeCompare(a.fecha||''));
+  const ab=list.filter(h=>h.estado!=='Cerrado');
+  return `<div class="grid g4" style="margin-bottom:14px">
+    <div class="card kpi"><div class="lbl">Total</div><div class="val">${DB.hallazgos.length}</div></div>
+    <div class="card kpi warn"><div class="lbl">Abiertos</div><div class="val">${ab.length}</div></div>
+    <div class="card kpi danger"><div class="lbl">Vencidos</div><div class="val">${ab.filter(h=>h.fechaComp&&h.fechaComp<hoy()).length}</div></div>
+    <div class="card kpi ok"><div class="lbl">Cerrados</div><div class="val">${DB.hallazgos.filter(h=>h.estado==='Cerrado').length}</div></div>
+  </div>
+  <div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn sm primary" onclick="editHallazgo()">+ Nuevo hallazgo</button></div>
+  <div class="card" style="overflow:hidden">
+  ${list.length?`<table><thead><tr><th>Folio</th><th>Hallazgo</th><th>Norma</th><th>Área</th><th>Responsable</th><th>Compromiso</th><th>Prioridad</th><th>Estado</th><th></th></tr></thead><tbody>
+    ${list.map(h=>{const venc=h.estado!=='Cerrado'&&h.fechaComp&&h.fechaComp<hoy();
+      return `<tr>
+        <td class="mono small">${esc(h.folio||'')}</td>
+        <td><div style="font-weight:550">${esc(h.desc)}</div>${h.detalle?`<div class="small muted">${esc(h.detalle)}</div>`:''}${h.origen?`<div class="small muted" style="font-size:11px">Origen: ${esc(h.origen)}</div>`:''}</td>
+        <td class="small muted">${esc(h.norma||'—')}</td>
+        <td class="small">${esc(h.area||'—')}</td>
+        <td class="small">${esc(h.resp||'—')}</td>
+        <td class="small ${venc?'':''}">${h.fechaComp?`<span class="pill ${venc?'danger':'mute'}">${fdate(h.fechaComp)}</span>`:'—'}</td>
+        <td><span class="pill ${h.prioridad==='Alta'?'danger':h.prioridad==='Media'?'warn':'mute'}">${esc(h.prioridad||'Media')}</span></td>
+        <td><select onchange="setHallEstado('${h.id}',this.value)" style="width:auto;font-size:12px;padding:3px 6px">
+          ${['Abierto','En proceso','Cerrado'].map(s=>`<option ${h.estado===s?'selected':''}>${s}</option>`).join('')}</select></td>
+        <td style="text-align:right;white-space:nowrap"><button class="btn sm ghost" onclick="editHallazgo('${h.id}')">Editar</button><button class="btn sm ghost" onclick="delHall('${h.id}')">✕</button></td>
+      </tr>`}).join('')}
+  </tbody></table>`:`<div class="empty"><div class="big">⚑</div>Sin hallazgos registrados.<br><span class="small">Se generan automáticamente al marcar NC en una lista de verificación.</span></div>`}
+  </div>`;
+}
+function setHallEstado(id,v){ const h=DB.hallazgos.find(x=>x.id===id); h.estado=v; if(v==='Cerrado') h.fechaCierre=hoy(); save(); renderNav(); }
+function delHall(id){ if(!confirm('¿Eliminar hallazgo?'))return; DB.hallazgos=DB.hallazgos.filter(h=>h.id!==id); save(); go('hallazgos'); }
+function editHallazgo(id){
+  const h=id?DB.hallazgos.find(x=>x.id===id):{prioridad:'Media',estado:'Abierto',fecha:hoy()};
+  modal(id?'Editar hallazgo':'Nuevo hallazgo',`
+    <label class="fld"><span>Descripción del hallazgo</span><input type="text" id="h_desc" value="${esc(h.desc||'')}"></label>
+    <label class="fld"><span>Detalle / condición encontrada</span><textarea id="h_det" rows="2">${esc(h.detalle||'')}</textarea></label>
+    <div class="row">
+      <label class="fld"><span>Norma</span><select id="h_norma">${NORMAS.map(n=>`<option ${h.norma===n.k?'selected':''}>${esc(n.k)}</option>`).join('')}</select></label>
+      <label class="fld"><span>Área</span><input type="text" id="h_area" value="${esc(h.area||'')}"></label>
+    </div>
+    <div class="row">
+      <label class="fld"><span>Responsable</span><input type="text" id="h_resp" value="${esc(h.resp||'')}"></label>
+      <label class="fld" style="max-width:170px"><span>Fecha compromiso</span><input type="date" id="h_comp" value="${esc(h.fechaComp||'')}"></label>
+      <label class="fld" style="max-width:150px"><span>Prioridad</span><select id="h_pri">${['Alta','Media','Baja'].map(p=>`<option ${h.prioridad===p?'selected':''}>${p}</option>`).join('')}</select></label>
+    </div>`,
+    `<button class="btn" onclick="cerrarModal()">Cancelar</button><button class="btn primary" onclick="guardarHall('${id||''}')">Guardar</button>`);
+}
+function guardarHall(id){
+  const g=k=>document.getElementById(k).value;
+  const obj={desc:g('h_desc'),detalle:g('h_det'),norma:g('h_norma'),area:g('h_area'),resp:g('h_resp'),fechaComp:g('h_comp'),prioridad:g('h_pri')};
+  if(!obj.desc){ toast('Escribe la descripción'); return; }
+  if(id){ Object.assign(DB.hallazgos.find(x=>x.id===id),obj); }
+  else { DB.hallazgos.push(Object.assign({id:uid(),folio:'H-'+String(DB.hallazgos.length+1).padStart(3,'0'),fecha:hoy(),estado:'Abierto'},obj)); }
+  save(); cerrarModal(); go('hallazgos');
+}
+
+/* ============================ INCIDENTES ============================ */
+function vIncidentes(){
+  const list=DB.incidentes.slice().sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||''));
+  const anio=DB.org.anio||new Date().getFullYear();
+  const delAnio=list.filter(i=>(i.fecha||'').startsWith(String(anio)));
+  const dias=delAnio.reduce((a,i)=>a+(Number(i.dias)||0),0);
+  const ult=list.length?list.map(i=>i.fecha).sort().pop():null;
+  const sinAcc=ult?Math.max(0,Math.round((new Date()-new Date(ult+'T12:00:00'))/864e5)):'—';
+  return `<div class="grid g4" style="margin-bottom:14px">
+    <div class="card kpi"><div class="lbl">Eventos ${anio}</div><div class="val">${delAnio.length}</div></div>
+    <div class="card kpi ${dias?'danger':'ok'}"><div class="lbl">Días de incapacidad</div><div class="val">${dias}</div></div>
+    <div class="card kpi ok"><div class="lbl">Días sin accidente</div><div class="val">${sinAcc}</div></div>
+    <div class="card kpi"><div class="lbl">ST-7 presentados</div><div class="val">${list.filter(i=>i.st7==='Sí').length}</div></div>
+  </div>
+  <div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:10px">
+    <button class="btn sm" onclick="nuevoDoc('EHS-F-032')">Formato de investigación</button>
+    <button class="btn sm primary" onclick="editInc()">+ Registrar incidente</button>
+  </div>
+  <div class="card" style="overflow:hidden">
+  ${list.length?`<table><thead><tr><th>Fecha</th><th>Tipo</th><th>Área</th><th>Descripción</th><th>Lesión</th><th>Días</th><th>ST-7</th><th>Estado</th><th></th></tr></thead><tbody>
+    ${list.map(i=>`<tr>
+      <td class="small">${fdate(i.fecha)}</td>
+      <td><span class="pill ${i.tipo==='Accidente con lesión'?'danger':i.tipo==='Cuasi accidente'?'warn':'mute'}">${esc(i.tipo||'—')}</span></td>
+      <td class="small">${esc(i.area||'—')}</td>
+      <td class="small">${esc(i.desc||'')}</td>
+      <td class="small">${esc(i.lesion||'—')}</td>
+      <td class="num">${i.dias||0}</td>
+      <td class="small">${esc(i.st7||'—')}</td>
+      <td><span class="pill ${i.estado==='Cerrada'?'ok':'info'}">${esc(i.estado||'Abierta')}</span></td>
+      <td style="text-align:right;white-space:nowrap"><button class="btn sm ghost" onclick="editInc('${i.id}')">Editar</button><button class="btn sm ghost" onclick="delInc('${i.id}')">✕</button></td>
+    </tr>`).join('')}
+  </tbody></table>`:`<div class="empty"><div class="big">⚠</div>Sin incidentes registrados.</div>`}
+  </div>`;
+}
+function editInc(id){
+  const i=id?DB.incidentes.find(x=>x.id===id):{fecha:hoy(),tipo:'Cuasi accidente',estado:'Abierta',st7:'No'};
+  modal(id?'Editar incidente':'Registrar incidente',`
+    <div class="row">
+      <label class="fld" style="max-width:170px"><span>Fecha</span><input type="date" id="i_fecha" value="${esc(i.fecha||'')}"></label>
+      <label class="fld"><span>Tipo</span><select id="i_tipo">${['Accidente con lesión','Accidente sin lesión','Cuasi accidente','Daño material','Enfermedad de trabajo','Ambiental'].map(t=>`<option ${i.tipo===t?'selected':''}>${t}</option>`).join('')}</select></label>
+      <label class="fld"><span>Área</span><input type="text" id="i_area" value="${esc(i.area||'')}"></label>
+    </div>
+    <label class="fld"><span>Descripción del evento</span><textarea id="i_desc" rows="3">${esc(i.desc||'')}</textarea></label>
+    <div class="row">
+      <label class="fld"><span>Lesión / daño</span><input type="text" id="i_lesion" value="${esc(i.lesion||'')}"></label>
+      <label class="fld" style="max-width:140px"><span>Días de incapacidad</span><input type="number" id="i_dias" value="${esc(i.dias||0)}"></label>
+      <label class="fld" style="max-width:150px"><span>¿Aviso ST-7?</span><select id="i_st7">${['No','Sí','Por determinar'].map(t=>`<option ${i.st7===t?'selected':''}>${t}</option>`).join('')}</select></label>
+      <label class="fld" style="max-width:150px"><span>Estado</span><select id="i_est">${['Abierta','En investigación','Cerrada'].map(t=>`<option ${i.estado===t?'selected':''}>${t}</option>`).join('')}</select></label>
+    </div>
+    <label class="fld"><span>Causa raíz y acciones</span><textarea id="i_causa" rows="2">${esc(i.causa||'')}</textarea></label>`,
+    `<button class="btn" onclick="cerrarModal()">Cancelar</button><button class="btn primary" onclick="guardarInc('${id||''}')">Guardar</button>`);
+}
+function guardarInc(id){
+  const g=k=>document.getElementById(k).value;
+  const obj={fecha:g('i_fecha'),tipo:g('i_tipo'),area:g('i_area'),desc:g('i_desc'),lesion:g('i_lesion'),dias:Number(g('i_dias'))||0,st7:g('i_st7'),estado:g('i_est'),causa:g('i_causa')};
+  if(id) Object.assign(DB.incidentes.find(x=>x.id===id),obj);
+  else DB.incidentes.push(Object.assign({id:uid()},obj));
+  save(); cerrarModal(); go('incidentes');
+}
+function delInc(id){ if(!confirm('¿Eliminar registro?'))return; DB.incidentes=DB.incidentes.filter(i=>i.id!==id); save(); go('incidentes'); }
+</script>
+<script>
+/* ============================ COMISIÓN ============================ */
+function vComision(){
+  const inte=DB.comision||[];
+  const docs=DB.docs.filter(d=>d.nk==='NOM-019-STPS-2011');
+  const actas=docs.filter(d=>d.c==='EHS-F-014');
+  const pat=inte.filter(i=>i.rep==='Patrón').length, trab=inte.filter(i=>i.rep==='Personas trabajadoras').length;
+  return `<div class="grid g4" style="margin-bottom:14px">
+    <div class="card kpi"><div class="lbl">Integrantes</div><div class="val">${inte.length}</div><div class="hint">${pat} patrón · ${trab} trabajadores</div></div>
+    <div class="card kpi"><div class="lbl">Actas de recorrido</div><div class="val">${actas.length}</div></div>
+    <div class="card kpi"><div class="lbl">Registros NOM-019</div><div class="val">${docs.length}</div></div>
+    <div class="card kpi ${inte.length&&pat&&trab?'ok':'warn'}"><div class="lbl">Integración</div><div class="val" style="font-size:18px;padding-top:6px">${inte.length&&pat&&trab?'Completa':'Incompleta'}</div><div class="hint">Requiere ambas representaciones</div></div>
+  </div>
+  <div class="grid g2">
+    <div class="card" style="overflow:hidden">
+      <div style="padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center"><h3 class="sec" style="margin:0">Integrantes</h3>
+        <button class="btn sm primary" style="margin-left:auto" onclick="editInte()">+ Integrante</button></div>
+      ${inte.length?`<table><thead><tr><th>Nombre</th><th>Puesto</th><th>Representación</th><th>Periodo</th><th></th></tr></thead><tbody>
+        ${inte.map(i=>`<tr><td>${esc(i.nombre)}</td><td class="small">${esc(i.puesto||'')}</td>
+          <td><span class="pill ${i.rep==='Patrón'?'info':'mute'}">${esc(i.rep||'')}</span></td>
+          <td class="small">${esc(i.periodo||'')}</td>
+          <td style="text-align:right"><button class="btn sm ghost" onclick="delInte('${i.id}')">✕</button></td></tr>`).join('')}
+      </tbody></table>`:`<div class="empty small">Sin integrantes registrados.</div>`}
+    </div>
+    <div class="card pad">
+      <h3 class="sec">Documentos de la comisión</h3>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        ${[['EHS-F-013','Acta de constitución'],['EHS-F-014','Acta de recorrido mensual'],['EHS-F-015','Programa anual de recorridos']].map(([c,t])=>`
+          <button class="btn" style="justify-content:space-between" onclick="nuevoDoc('${c}')"><span><span class="mono" style="color:var(--accent);font-weight:700">${c}</span> · ${t}</span><span>→</span></button>`).join('')}
+      </div>
+      <div class="hr"></div>
+      <h3 class="sec">Obligaciones clave (NOM-019)</h3>
+      <ul class="small" style="margin:0;padding-left:18px;color:var(--ink-2)">
+        <li>Acta de constitución con ambas representaciones y registro ante la STPS.</li>
+        <li>Recorridos de verificación cuando menos cada mes, con acta.</li>
+        <li>Programa anual de recorridos y de capacitación de la comisión.</li>
+        <li>Seguimiento documentado de las condiciones reportadas.</li>
+        <li>Conservar actas y evidencias del periodo de vigencia.</li>
+      </ul>
+    </div>
+  </div>`;
+}
+function editInte(){
+  modal('Integrante de la comisión',`
+    <div class="row"><label class="fld"><span>Nombre</span><input type="text" id="c_nom"></label>
+    <label class="fld"><span>Puesto</span><input type="text" id="c_pue"></label></div>
+    <div class="row"><label class="fld"><span>Representación</span><select id="c_rep"><option>Patrón</option><option>Personas trabajadoras</option></select></label>
+    <label class="fld"><span>Periodo</span><input type="text" id="c_per" placeholder="2026-2027"></label></div>`,
+    `<button class="btn" onclick="cerrarModal()">Cancelar</button><button class="btn primary" onclick="guardarInte()">Guardar</button>`);
+}
+function guardarInte(){
+  const g=k=>document.getElementById(k).value;
+  if(!g('c_nom')) return toast('Escribe el nombre');
+  DB.comision=DB.comision||[]; DB.comision.push({id:uid(),nombre:g('c_nom'),puesto:g('c_pue'),rep:g('c_rep'),periodo:g('c_per')});
+  save(); cerrarModal(); go('comision');
+}
+function delInte(id){ DB.comision=DB.comision.filter(i=>i.id!==id); save(); go('comision'); }
+
+/* ============================ QUÍMICOS ============================ */
+function vQuimicos(){
+  const list=DB.quimicos||[];
+  const sinSds=list.filter(q=>q.sds!=='Sí').length;
+  const sinEtiq=list.filter(q=>q.etiqueta!=='Sí').length;
+  return `<div class="grid g4" style="margin-bottom:14px">
+    <div class="card kpi"><div class="lbl">Sustancias</div><div class="val">${list.length}</div></div>
+    <div class="card kpi ${sinSds?'danger':'ok'}"><div class="lbl">Sin SDS</div><div class="val">${sinSds}</div><div class="hint">Requiere SDS en español</div></div>
+    <div class="card kpi ${sinEtiq?'warn':'ok'}"><div class="lbl">Sin etiqueta GHS</div><div class="val">${sinEtiq}</div></div>
+    <div class="card kpi"><div class="lbl">Áreas con químicos</div><div class="val">${[...new Set(list.map(q=>q.area).filter(Boolean))].length}</div></div>
+  </div>
+  <div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:10px">
+    <button class="btn sm" onclick="nuevoDoc('EHS-F-012')">Verificar etiquetado</button>
+    <button class="btn sm primary" onclick="editQ()">+ Sustancia</button>
+  </div>
+  <div class="card" style="overflow:hidden">
+  ${list.length?`<table><thead><tr><th>Sustancia</th><th>Proveedor</th><th>Área</th><th>Cantidad</th><th>GHS</th><th>SDS</th><th>Etiqueta</th><th>EPP</th><th></th></tr></thead><tbody>
+    ${list.map(q=>`<tr>
+      <td style="font-weight:550">${esc(q.nom)}</td><td class="small">${esc(q.prov||'—')}</td><td class="small">${esc(q.area||'—')}</td>
+      <td class="small">${esc(q.cant||'')} ${esc(q.uni||'')}</td><td class="small">${esc(q.ghs||'—')}</td>
+      <td>${q.sds==='Sí'?'<span class="pill ok">Sí</span>':'<span class="pill danger">No</span>'}</td>
+      <td>${q.etiqueta==='Sí'?'<span class="pill ok">Sí</span>':'<span class="pill warn">No</span>'}</td>
+      <td class="small">${esc(q.epp||'—')}</td>
+      <td style="text-align:right;white-space:nowrap"><button class="btn sm ghost" onclick="editQ('${q.id}')">Editar</button><button class="btn sm ghost" onclick="delQ('${q.id}')">✕</button></td>
+    </tr>`).join('')}
+  </tbody></table>`:`<div class="empty"><div class="big">⚗</div>Sin sustancias registradas.</div>`}
+  </div>`;
+}
+function editQ(id){
+  const q=id?DB.quimicos.find(x=>x.id===id):{sds:'No',etiqueta:'No'};
+  modal(id?'Editar sustancia':'Nueva sustancia',`
+    <div class="row"><label class="fld"><span>Sustancia / producto</span><input type="text" id="q_nom" value="${esc(q.nom||'')}"></label>
+    <label class="fld"><span>Proveedor</span><input type="text" id="q_prov" value="${esc(q.prov||'')}"></label></div>
+    <div class="row"><label class="fld"><span>Área</span><input type="text" id="q_area" value="${esc(q.area||'')}"></label>
+    <label class="fld" style="max-width:120px"><span>Cantidad</span><input type="text" id="q_cant" value="${esc(q.cant||'')}"></label>
+    <label class="fld" style="max-width:100px"><span>Unidad</span><select id="q_uni">${['L','kg','mL','g','pza'].map(u=>`<option ${q.uni===u?'selected':''}>${u}</option>`).join('')}</select></label></div>
+    <div class="row"><label class="fld"><span>Pictograma GHS</span><input type="text" id="q_ghs" value="${esc(q.ghs||'')}" placeholder="Corrosión, llama, exclamación…"></label>
+    <label class="fld"><span>EPP requerido</span><input type="text" id="q_epp" value="${esc(q.epp||'')}"></label></div>
+    <div class="row"><label class="fld"><span>¿SDS en español?</span><select id="q_sds">${['Sí','No'].map(u=>`<option ${q.sds===u?'selected':''}>${u}</option>`).join('')}</select></label>
+    <label class="fld"><span>¿Etiqueta GHS vigente?</span><select id="q_eti">${['Sí','No'].map(u=>`<option ${q.etiqueta===u?'selected':''}>${u}</option>`).join('')}</select></label></div>`,
+    `<button class="btn" onclick="cerrarModal()">Cancelar</button><button class="btn primary" onclick="guardarQ('${id||''}')">Guardar</button>`);
+}
+function guardarQ(id){
+  const g=k=>document.getElementById(k).value;
+  if(!g('q_nom')) return toast('Escribe el nombre de la sustancia');
+  const obj={nom:g('q_nom'),prov:g('q_prov'),area:g('q_area'),cant:g('q_cant'),uni:g('q_uni'),ghs:g('q_ghs'),epp:g('q_epp'),sds:g('q_sds'),etiqueta:g('q_eti')};
+  if(id) Object.assign(DB.quimicos.find(x=>x.id===id),obj); else DB.quimicos.push(Object.assign({id:uid()},obj));
+  save(); cerrarModal(); go('quimicos');
+}
+function delQ(id){ DB.quimicos=DB.quimicos.filter(q=>q.id!==id); save(); go('quimicos'); }
+
+/* ============================ CAPACITACIÓN ============================ */
+function vCapacitacion(){
+  const list=DB.capacitacion||[];
+  const conDc3=list.filter(c=>c.dc3==='Sí').length;
+  const hrs=list.reduce((a,c)=>a+(Number(c.hrs)||0),0);
+  return `<div class="grid g4" style="margin-bottom:14px">
+    <div class="card kpi"><div class="lbl">Registros</div><div class="val">${list.length}</div></div>
+    <div class="card kpi ok"><div class="lbl">DC-3 emitidas</div><div class="val">${conDc3}</div><div class="hint">${list.length?Math.round(conDc3/list.length*100):0}% del total</div></div>
+    <div class="card kpi"><div class="lbl">Horas acumuladas</div><div class="val">${hrs}</div></div>
+    <div class="card kpi"><div class="lbl">Temas distintos</div><div class="val">${[...new Set(list.map(c=>c.curso))].length}</div></div>
+  </div>
+  <div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:10px">
+    <button class="btn sm" onclick="nuevoDoc('EHS-F-036')">Matriz de necesidades</button>
+    <button class="btn sm primary" onclick="editCap()">+ Registrar capacitación</button>
+  </div>
+  <div class="card" style="overflow:hidden">
+  ${list.length?`<table><thead><tr><th>Curso</th><th>Norma</th><th>Fecha</th><th>Horas</th><th>Persona</th><th>Instructor</th><th>DC-3</th><th>Calif.</th><th></th></tr></thead><tbody>
+    ${list.map(c=>`<tr>
+      <td style="font-weight:550">${esc(c.curso)}</td><td class="small muted">${esc(c.norma||'—')}</td><td class="small">${fdate(c.fecha)}</td>
+      <td class="num">${esc(c.hrs||'')}</td><td class="small">${esc(c.persona||'—')}</td><td class="small">${esc(c.instructor||'—')}</td>
+      <td>${c.dc3==='Sí'?'<span class="pill ok">Sí</span>':'<span class="pill warn">No</span>'}</td>
+      <td class="num">${esc(c.calif||'—')}</td>
+      <td style="text-align:right;white-space:nowrap"><button class="btn sm ghost" onclick="editCap('${c.id}')">Editar</button><button class="btn sm ghost" onclick="delCap('${c.id}')">✕</button></td>
+    </tr>`).join('')}
+  </tbody></table>`:`<div class="empty"><div class="big">✎</div>Sin capacitaciones registradas.</div>`}
+  </div>`;
+}
+function editCap(id){
+  const c=id?DB.capacitacion.find(x=>x.id===id):{dc3:'No',fecha:hoy()};
+  modal(id?'Editar capacitación':'Registrar capacitación',`
+    <div class="row"><label class="fld"><span>Curso / tema</span><input type="text" id="k_curso" value="${esc(c.curso||'')}"></label>
+    <label class="fld"><span>Norma o requisito</span><select id="k_norma"><option value="">—</option>${NORMAS.map(n=>`<option ${c.norma===n.k?'selected':''}>${esc(n.k)}</option>`).join('')}</select></label></div>
+    <div class="row"><label class="fld" style="max-width:170px"><span>Fecha</span><input type="date" id="k_fecha" value="${esc(c.fecha||'')}"></label>
+    <label class="fld" style="max-width:110px"><span>Horas</span><input type="number" id="k_hrs" value="${esc(c.hrs||'')}"></label>
+    <label class="fld"><span>Persona capacitada</span><input type="text" id="k_persona" value="${esc(c.persona||'')}"></label></div>
+    <div class="row"><label class="fld"><span>Instructor / agente capacitador</span><input type="text" id="k_inst" value="${esc(c.instructor||'')}"></label>
+    <label class="fld" style="max-width:130px"><span>¿DC-3?</span><select id="k_dc3">${['Sí','No'].map(u=>`<option ${c.dc3===u?'selected':''}>${u}</option>`).join('')}</select></label>
+    <label class="fld" style="max-width:110px"><span>Calificación</span><input type="text" id="k_cal" value="${esc(c.calif||'')}"></label></div>`,
+    `<button class="btn" onclick="cerrarModal()">Cancelar</button><button class="btn primary" onclick="guardarCap('${id||''}')">Guardar</button>`);
+}
+function guardarCap(id){
+  const g=k=>document.getElementById(k).value;
+  if(!g('k_curso')) return toast('Escribe el curso');
+  const obj={curso:g('k_curso'),norma:g('k_norma'),fecha:g('k_fecha'),hrs:g('k_hrs'),persona:g('k_persona'),instructor:g('k_inst'),dc3:g('k_dc3'),calif:g('k_cal')};
+  if(id) Object.assign(DB.capacitacion.find(x=>x.id===id),obj); else DB.capacitacion.push(Object.assign({id:uid()},obj));
+  save(); cerrarModal(); go('capacitacion');
+}
+function delCap(id){ DB.capacitacion=DB.capacitacion.filter(c=>c.id!==id); save(); go('capacitacion'); }
+
+/* ============================ DATOS ============================ */
+function vDatos(){
+  const o=DB.org;
+  const bytes=new Blob([JSON.stringify(DB)]).size;
+  return `<div class="grid g2">
+    <div class="card pad">
+      <h3 class="sec">Organización</h3>
+      <label class="fld"><span>Razón social</span><input type="text" value="${esc(o.nombre||'')}" oninput="setOrg('nombre',this.value)"></label>
+      <div class="row"><label class="fld"><span>Centro de trabajo</span><input type="text" value="${esc(o.centro||'')}" oninput="setOrg('centro',this.value)"></label>
+      <label class="fld" style="max-width:120px"><span>Año</span><input type="number" value="${esc(o.anio||'')}" oninput="setOrg('anio',this.value)"></label></div>
+      <label class="fld"><span>Responsable EHS</span><input type="text" value="${esc(o.resp||'')}" oninput="setOrg('resp',this.value)"></label>
+      <label class="fld"><span>Puesto</span><input type="text" value="${esc(o.puesto||'')}" oninput="setOrg('puesto',this.value)"></label>
+      <div class="small muted">Estos datos aparecen en el encabezado y pie de todos los formatos impresos.</div>
+    </div>
+    <div class="card pad">
+      <h3 class="sec">Respaldo</h3>
+      <p class="small muted">Los datos se guardan en este navegador. Exporta un respaldo con frecuencia y cárgalo en otro equipo si lo necesitas.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+        <button class="btn primary" onclick="exportar()">Descargar respaldo (.json)</button>
+        <button class="btn" onclick="document.getElementById('imp').click()">Cargar respaldo</button>
+        <input type="file" id="imp" accept=".json" style="display:none" onchange="importar(this)">
+      </div>
+      <div class="small muted" style="margin-bottom:14px">Tamaño actual: ${(bytes/1024).toFixed(1)} KB · ${DB.docs.length} registros · ${DB.hallazgos.length} hallazgos · ${DB.incidentes.length} incidentes</div>
+      <div class="hr"></div>
+      <h3 class="sec">Contenido del sistema</h3>
+      <div class="small" style="color:var(--ink-2);line-height:1.8">
+        ${NORMAS.length} normas en el marco normativo · ${FORMATOS.length} formatos en la biblioteca<br>
+        ${NORMAS.filter(n=>normAplica(n.k)).length} normas marcadas como aplicables
+      </div>
+      <div class="hr"></div>
+      <button class="btn danger" onclick="resetAll()">Borrar todos los datos</button>
+    </div>
+  </div>
+  <div class="card pad" style="margin-top:14px">
+    <h3 class="sec">Cómo usar el sistema</h3>
+    <ol class="small" style="color:var(--ink-2);line-height:1.7;margin:0;padding-left:18px">
+      <li>En <b>Marco normativo</b>, marca las normas que aplican a tu centro de trabajo.</li>
+      <li>En <b>Formatos</b>, abre el formato que necesitas y llénalo en campo o en oficina.</li>
+      <li>Al marcar <b>NC</b> en una lista de verificación, describe la condición y genera hallazgos con un clic.</li>
+      <li>Da seguimiento a los hallazgos con responsable y fecha compromiso hasta cerrarlos.</li>
+      <li>Imprime o guarda en PDF desde cualquier registro: el formato sale en hoja carta con firmas.</li>
+    </ol>
+  </div>`;
+}
+function setOrg(k,v){ DB.org[k]=v; save(); document.getElementById('footOrg').textContent=DB.org.centro||'—'; }
+function exportar(){
+  const blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`ehs-control-respaldo-${hoy()}.json`; a.click(); URL.revokeObjectURL(a.href);
+  toast('Respaldo descargado');
+}
+function importar(inp){
+  const f=inp.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d.org||!d.docs) throw 0;
+      DB=Object.assign({},DEFAULTS,d); save(); toast('Respaldo cargado'); go('panel'); }
+    catch(e){ toast('Archivo no válido'); } };
+  r.readAsText(f);
+}
+function resetAll(){ if(!confirm('Se borrarán todos los registros de este navegador. ¿Continuar?'))return;
+  localStorage.removeItem(KEY); DB=JSON.parse(JSON.stringify(DEFAULTS)); save(); go('panel'); toast('Datos borrados'); }
+
+/* ============================ INIT ============================ */
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') cerrarModal(); });
+window.EHS={get db(){return DB},set db(v){DB=v},save};
+go(TITLES[(location.hash||'').slice(1)]?(location.hash||'').slice(1):'panel');
+</script>
+</body>
+</html>
