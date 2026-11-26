@@ -853,7 +853,7 @@ const KEY='ehs.control.v2';
 const SB_URL='https://brhnoixerulcdpvtoxra.supabase.co';
 const SB_KEY='sb_publishable_mdTjLWnTYeO0GZBnoke5-w_fXJKA1lM';
 const SKEY='ehs.session.v1';
-let SESSION=null, CENTRO_ID=null, pushTimer=null;
+let SESSION=null, CENTRO_ID=null, CENTRO_VERSION=null, pushTimer=null;
 
 function loadSession(){ try{ return JSON.parse(localStorage.getItem(SKEY)||'null'); }catch(e){ return null; } }
 function saveSession(v){ try{ v?localStorage.setItem(SKEY,JSON.stringify(v)):localStorage.removeItem(SKEY); }catch(e){} }
@@ -900,6 +900,22 @@ async function sb(path,opts){
   if(!r.ok) throw new Error('supabase '+r.status+': '+txt.slice(0,180));
   return txt?JSON.parse(txt):null;
 }
+async function sbRpc(fn,body){
+  if(!SESSION) throw new Error('Sin sesión');
+  if(SESSION.expires_at&&Date.now()>SESSION.expires_at){ try{ await authRefresh(); }catch(e){} }
+  const call=()=>fetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',
+    headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SESSION.access_token,'Content-Type':'application/json'},
+    body:JSON.stringify(body||{})});
+  let r=await call();
+  if(r.status===401){ await authRefresh(); r=await call(); }
+  const txt=await r.text();
+  if(!r.ok){
+    let msg=txt, code=null;
+    try{ const j=JSON.parse(txt); msg=j.message||j.hint||txt; code=j.code||null; }catch(e){}
+    const err=new Error(msg); err.code=code; throw err;
+  }
+  return txt?JSON.parse(txt):null;
+}
 async function ensureCentro(){
   if(CENTRO_ID) return CENTRO_ID;
   const nombre=(DB.org&&DB.org.centro)||'Centro de trabajo';
@@ -912,14 +928,22 @@ async function ensureCentro(){
 }
 async function pullCloud(){
   await ensureCentro();
-  const rows=await sb('ehs_estado?select=data,updated_at&centro_id=eq.'+CENTRO_ID);
-  return rows&&rows.length?rows[0]:null;
+  const rows=await sb('ehs_estado?select=data,updated_at,version&centro_id=eq.'+CENTRO_ID);
+  if(rows&&rows.length){ CENTRO_VERSION=rows[0].version; return rows[0]; }
+  CENTRO_VERSION=null;
+  return null;
 }
 async function pushCloud(){
   await ensureCentro();
-  await sb('ehs_estado?on_conflict=centro_id',{method:'POST',
-    headers:{'Prefer':'resolution=merge-duplicates,return=minimal'},
-    body:JSON.stringify([{centro_id:CENTRO_ID,data:DB,updated_by:(SESSION&&SESSION.uid)||null}])});
+  if(CENTRO_VERSION===null){
+    const ins=await sb('ehs_estado?on_conflict=centro_id',{method:'POST',
+      headers:{'Prefer':'resolution=merge-duplicates,return=representation'},
+      body:JSON.stringify([{centro_id:CENTRO_ID,data:DB,updated_by:(SESSION&&SESSION.uid)||null}])});
+    CENTRO_VERSION=(ins&&ins[0]&&ins[0].version)||1;
+    return;
+  }
+  const nueva=await sbRpc('ehs_guardar_estado',{p_centro:CENTRO_ID,p_data:DB,p_version:CENTRO_VERSION});
+  if(typeof nueva==='number') CENTRO_VERSION=nueva;
 }
 function setSync(state,label){
   const el=document.getElementById('syncChip'); if(!el) return;
@@ -932,7 +956,16 @@ function queuePush(){
   setSync('wait');
   pushTimer=setTimeout(async()=>{
     try{ setSync('busy'); await pushCloud(); setSync('ok'); }
-    catch(e){ console.error(e); setSync('err'); }
+    catch(e){
+      console.error(e);
+      if(/CONFLICTO_VERSION/.test(e.message||'')){
+        setSync('err','Conflicto');
+        if(confirm('Otra persona guardó cambios en este centro antes que tú.\n\n¿Recargar para ver la versión más reciente? Se perderán los cambios sin guardar.')) location.reload();
+      }else{
+        setSync('err');
+        toast('No se pudo guardar en la nube');
+      }
+    }
   },700);
 }
 function renderUser(){
@@ -1758,7 +1791,7 @@ function resetAll(){ if(!confirm('Se borrarán todos los registros de la organiz
 
 /* ============================ INIT ============================ */
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') cerrarModal(); });
-window.EHS={get db(){return DB},set db(v){DB=v},save};
+window.EHS={get db(){return DB},set db(v){DB=v},save,get version(){return CENTRO_VERSION},get centro(){return CENTRO_ID},get user(){return SESSION&&SESSION.email}};
 boot();
 </script>
 </body>

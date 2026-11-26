@@ -66,7 +66,7 @@ Los registros se guardan en Supabase y se sincronizan entre equipos al iniciar s
 - **Respaldo:** Organización y datos → *Descargar respaldo (.json)*.
 - **Restauración:** *Cargar respaldo* en el mismo apartado.
 - Los cambios se empujan solos ~0.7 s después de cada edición; el indicador junto al correo muestra *Guardado* / *Guardando…* / *Sin guardar*.
-- Conflicto: gana la última escritura. Si dos coordinadores editan el mismo centro al mismo tiempo, se pierde la versión anterior del que guardó primero.
+- **Control de versión:** el guardado pasa por `ehs_guardar_estado(centro, data, version)`. Si alguien más guardó antes, la app avisa del conflicto y ofrece recargar en lugar de pisar el cambio. Cada guardado deja renglón en `ehs_auditoria`.
 
 ## Supabase
 
@@ -94,8 +94,33 @@ La clave publicable (`sb_publishable_…`) va embebida en `index.html` porque es
 ```
 .
 ├── index.html                      # aplicación completa (UI, catálogo normativo, formatos, auth y sincronización)
+├── _headers                        # cabeceras de seguridad para Cloudflare Pages
+├── data/normas.js                  # catálogo de verificación por norma (fuente única; genera normas.json)
+├── data/normas.json                # catálogo exportado (build.js)
+├── js/formatos.js                  # generador de formato imprimible + conversión NC → hallazgo
+├── tests/catalogo.test.js          # 5 pruebas del catálogo y del generador
+├── build.js                        # regenera data/normas.json
+├── package.json                    # scripts build y test
+├── .github/workflows/ci.yml        # CI: pruebas + revisión de que no haya llaves service_role
 ├── supabase/migrations/
 │   ├── 0001_init.sql               # tablas, RLS y vista de cobertura
-│   └── 0002_grants.sql             # permisos del rol authenticated
+│   ├── 0002_grants.sql             # permisos del rol authenticated
+│   ├── 0003_version_auditoria_respaldos.sql   # versionado optimista, auditoría y respaldo diario
+│   └── 0004_roles_por_centro.sql   # plantilla de roles (no aplicada)
 └── README.md
+```
+
+## Catálogo de verificación (`data/normas.js`)
+
+Módulo independiente con 23 NOM, cada una con su lista de verificación y su estado de vigencia. **Todavía no alimenta la app**: el catálogo que usa `index.html` cubre 35 NOM y 37 formatos con campos propios. Sirve para revisar y después fusionar.
+
+Pendientes antes de usarlo en auditoría:
+
+- Solo NOM-017-STPS-2024 y NOM-006-STPS-2023 están con vigencia confirmada; el resto está como `por_validar` y hay que contrastarlo con el DOF.
+- Los requisitos están en lenguaje sencillo y falta el numeral de cada uno.
+- Faltan 12 normas para llegar a las 35 del README (003, 007, 008, 012, 013, 014, 016, 023, 031, 034, 037 y las de producto excluidas).
+
+```bash
+npm test          # corre las 5 pruebas
+npm run build     # regenera data/normas.json desde normas.js
 ```
