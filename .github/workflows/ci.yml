@@ -1,0 +1,13 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: node build.js
+      - run: node --test tests/catalogo.test.js
+      - name: Sin llaves service_role en el repo
+        run: "! grep -rIl 'service_role' --include='*.html' --include='*.js' --include='*.json' . | grep -v node_modules"
