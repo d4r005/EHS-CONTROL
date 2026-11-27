@@ -21,7 +21,7 @@ test("estructura mínima de cada norma", () => {
 test("normas sustituidas llevan su nota", () => {
   const por = c => NORMAS.find(n => n.codigo === c);
   assert.ok(por("NOM-017-STPS-2024").vigencia.nota.includes("2008"));
-  assert.ok(por("NOM-006-STPS-2023").vigencia.nota.includes("2014"));
+  assert.ok(por("NOM-006-STPS-2023").vigencia.nota.includes("2000"));
   assert.ok(por("NOM-005-STPS-1998").vigencia.nota.includes("2025"));
 });
 

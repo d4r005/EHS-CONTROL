@@ -167,3 +167,32 @@ test("no se filtran secretos ni la llave de servicio de Supabase", () => {
   assert.ok(!new RegExp("service" + "_" + "role").test(html));
   assert.ok(!/ghp_[A-Za-z0-9]{20,}|github_pat_/.test(html));
 });
+
+const F = extraer("FORMATOS_F");
+
+test("lote ergonomía y manejo de materiales: códigos desde EHS-F-089 y estructura por tipo", () => {
+  const cods = F.map(f => f.c);
+  assert.strictEqual(new Set(cods).size, cods.length);
+  cods.forEach(c => assert.ok(+c.slice(6) >= 89, c));
+  for (const f of F) {
+    assert.ok(["check", "tabla", "acta", "programa"].includes(f.tipo), f.c);
+    assert.ok(f.n && f.nk && f.p && f.frec, f.c + " sin metadatos");
+    if (f.tipo === "check") assert.ok(f.sec.length >= 2 && f.sec.every(s => s.it.length >= 3), f.c);
+    if (f.tipo === "tabla") assert.ok(f.cols.length >= 8, f.c);
+    if (f.tipo === "acta") assert.ok(f.bloques.length >= 5, f.c);
+    if (f.tipo === "programa") assert.ok(f.filas.filter(r => r.e).length >= 8, f.c);
+  }
+});
+
+test("los formatos de ergonomía y manejo de materiales citan la norma vigente", () => {
+  F.filter(f => f.nk.startsWith("NOM-036")).forEach(f => assert.strictEqual(f.nk, "NOM-036-1-STPS-2018", f.c));
+  F.filter(f => f.nk.startsWith("NOM-006")).forEach(f => assert.strictEqual(f.nk, "NOM-006-STPS-2023", f.c));
+});
+
+test("el catálogo usa la clave correcta de ergonomía y la versión 2023 de manejo de materiales", () => {
+  const i = html.indexOf("{k:'NOM-036-1-STPS-2018'");
+  assert.ok(i > 0, "falta NOM-036-1-STPS-2018 en el catálogo");
+  assert.ok(html.indexOf("{k:'NOM-036-STPS-2018'") < 0, "quedó la clave corta de 036");
+  assert.ok(html.indexOf("{k:'NOM-006-STPS-2023'") > 0, "falta NOM-006-STPS-2023");
+  assert.ok(html.indexOf("NOM-006-STPS-2014") < 0, "quedó la referencia inexistente a NOM-006-STPS-2014");
+});

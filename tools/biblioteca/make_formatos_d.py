@@ -82,7 +82,7 @@ nuevos.append(dict(c='EHS-F-077', n='Registro de equipo de protección personal 
  nFilas=16,
  firmas=['Elaboró','Depto. EHS','Gerencia']))
 
-nuevos.append(dict(c='EHS-F-078', n='Programa de mantenimiento de racks y estanterías', nk='NOM-006-STPS-2014', tipo='tabla',
+nuevos.append(dict(c='EHS-F-078', n='Programa de mantenimiento de elementos estructurales, estantes y plataformas de almacenamiento', nk='NOM-006-STPS-2023', tipo='tabla',
  frec='Mensual', orient='landscape',
  p='Revisión de racks y estanterías: deformaciones, daños, estiba riesgosa, verticalidad, estabilidad y modificaciones a la estructura.',
  campos=[['area','Almacén o área'],['fecha','Fecha de revisión','date'],['resp','Personal responsable']],

@@ -16,7 +16,7 @@ Aplicación web de un solo archivo (`index.html`), sin dependencias externas ni 
 |---|---|
 | Panel | Cobertura de evidencia por norma, hallazgos abiertos/vencidos, incidentes del año, registros y capacitación |
 | Marco normativo | Catálogo completo con aplicabilidad por centro de trabajo, requisitos clave, evidencias y formatos ligados |
-| Formatos | 88 formatos imprimibles (EHS-F-001 a EHS-F-088): listas de verificación, tablas, actas, programas anuales con matriz de 12 meses, permisos de trabajo con selección múltiple y cuestionarios Sí/No con el diseño F-SH: encabezado con logo, barra dorada de título, bloque de control (código, revisión, fecha, página), tabla de verificación C/NC/N/A y firmas. Tres hojas conservan el diseño del documento original: el organigrama de brigada (tarjetas verde, azul, amarillo y rojo en cuatro columnas), el permiso de trabajo (recuadros de color por tipo de trabajo, evaluación y precauciones en dos columnas, dos páginas) y la evaluación del simulacro (tabla Observaciones / Sí / No / Explique) |
+| Formatos | 97 formatos imprimibles (EHS-F-001 a EHS-F-097): listas de verificación, tablas, actas, programas anuales con matriz de 12 meses, permisos de trabajo con selección múltiple y cuestionarios Sí/No con el diseño F-SH: encabezado con logo, barra dorada de título, bloque de control (código, revisión, fecha, página), tabla de verificación C/NC/N/A y firmas. Tres hojas conservan el diseño del documento original: el organigrama de brigada (tarjetas verde, azul, amarillo y rojo en cuatro columnas), el permiso de trabajo (recuadros de color por tipo de trabajo, evaluación y precauciones en dos columnas, dos páginas) y la evaluación del simulacro (tabla Observaciones / Sí / No / Explique) |
 | Etiquetas | Etiquetas de sustancias químicas y de residuos peligrosos, con vista previa e impresión de 4 por hoja |
 | Brigadas | Organigrama de la brigada de emergencias, con integrantes y funciones editables e impresión |
 | Documentos | 11 programas, procedimientos, manuales, planes e instructivos (EHS-D-001 a 009) con el texto íntegro de los documentos F-SH / D-SH, imprimibles con el encabezado de la empresa |
@@ -100,10 +100,31 @@ Las tres tablas tienen RLS activo y solo permiten acceso a usuarios autenticados
 
 La clave publicable (`sb_publishable_…`) va embebida en `index.html` porque es pública por diseño; la seguridad depende de RLS y del login, nunca de esa clave. La `service_role` **no** debe aparecer en el repo.
 
+## Ergonomía y manejo de materiales (actualización)
+
+Los formatos de la NOM-036-1-STPS-2018 y la NOM-006-STPS-2023 se alinearon con el texto vigente del DOF y sus numerales:
+
+| Formato | Contenido | Numerales |
+|---|---|---|
+| EHS-F-064 | Empuje, arrastre y jalado de cargas (Apéndice II) | 7.3 b) |
+| EHS-F-083 | Levantamiento, descenso y transporte (Apéndice I) | 7.3 a) |
+| EHS-F-089 | Informe del análisis de factores de riesgo ergonómico | 7.1 a 7.7 |
+| EHS-F-090 | Programa de ergonomía para el manejo manual de cargas | 8.5, 8.6, 8.7 |
+| EHS-F-091 | Vigilancia a la salud y aptitud física | 9.1 a 9.5, 8.1 |
+| EHS-F-092 | Programa de revisión y mantenimiento de la maquinaria | 5.1, 7.1 |
+| EHS-F-093 | Registro de revisión y mantenimiento de la maquinaria | 5.10, 7.1 |
+| EHS-F-094 | Revisión visual y prueba funcional por jornada | 8.1 |
+| EHS-F-095 | Autorización del patrón a operadores | 7.4 k), 10.2, 10.3 |
+| EHS-F-096 | Condiciones de seguridad en áreas de almacenamiento | 9.2 a 9.4 |
+| EHS-F-097 | Elementos estructurales, estantes y plataformas | 9.4 a) a l) |
+
+Pendiente en el catálogo: EHS-F-076 y EHS-F-077 todavía citan NOM-017-STPS-2008; la vigente es la NOM-017-STPS-2024.
+
 ## Notas de vigencia
 
 - **NOM-017-STPS-2024** sustituye a la NOM-017-STPS-2008 (EPP).
-- **NOM-006-STPS-2023** sustituye a la NOM-006-STPS-2000 (manejo de materiales con maquinaria).
+- **NOM-006-STPS-2023** sustituye a la NOM-006-STPS-2000 (almacenamiento y manejo de materiales mediante maquinaria). No existe una NOM-006-STPS-2014.
+- **NOM-036-1-STPS-2018** es la clave correcta de la Parte 1 (manejo manual de cargas); el catálogo la tenía abreviada como NOM-036-STPS-2018. No hay Parte 2 publicada en el DOF.
 - **NOM-005-STPS-2025** está publicada como proyecto y sustituirá a la NOM-005-STPS-1998. Confirma la publicación definitiva en el DOF antes de ajustar formatos.
 
 ## Estructura

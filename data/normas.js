@@ -56,7 +56,7 @@ const NORMAS = [
         "Personal capacitado y con EPP adecuado"] } },
 
   { codigo: "NOM-006-STPS-2023", tema: "Almacenamiento y manejo de materiales con maquinaria", tipo: "seguridad",
-    vigencia: { estado: "confirmada", nota: "Sustituye a la NOM-006-STPS-2014." },
+    vigencia: { estado: "confirmada", nota: "Sustituye a la NOM-006-STPS-2000." },
     formato: { id: "EHS-006-F01", nombre: "Revisión de montacargas y manejo de materiales", periodicidad: "Cada turno (revisión previa) / según programa",
       items: ["Operador capacitado y autorizado por escrito",
         "Revisión previa al uso realizada (frenos, dirección, luces, alarma de reversa, horquillas)",

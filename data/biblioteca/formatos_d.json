@@ -489,12 +489,12 @@
   },
   {
    "c": "EHS-F-078",
-   "n": "Programa de mantenimiento de racks y estanterías",
-   "nk": "NOM-006-STPS-2014",
+   "n": "Programa de mantenimiento de elementos estructurales, estantes y plataformas de almacenamiento",
+   "nk": "NOM-006-STPS-2023",
    "tipo": "tabla",
    "frec": "Mensual",
    "orient": "landscape",
-   "p": "Revisión de racks y estanterías: deformaciones, daños, estiba riesgosa, verticalidad, estabilidad y modificaciones a la estructura.",
+   "p": "Revisión de elementos estructurales, estantes y plataformas: capacidad de carga, anclaje, verticalidad, estabilidad, protecciones de esquina, elementos de retención, daños por impacto y modificaciones no autorizadas (NOM-006-STPS-2023, numeral 9.4, incisos a) a l)).",
    "campos": [
     [
      "area",
@@ -513,31 +513,35 @@
    "cols": [
     [
      "rack",
-     "Rack o estantería"
+     "Rack, estante o plataforma"
+    ],
+    [
+     "cap",
+     "Capacidad de carga señalada y respetada"
     ],
     [
      "def",
-     "Deformaciones"
+     "Deformaciones o corrosión"
     ],
     [
      "dano",
-     "Dañada, desgastada o en condición insegura"
+     "Dañada o en condición insegura"
     ],
     [
      "estiba",
-     "Estiba riesgosa"
+     "Estiba riesgosa o altura excedida"
     ],
     [
-     "mod",
-     "Se realizó alguna modificación a la estructura"
+     "prot",
+     "Protecciones de esquina y retención"
     ],
     [
      "vert",
-     "Está totalmente vertical"
+     "Totalmente vertical y nivelada"
     ],
     [
-     "inest",
-     "Inestable"
+     "mod",
+     "Modificación a la estructura"
     ],
     [
      "accion",
