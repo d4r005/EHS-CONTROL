@@ -146,7 +146,7 @@ const NORMAS = [
         "Dispositivos de seguridad para el control de radiaciones instalados y en funcionamiento",
         "Equipo de protección personal específico al riesgo",
         "Trabajadores informados y capacitados sobre los riesgos y el manejo de las fuentes",
-        "Exámenes médicos periódicos a los trabajadores expuestos"] } },
+        "Exámenes médicos periódicos para los trabajadores expuestos, promovidos por el patrón y los propios trabajadores"] } },
   { codigo: "NOM-014-STPS-2000", tema: "Presiones ambientales anormales", tipo: "salud",
     vigencia: { estado: "por_validar", nota: "Publicada en el DOF el 10/04/2000. Requisitos tomados de los numerales 5.1 a 5.10 del texto publicado: confirmar numerales en el DOF antes de auditar." },
     formato: { id: "EHS-014-F01", nombre: "Verificación de actividades de buceo y presiones ambientales anormales", periodicidad: "Por operación / anual",
