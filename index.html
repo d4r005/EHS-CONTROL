@@ -97,6 +97,8 @@ h3.sec{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--
 .pill.danger{background:var(--danger-bg);color:var(--danger)}
 .pill.info{background:var(--info-bg);color:var(--info)}
 .pill.mute{background:#f1f5f9;color:var(--muted)}
+.subhead{background:#fbfcfd}
+.nc-in{border-color:#fecaca;background:#fff7f7}
 
 table{width:100%;border-collapse:collapse;font-size:13px}
 th{
@@ -196,19 +198,55 @@ label.fld span{display:block;font-size:11.5px;font-weight:650;color:var(--ink-2)
 @media(max-width:820px){.userbox .uemail{display:none}}
 
 /* ---------- modo oscuro ---------- */
-html[data-theme="dark"]{--ink:#e6edf5;--ink-2:#c3cfdd;--muted:#94a3b8;--line:#2c3b4d;--bg:#0b1220;--card:#16202e;--nav:#0a111c;--nav-2:#16202e;
-  --warn:#f59e0b;--warn-bg:#3a2a08;--danger:#f87171;--danger-bg:#3b1414;--ok:#4ade80;--ok-bg:#0f2d1b;--info:#93c5fd;--info-bg:#12283f}
+html[data-theme="dark"]{
+  --ink:#e8eef6; --ink-2:#c8d5e3; --muted:#9aa9bb; --line:#33445a;
+  --bg:#0b1220; --card:#16202e; --nav:#0a111c; --nav-2:#16202e;
+  --warn:#fbbf24; --warn-bg:#3a2a08; --danger:#fca5a5; --danger-bg:#3b1414;
+  --ok:#6ee7b7; --ok-bg:#0f3d2e; --info:#93c5fd; --info-bg:#12283f;
+  color-scheme:dark;
+}
 html[data-theme="dark"] body{background:var(--bg);color:var(--ink)}
 html[data-theme="dark"] .top{background:var(--card);border-bottom-color:var(--line)}
 html[data-theme="dark"] .card,html[data-theme="dark"] .lcard{background:var(--card);border-color:var(--line)}
+html[data-theme="dark"] .subhead{background:#1b2836}
 html[data-theme="dark"] .top h2,html[data-theme="dark"] .kpi .val{color:var(--ink)}
-html[data-theme="dark"] input,html[data-theme="dark"] select,html[data-theme="dark"] textarea{background:#0f1a27;color:var(--ink);border-color:var(--line)}
-html[data-theme="dark"] .btn{background:#1d2a3a;border-color:var(--line);color:var(--ink-2)}
-html[data-theme="dark"] .btn:hover{background:#243449}
-html[data-theme="dark"] .btn.primary{background:var(--accent);border-color:var(--accent);color:#04211e}
-html[data-theme="dark"] .login{background:linear-gradient(160deg,#080e18,#0d1b2a 55%,#0a2b27)}
-html[data-theme="dark"] table th{background:#1b2735}
+html[data-theme="dark"] input,html[data-theme="dark"] select,html[data-theme="dark"] textarea{
+  background:#0f1a27;color:var(--ink);border-color:var(--line)}
+html[data-theme="dark"] input::placeholder,html[data-theme="dark"] textarea::placeholder{color:#7b8ba3}
+html[data-theme="dark"] .nc-in{border-color:#7f1d1d;background:#2a1212}
+
+/* botones */
+html[data-theme="dark"] .btn{background:#243449;border-color:#3d5068;color:#e8eef6}
+html[data-theme="dark"] .btn:hover{background:#2e425c;border-color:#4a5f7a}
+html[data-theme="dark"] .btn.primary{background:#14b8a6;border-color:#14b8a6;color:#062a26}
+html[data-theme="dark"] .btn.primary:hover{background:#2dd4bf;border-color:#2dd4bf}
+html[data-theme="dark"] .btn.ghost{background:transparent;border-color:transparent;color:var(--ink-2)}
+html[data-theme="dark"] .btn.danger{background:#2a1212;border-color:#7f1d1d;color:#fca5a5}
+html[data-theme="dark"] .btn.danger:hover{background:#3b1414}
+
+/* etiquetas y chips */
+html[data-theme="dark"] .tag{background:#243449;color:#dbe6f0}
+html[data-theme="dark"] .pill.mute{background:#243449;color:#c8d5e3}
+html[data-theme="dark"] .pill.ok{background:#0f3d2e;color:#6ee7b7}
+html[data-theme="dark"] .pill.warn{background:#3a2a08;color:#fbbf24}
+html[data-theme="dark"] .pill.danger{background:#3b1414;color:#fca5a5}
+html[data-theme="dark"] .pill.info{background:#12283f;color:#93c5fd}
+html[data-theme="dark"] .bar{background:#243449}
+html[data-theme="dark"] .mono{color:#7dd3c0}
+
+/* tablas */
+html[data-theme="dark"] table th{background:#1b2836;color:var(--ink)}
+html[data-theme="dark"] tbody tr:hover{background:#1b2836}
 html[data-theme="dark"] tr:nth-child(even) td{background:#131e2b}
+
+/* modal, avisos y login */
+html[data-theme="dark"] .modal{background:#16202e;color:var(--ink)}
+html[data-theme="dark"] .modal .mf{background:#131e2b}
+html[data-theme="dark"] .toast{background:#e8eef6;color:#0b1220;font-weight:600}
+html[data-theme="dark"] .login{background:linear-gradient(160deg,#080e18,#0d1b2a 55%,#0a2b27)}
+html[data-theme="dark"] .lcard input{background:#0f1a27;color:var(--ink);border-color:var(--line)}
+html[data-theme="dark"] .lfoot,html[data-theme="dark"] .lhint{color:var(--muted)}
+html[data-theme="dark"] .lerr{color:#fca5a5}
 </style>
 </head>
 <body>
@@ -1194,7 +1232,7 @@ function vNormas(){
     if(!ns.length) return '';
     const apl=ns.filter(n=>normAplica(n.k)).length;
     return `<div class="card" style="margin-bottom:16px;overflow:hidden">
-      <div style="padding:13px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:#fbfcfd">
+      <div class="subhead" style="padding:13px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px">
         <h3 class="sec" style="margin:0">${g}</h3>
         <span class="tag">${apl} de ${ns.length} aplicables</span>
       </div>
@@ -1317,7 +1355,7 @@ function vDoc(){
   if(d.tipo==='check'){
     cuerpo=(f.sec||[]).map((s,si)=>`
       <div class="card" style="margin-bottom:12px;overflow:hidden">
-        <div style="padding:10px 14px;background:#fbfcfd;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center">
+        <div class="subhead" style="padding:10px 14px;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center">
           <b style="font-size:13px">${esc(s.t)}</b>${s.ref?`<span class="tag">${esc(s.ref)}</span>`:''}
           <span class="small muted" style="margin-left:auto">${s.it.length} puntos</span>
         </div>
@@ -1325,7 +1363,7 @@ function vDoc(){
           return `<div style="display:grid;grid-template-columns:1fr 132px;gap:10px;padding:9px 14px;border-bottom:1px solid #eef2f6;align-items:center">
             <div>
               <div style="font-size:13px">${esc(t)}</div>
-              ${val==='NC'?`<input type="text" placeholder="Describe la condición encontrada (genera hallazgo)" value="${esc((d.ob||{})[k]||'')}" oninput="setOb('${d.id}','${k}',this.value)" style="margin-top:6px;font-size:12.5px;border-color:#fecaca;background:#fff7f7">`:''}
+              ${val==='NC'?`<input type="text" placeholder="Describe la condición encontrada (genera hallazgo)" value="${esc((d.ob||{})[k]||'')}" oninput="setOb('${d.id}','${k}',this.value)" class="nc-in" style="margin-top:6px;font-size:12.5px">`:''}
             </div>
             <div style="display:flex;gap:4px;justify-content:flex-end">
               ${['C','NC','NA'].map(o=>`<button class="btn sm" onclick="setIt('${d.id}','${k}','${o}')" style="min-width:40px;justify-content:center;${val===o?`background:${o==='C'?'var(--ok-bg)':o==='NC'?'var(--danger-bg)':'#eef2f6'};border-color:${o==='C'?'#86efac':o==='NC'?'#fecaca':'#cbd5e1'};font-weight:700`:''}">${o}</button>`).join('')}
