@@ -55,6 +55,14 @@ Aplicación web de un solo archivo (`index.html`), sin dependencias externas ni 
 2. Branch `main`, carpeta `/ (root)`.
 3. El sitio queda en `https://d4r005.github.io/EHS-CONTROL/`.
 
+## Multiempresa y marca
+
+Cada empresa (o centro de trabajo) es un renglón de `ehs_centros` con sus propios datos en `ehs_estado`. En la barra lateral, el selector bajo el logo permite cambiar de empresa y el botón **+** crea una nueva con su espacio de datos independiente.
+
+Cada empresa guarda su logo (`logo`, data URI PNG de hasta 320 px) y su color (`color`, hexadecimal). Se editan en **Organización y datos → Marca de la empresa**; el logo se redimensiona en el navegador antes de guardarse.
+
+El logo de la empresa y su color se usan en los formatos impresos: encabezado, barra de título, filete superior y encabezados de tabla. El logo de EHS Control aparece en la barra lateral y en la pantalla de acceso.
+
 ## Diseño de los formatos
 
 La hoja impresa sigue el patrón de los formatos F-SH de la empresa: logo en el encabezado, nombre de la razón social y "Seguridad y Salud en el Trabajo", barra dorada (#ECB324) con el nombre del formato y la norma, bloque de control documental, tabla con encabezado dorado claro, bloque de firmas y pie con código y revisión. El logo va embebido como data URI para que el archivo siga siendo autocontenido.
@@ -112,7 +120,8 @@ La clave publicable (`sb_publishable_…`) va embebida en `index.html` porque es
 │   ├── 0001_init.sql               # tablas, RLS y vista de cobertura
 │   ├── 0002_grants.sql             # permisos del rol authenticated
 │   ├── 0003_version_auditoria_respaldos.sql   # versionado optimista, auditoría y respaldo diario
-│   └── 0004_roles_por_centro.sql   # plantilla de roles (no aplicada)
+│   ├── 0004_roles_por_centro.sql   # plantilla de roles (no aplicada)
+│   └── 0005_marca_empresa.sql      # logo y color por empresa
 └── README.md
 ```
 
