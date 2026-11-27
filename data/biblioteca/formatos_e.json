@@ -1,0 +1,245 @@
+{
+ "nuevos": [
+  {
+   "c": "EHS-F-085",
+   "n": "Bitácora de inspección a extintores",
+   "nk": "NOM-002-STPS-2010",
+   "tipo": "tabla",
+   "frec": "Mensual",
+   "orient": "landscape",
+   "p": "Revisión por extintor: localización, agente y capacidad, visibilidad y acceso, altura, señalización, estado del cuerpo y del manómetro, y fecha de recarga.",
+   "campos": [
+    [
+     "fecha",
+     "Fecha de revisión",
+     "date"
+    ],
+    [
+     "resp",
+     "Responsable de la revisión"
+    ],
+    [
+     "puesto",
+     "Puesto"
+    ]
+   ],
+   "cols": [
+    [
+     "no",
+     "No. extintor"
+    ],
+    [
+     "loc",
+     "Localización"
+    ],
+    [
+     "agente",
+     "Agente extintor"
+    ],
+    [
+     "cap",
+     "Capacidad (kg)"
+    ],
+    [
+     "vis",
+     "Lugar visible y de fácil acceso"
+    ],
+    [
+     "croq",
+     "Ubicación conforme al croquis"
+    ],
+    [
+     "alt",
+     "Altura no mayor a 1.50 m"
+    ],
+    [
+     "sen",
+     "Señalizado"
+    ],
+    [
+     "prec",
+     "Precinto y seguro en buen estado"
+    ],
+    [
+     "man",
+     "Manómetro en la zona verde"
+    ],
+    [
+     "fis",
+     "Corrosión, escape, golpes, deformación, roturas o desprendimientos"
+    ],
+    [
+     "rec",
+     "Fecha de recarga"
+    ],
+    [
+     "obs",
+     "Observaciones y acciones"
+    ]
+   ],
+   "nFilas": 12,
+   "nota": "Cualquier extintor con daño físico, sin presión o descargado se retira de servicio y se repone de inmediato.",
+   "firmas": [
+    "Responsable de la revisión",
+    "Responsable de mantenimiento",
+    "Depto. EHS"
+   ]
+  },
+  {
+   "c": "EHS-F-086",
+   "n": "Bitácora de inspección a hidrantes",
+   "nk": "NOM-002-STPS-2010",
+   "tipo": "check",
+   "frec": "Mensual",
+   "orient": "portrait",
+   "p": "Revisión mensual del hidrante: gabinete o capucha, manguera, chiflón, válvula, señalamiento, daños físicos y acceso libre.",
+   "campos": [
+    [
+     "anio",
+     "Año de revisión"
+    ],
+    [
+     "hid",
+     "No. de hidrante"
+    ],
+    [
+     "area",
+     "Ubicación"
+    ],
+    [
+     "fecha",
+     "Fecha de revisión",
+     "date"
+    ],
+    [
+     "resp",
+     "Nombre de quien revisa"
+    ]
+   ],
+   "sec": [
+    {
+     "t": "Hidrante",
+     "it": [
+      "Gabinete o capucha en buen estado",
+      "Manguera completa, sin roturas ni obstrucciones",
+      "Chiflón en buen estado y con empaque",
+      "Válvula opera correctamente y sin fugas",
+      "Señalamiento visible y en buen estado",
+      "Sin daños físicos en el gabinete y sus componentes",
+      "Acceso libre, sin obstáculos ni material almacenado"
+     ]
+    },
+    {
+     "t": "Prueba",
+     "it": [
+      "Se verificó la presión y el flujo del hidrante",
+      "Se registró la fecha de la última prueba de flujo"
+     ]
+    }
+   ],
+   "firmas": [
+    "Nombre de quien revisa",
+    "Responsable de mantenimiento",
+    "Depto. EHS"
+   ]
+  },
+  {
+   "c": "EHS-F-087",
+   "n": "Bitácora de inspección a sistema de rociadores",
+   "nk": "NOM-002-STPS-2010",
+   "tipo": "check",
+   "frec": "Semanal y bimensual",
+   "orient": "portrait",
+   "p": "Revisión semanal y bimensual del sistema de rociadores: válvulas, manómetros, prueba de alarma hidráulica, distancia a materiales y limpieza del filtro.",
+   "campos": [
+    [
+     "area",
+     "Sistema o área"
+    ],
+    [
+     "fecha",
+     "Fecha de revisión",
+     "date"
+    ],
+    [
+     "resp",
+     "Nombre de quien revisa"
+    ]
+   ],
+   "sec": [
+    {
+     "t": "Revisiones semanales",
+     "it": [
+      "Válvula de bloqueo general abierta y precintada",
+      "Manómetros del puesto de control con lectura correcta de acuerdo al instalador",
+      "Apertura de válvula de prueba de alarma hidráulica para verificar funcionamiento",
+      "Se comprobó que la alarma remota funcionó en la prueba anterior",
+      "Distancia de rociadores a materiales y equipos superior a 50 centímetros",
+      "Válvula de circuito de alarma abierta y precintada"
+     ]
+    },
+    {
+     "t": "Revisiones bimensuales",
+     "it": [
+      "Desprecintar, cerrar y abrir válvula de bloqueo general",
+      "Precintar válvula de bloqueo general en posición abierta",
+      "Limpiar filtro de entrada de agua a gong"
+     ]
+    }
+   ],
+   "firmas": [
+    "Nombre de quien revisa",
+    "Responsable de mantenimiento",
+    "Depto. EHS"
+   ]
+  },
+  {
+   "c": "EHS-F-088",
+   "n": "Bitácora de inspección a alarmas de incendio",
+   "nk": "NOM-002-STPS-2010",
+   "tipo": "check",
+   "frec": "Mensual",
+   "orient": "portrait",
+   "p": "Prueba de funcionamiento de las alarmas de incendio, audibilidad en el área y señalización del dispositivo.",
+   "campos": [
+    [
+     "area",
+     "Ubicación"
+    ],
+    [
+     "fecha",
+     "Fecha de revisión",
+     "date"
+    ],
+    [
+     "resp",
+     "Nombre de quien revisa"
+    ]
+   ],
+   "sec": [
+    {
+     "t": "Prueba de funcionamiento",
+     "it": [
+      "Al presionar el botón de prueba, el dispositivo emite sonido de alarma",
+      "El sonido es escuchado por el personal del área",
+      "El dispositivo se encuentra señalizado"
+     ]
+    },
+    {
+     "t": "Condición general",
+     "it": [
+      "El dispositivo está libre de obstrucciones y visible",
+      "La ruta hasta el dispositivo está despejada",
+      "Se registraron las fallas detectadas y su acción correctiva"
+     ]
+    }
+   ],
+   "firmas": [
+    "Nombre de quien revisa",
+    "Responsable de mantenimiento",
+    "Depto. EHS"
+   ]
+  }
+ ],
+ "docs": []
+}

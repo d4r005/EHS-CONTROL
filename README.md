@@ -16,7 +16,7 @@ Aplicación web de un solo archivo (`index.html`), sin dependencias externas ni 
 |---|---|
 | Panel | Cobertura de evidencia por norma, hallazgos abiertos/vencidos, incidentes del año, registros y capacitación |
 | Marco normativo | Catálogo completo con aplicabilidad por centro de trabajo, requisitos clave, evidencias y formatos ligados |
-| Formatos | 84 formatos imprimibles (EHS-F-001 a EHS-F-084): listas de verificación, tablas, actas, programas anuales con matriz de 12 meses, permisos de trabajo con selección múltiple y cuestionarios Sí/No con el diseño F-SH: encabezado con logo, barra dorada de título, bloque de control (código, revisión, fecha, página), tabla de verificación C/NC/N/A y firmas |
+| Formatos | 88 formatos imprimibles (EHS-F-001 a EHS-F-088): listas de verificación, tablas, actas, programas anuales con matriz de 12 meses, permisos de trabajo con selección múltiple y cuestionarios Sí/No con el diseño F-SH: encabezado con logo, barra dorada de título, bloque de control (código, revisión, fecha, página), tabla de verificación C/NC/N/A y firmas |
 | Etiquetas | Etiquetas de sustancias químicas y de residuos peligrosos, con vista previa e impresión de 4 por hoja |
 | Brigadas | Organigrama de la brigada de emergencias, con integrantes y funciones editables e impresión |
 | Documentos | 11 programas, procedimientos, manuales, planes e instructivos (EHS-D-001 a 009) con el texto íntegro de los documentos F-SH / D-SH, imprimibles con el encabezado de la empresa |

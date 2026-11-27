@@ -5,6 +5,7 @@ s=open(R+'index.html').read()
 F=json.load(open(DAT+'formatos.json')); D=json.load(open(DAT+'docs.json'))
 C=json.load(open(DAT+'formatos_c.json'))
 Dl=json.load(open(DAT+'formatos_d.json'))
+E=json.load(open(DAT+'formatos_e.json'))
 def js(o): return json.dumps(o,ensure_ascii=False,separators=(',',':'))
 # limpiar bloque previo (idempotente)
 s=re.sub(r'<script>\n/\* @@AUTOGEN-INICIO@@ \*/.*?/\* @@AUTOGEN-FIN@@ \*/\n</script>\n','',s,flags=re.S)
@@ -36,6 +37,13 @@ FORMATOS_D.forEach(n=>{{ if(!FORMATOS.some(f=>f.c===n.c)) FORMATOS.push(n); }});
 (function(){{
   const porNorma={{}};
   FORMATOS_D.forEach(f=>{{ (porNorma[f.nk]=porNorma[f.nk]||[]).push(f.c); }});
+  Object.keys(porNorma).forEach(k=>{{ const n=(typeof NORMAS!=='undefined')&&NORMAS.find(x=>x.k===k); if(n){{ n.f=n.f||[]; porNorma[k].forEach(c=>{{ if(!n.f.includes(c)) n.f.push(c); }}); }} }});
+}})();
+const FORMATOS_E = {js(E['nuevos'])};
+FORMATOS_E.forEach(n=>{{ if(!FORMATOS.some(f=>f.c===n.c)) FORMATOS.push(n); }});
+(function(){{
+  const porNorma={{}};
+  FORMATOS_E.forEach(f=>{{ (porNorma[f.nk]=porNorma[f.nk]||[]).push(f.c); }});
   Object.keys(porNorma).forEach(k=>{{ const n=(typeof NORMAS!=='undefined')&&NORMAS.find(x=>x.k===k); if(n){{ n.f=n.f||[]; porNorma[k].forEach(c=>{{ if(!n.f.includes(c)) n.f.push(c); }}); }} }});
 }})();
 const DOCUMENTOS = {js(D+Dl['docs'])};
