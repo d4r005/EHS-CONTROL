@@ -16,7 +16,7 @@ Aplicación web de un solo archivo (`index.html`), sin dependencias externas ni 
 |---|---|
 | Panel | Cobertura de evidencia por norma, hallazgos abiertos/vencidos, incidentes del año, registros y capacitación |
 | Marco normativo | Catálogo completo con aplicabilidad por centro de trabajo, requisitos clave, evidencias y formatos ligados |
-| Formatos | 97 formatos imprimibles (EHS-F-001 a EHS-F-097): listas de verificación, tablas, actas, programas anuales con matriz de 12 meses, permisos de trabajo con selección múltiple y cuestionarios Sí/No con el diseño F-SH: encabezado con logo, barra dorada de título, bloque de control (código, revisión, fecha, página), tabla de verificación C/NC/N/A y firmas. Tres hojas conservan el diseño del documento original: el organigrama de brigada (tarjetas verde, azul, amarillo y rojo en cuatro columnas), el permiso de trabajo (recuadros de color por tipo de trabajo, evaluación y precauciones en dos columnas, dos páginas) y la evaluación del simulacro (tabla Observaciones / Sí / No / Explique) |
+| Formatos | 99 formatos imprimibles (EHS-F-001 a EHS-F-099): listas de verificación, tablas, actas, programas anuales con matriz de 12 meses, permisos de trabajo con selección múltiple y cuestionarios Sí/No con el diseño F-SH: encabezado con logo, barra dorada de título, bloque de control (código, revisión, fecha, página), tabla de verificación C/NC/N/A y firmas. Tres hojas conservan el diseño del documento original: el organigrama de brigada (tarjetas verde, azul, amarillo y rojo en cuatro columnas), el permiso de trabajo (recuadros de color por tipo de trabajo, evaluación y precauciones en dos columnas, dos páginas) y la evaluación del simulacro (tabla Observaciones / Sí / No / Explique) |
 | Etiquetas | Etiquetas de sustancias químicas y de residuos peligrosos, con vista previa e impresión de 4 por hoja |
 | Brigadas | Organigrama de la brigada de emergencias, con integrantes y funciones editables e impresión |
 | Documentos | 11 programas, procedimientos, manuales, planes e instructivos (EHS-D-001 a 009) con el texto íntegro de los documentos F-SH / D-SH, imprimibles con el encabezado de la empresa |
@@ -123,6 +123,7 @@ Pendiente en el catálogo: EHS-F-076 y EHS-F-077 todavía citan NOM-017-STPS-200
 ## Notas de vigencia
 
 - **NOM-017-STPS-2024** sustituye a la NOM-017-STPS-2008 (EPP).
+- **NOM-017-STPS-2024** toma la estructura de los formatos F-SH-017 de la empresa: análisis de riesgos por puesto y área con determinación de EPP (5.1 y 5.2), matriz de EPP por región anatómica (5.2) y registro de revisión, reposición, limpieza, mantenimiento, resguardo y disposición final (5.12).
 - **NOM-006-STPS-2023** sustituye a la NOM-006-STPS-2000 (almacenamiento y manejo de materiales mediante maquinaria). No existe una NOM-006-STPS-2014.
 - **NOM-036-1-STPS-2018** es la clave correcta de la Parte 1 (manejo manual de cargas); el catálogo la tenía abreviada como NOM-036-STPS-2018. No hay Parte 2 publicada en el DOF.
 - **NOM-005-STPS-2025** está publicada como proyecto y sustituirá a la NOM-005-STPS-1998. Confirma la publicación definitiva en el DOF antes de ajustar formatos.

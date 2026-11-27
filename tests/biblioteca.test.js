@@ -196,3 +196,26 @@ test("el catálogo usa la clave correcta de ergonomía y la versión 2023 de man
   assert.ok(html.indexOf("{k:'NOM-006-STPS-2023'") > 0, "falta NOM-006-STPS-2023");
   assert.ok(html.indexOf("NOM-006-STPS-2014") < 0, "quedó la referencia inexistente a NOM-006-STPS-2014");
 });
+
+const G = extraer("FORMATOS_G");
+
+test("lote EPP 2024: códigos desde EHS-F-098 y estructura por tipo", () => {
+  const cods = G.map(f => f.c);
+  assert.strictEqual(new Set(cods).size, cods.length);
+  cods.forEach(c => assert.ok(+c.slice(6) >= 98, c));
+  for (const f of G) {
+    assert.strictEqual(f.tipo, "tabla");
+    assert.ok(f.n && f.p && f.frec, f.c + " sin metadatos");
+    assert.strictEqual(f.nk, "NOM-017-STPS-2024", f.c);
+    assert.ok(f.cols.length >= 9, f.c + " con pocas columnas");
+  }
+});
+
+test("ningún formato cita ya la NOM-017-STPS-2008", () => {
+  const todos = html.match(/const FORMATOS_\w+ = (\[[\s\S]*?\]);\n/g) || [];
+  for (const bloque of todos) {
+    assert.ok(!bloque.includes("NOM-017-STPS-2008"), "quedó una referencia a la NOM-017-STPS-2008");
+  }
+  const ref = extraer("FORMATOS_REF");
+  assert.ok(ref.every(f => f.nk !== "NOM-017-STPS-2008"));
+});
