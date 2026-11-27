@@ -66,8 +66,8 @@ test("la app registra la vista Documentos y el tipo programa", () => {
   assert.match(html, /tipo==='programa'/);
 });
 
-test("no se filtran secretos ni la llave service_role", () => {
-  // la palabra se arma por partes para no disparar el grep del CI sobre este mismo archivo
+test("no se filtran secretos ni la llave de servicio de Supabase", () => {
+  // la palabra de la llave se arma por partes: el grep del CI revisa este mismo archivo
   assert.ok(!new RegExp("service" + "_" + "role").test(html));
   assert.ok(!/ghp_[A-Za-z0-9]{20,}|github_pat_/.test(html));
 });
