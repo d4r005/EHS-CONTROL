@@ -1,1 +1,1 @@
-{ "name": "ehs-control-mejoras", "private": true, "scripts": { "build": "node build.js", "test": "node --test tests/catalogo.test.js tests/biblioteca.test.js tests/navegacion.test.js" } }
+{ "name": "ehs-control-mejoras", "private": true, "scripts": { "build": "node build.js", "test": "node --test tests/catalogo.test.js tests/biblioteca.test.js tests/navegacion.test.js tests/catalogo_drift.test.js" } }

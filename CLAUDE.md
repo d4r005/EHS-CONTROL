@@ -20,7 +20,7 @@ Este proyecto tiene el modo automático habilitado mediante `.claude/settings.js
 
 | Comando | Descripción |
 |---|---|
-| `npm test` | Pruebas del catálogo normativo y de la biblioteca de formatos y documentos |
+| `npm test` | Pruebas del catálogo normativo, la biblioteca de formatos y documentos, el menú de navegación y la sincronía entre `index.html` y `data/normas.js` |
 | `npm run build` | Regenera `data/normas.json` desde `data/normas.js` |
 
 ## Estructura del proyecto
@@ -28,10 +28,13 @@ Este proyecto tiene el modo automático habilitado mediante `.claude/settings.js
 ```
 .
 ├── index.html          # Aplicación SPA completa (UI, catálogo, formatos, auth, impresión)
-├── data/normas.js      # Catálogo de 23 NOM con estados de vigencia
+├── data/normas.js      # Catálogo de 35 NOM con estados de vigencia (fuente única)
 ├── data/normas.json    # Versión exportada (generada por build.js)
 ├── js/formatos.js      # Generador de formatos imprimibles + lógica de hallazgos
-├── tests/catalogo.test.js  # 5 pruebas devalidación
+├── tests/catalogo.test.js  # Pruebas del catálogo normativo
+├── tests/biblioteca.test.js # Pruebas de formatos y documentos
+├── tests/navegacion.test.js # Menú lateral: ids únicos, títulos y rutas de vista
+├── tests/catalogo_drift.test.js # index.html y data/normas.js deben cubrir las mismas NOM
 ├── build.js            # Regenera data/normas.json desde normas.js
 ├── package.json        # Scripts build y test
 ├── .github/workflows/ci.yml  # CI: pruebas + validación de service_role
@@ -42,11 +45,11 @@ Este proyecto tiene el modo automático habilitado mediante `.claude/settings.js
 
 - **Panel** — Resumen de cumplimiento, hallazgos abiertos/vencidos, incidentes, registros
 - **Marco normativo** — Catálogo con 35 NOM + ISO 14001/45001 + trámites IMSS, aplicabilidad por centro
-- **Formatos** — 84 formatos imprimibles (EHS-F-001 a EHS-F-088), llenables en navegador; tipos: check, tabla, acta, programa, seleccion, cuestionario
+- **Formatos** — 99 formatos imprimibles (EHS-F-001 a EHS-F-099), llenables en navegador; tipos: check, tabla, acta, programa, seleccion, cuestionario
 - **Etiquetas** — etiquetas de sustancias químicas y residuos peligrosos (4 por hoja)
 - **Hojas con diseño propio** — `hoja:'ptr'` y `hoja:'simulacro'` en el formato despachan a `hojaPTR` / `hojaSimulacro` (en `tools/biblioteca/hojas.js`)
 - **Brigadas** — organigrama de la brigada de emergencias (integrantes y funciones editables)
-- **Documentos** — 9 programas, procedimientos, manuales y planes (EHS-D-001 a 009), lectura e impresión
+- **Documentos** — 11 programas, procedimientos, manuales y planes (EHS-D-001 a 011), lectura e impresión
 - **Registros** — Búsqueda, reimpresión, exportación de documentos llenados
 - **Hallazgos** — Generación automática desde NC, seguimiento con responsable/fecha compromiso
 - **Incidentes** — Registro con días de incapacidad, control de aviso ST-7
