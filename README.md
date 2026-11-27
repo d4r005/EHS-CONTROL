@@ -16,7 +16,8 @@ Aplicación web de un solo archivo (`index.html`), sin dependencias externas ni 
 |---|---|
 | Panel | Cobertura de evidencia por norma, hallazgos abiertos/vencidos, incidentes del año, registros y capacitación |
 | Marco normativo | Catálogo completo con aplicabilidad por centro de trabajo, requisitos clave, evidencias y formatos ligados |
-| Formatos | 65 formatos imprimibles (EHS-F-001 a EHS-F-065): listas de verificación, tablas, actas y programas anuales con matriz de 12 meses, en hoja carta con el diseño F-SH: encabezado con logo, barra dorada de título, bloque de control (código, revisión, fecha, página), tabla de verificación C/NC/N/A y firmas |
+| Formatos | 69 formatos imprimibles (EHS-F-001 a EHS-F-069): listas de verificación, tablas, actas, programas anuales con matriz de 12 meses, permisos de trabajo con selección múltiple y cuestionarios Sí/No con el diseño F-SH: encabezado con logo, barra dorada de título, bloque de control (código, revisión, fecha, página), tabla de verificación C/NC/N/A y firmas |
+| Brigadas | Organigrama de la brigada de emergencias, con integrantes y funciones editables e impresión |
 | Documentos | 9 programas, procedimientos, manuales, planes e instructivos (EHS-D-001 a 009) con el texto íntegro de los documentos F-SH / D-SH, imprimibles con el encabezado de la empresa |
 | Registros | Documentos llenados, búsqueda, reimpresión y exportación |
 | Hallazgos | Generación automática desde NC en listas de verificación, responsable, fecha compromiso, cierre |
@@ -116,7 +117,7 @@ La clave publicable (`sb_publishable_…`) va embebida en `index.html` porque es
 ├── tests/catalogo.test.js          # 5 pruebas del catálogo y del generador
 ├── tests/biblioteca.test.js        # integridad de formatos y documentos incrustados en index.html
 ├── data/biblioteca/                # formatos.json y docs.json generados desde la carpeta Formatos
-├── tools/biblioteca/               # scripts que regeneran el bloque AUTOGEN de index.html (ver su README)
+├── tools/biblioteca/               # scripts que regeneran el bloque AUTOGEN y los tipos nuevos de index.html
 ├── build.js                        # regenera data/normas.json
 ├── package.json                    # scripts build y test
 ├── .github/workflows/ci.yml        # CI: pruebas + revisión de que no haya llaves service_role

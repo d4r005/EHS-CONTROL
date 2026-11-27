@@ -1,0 +1,136 @@
+# Formatos del segundo lote: PTR, bitácora de permisos, evaluación de simulacro, IPER
+import json, os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+OUT = os.environ.get('OUT_DIR', 'data/biblioteca')
+nuevos, upd = [], {}
+
+PTR_SEC = [
+ ('Tipo de trabajo a realizar (marcar los que apliquen)',
+  ['Trabajos en alturas (1.8 m)','Trabajos de elevación','Trabajos en caliente','Trabajos eléctricos','Trabajos LOTO','Trabajos Hazmat']),
+ ('Evaluación de riesgos — trabajos en alturas',
+  ['Caída desde alturas','Caída de materiales usados en altura','Caída de escalera, plataforma o canastilla','Caída por agujeros o a través de materiales frágiles','Choque con personas u objetos cuando se trabaja en altura','Contacto con líneas vivas o equipos energizados']),
+ ('Evaluación de riesgos — trabajos de elevación',
+  ['Caída de cargas','Colapso de equipos de elevación','Contacto con líneas o equipos eléctricos','Golpear personas u objetos durante la elevación']),
+ ('Evaluación de riesgos — trabajos en caliente',
+  ['Incendio','Explosión','Quemaduras','Cortes','Salpicaduras']),
+ ('Evaluación de riesgos — trabajos eléctricos',
+  ['Contacto eléctrico directo','Arco eléctrico','Contacto eléctrico indirecto','Proyección de materiales','Explosiones','Electricidad estática']),
+ ('Evaluación de riesgos — LOTO',
+  ['Riesgo eléctrico','Riesgo mecánico','Hidráulico','Neumático','Químico']),
+ ('Precauciones previas y durante el trabajo — alturas',
+  ['Andamios','Canasta','Escalera','Segregación temporal','Línea de vida temporal','Solo la herramienta necesaria','Herramientas amarradas','Redes de seguridad','Delimitación del área','Línea de vida con o sin amortiguador','Anticaídas retráctil (carrete)','Casco con barbiquejo (obligatorio)','Puntos de anclaje designados']),
+ ('Precauciones — trabajos en caliente',
+  ['Extintor de CO2','Extintor de espuma','Extintor de polvo','Despejar el área a un radio de 10 m','Vigilancia en la zona de trabajo']),
+ ('Precauciones — trabajos de elevación',
+  ['Gancho','Cable','Cáncamos','Eslingas cadena','Cuerdas fibra','Argollas','Gancho de rescate','Material asegurado a tarima']),
+ ('Precauciones — trabajos eléctricos',
+  ['Bloqueo y señalización de energía','Magnetotérmico / interruptor diferencial','Puesta a tierra','Vestimenta sin portes metálicos','Doble aislamiento','Separación eléctrica de circuitos']),
+ ('EPP específico — trabajos en caliente',
+  ['Casco de seguridad','Careta de soldar / esmerilar','Guantes resistentes para el calor','Ropa de protección de cuero cromado','Zapatos de seguridad con punta de acero','Respirador y filtros para humos metálicos']),
+ ('EPP específico — trabajos eléctricos',
+  ['Calzado de seguridad dieléctrico','Guantes dieléctricos','Ropa de trabajo ignífuga','Casco dieléctrico','Alfombras aislantes','Banquetas aislantes','Pértigas aislantes']),
+ ('EPP específico — trabajos Hazmat',
+  ['Guantes químicos','Botas contra químicos','Traje Tyvek','Respirador de media cara o cara completa','Número NIOSH de filtro verificado','Hojas de Seguridad de S.Q.P. disponibles']),
+ ('EPP específico — trabajos LOTO',
+  ['Botas de seguridad eléctrica','Guantes de seguridad eléctrica','Gafas de seguridad']),
+ ('Confirmaciones previas (Sí)',
+  ['Área circundante verificada y limpia','EPP adecuado y usado por toda persona involucrada','Equipos de extinción de incendios adecuados y disponibles','Lona contra chispas o ignífuga','Equipo eléctricamente aislado / puesto a tierra','Área de trabajo despejada, demarcada, cubierta y etiquetada','Materiales flamables retirados del lugar al menos a 11 m','Trabajadores cercanos informados del trabajo a efectuarse','Capacitación adecuada proporcionada a toda persona involucrada','Medios adecuados de salida disponibles','El emisor y el receptor del permiso revisan el área de forma conjunta','Plática informativa dada a todos los trabajadores afectados por este permiso']),
+ ('Capacitación y requisitos (DC-3)',
+  ['Capacitación general en trabajo en alturas (DC-3)','Entrenamiento en uso de arnés (DC-3)','Capacitación general para trabajos en caliente (DC-3)','Capacitación general en Lock Out - Tag Out','Capacitación general en mantenimiento a instalaciones eléctricas (DC-3)']),
+ ('Documentación revisada',
+  ['Seguro Social IMSS (SUA)','Seguro de Responsabilidad Civil']),
+]
+
+nuevos.append(dict(
+ c='EHS-F-066', n='Permiso para realizar trabajos peligrosos (PTR)', nk='NOM-009-STPS-2011', tipo='seleccion',
+ frec='Por evento', orient='portrait',
+ p='Permiso por evento para trabajos de alto riesgo: tipo de trabajo, evaluación de riesgos, precauciones, EPP específico, confirmaciones previas, capacitación DC-3 y documentación revisada.',
+ campos=[['fecha','Fecha de trámite','date'],['folio','Permiso N°'],['hora','Hora de trámite'],['resp','Responsable del área'],
+   ['sitio','Sitio y área de realización del trabajo'],['ejec','Trabajo a realizar por (NAF interno / contratista)'],['cia','Nombre de la compañía contratista'],
+   ['fEjec','Fecha de ejecución','date'],['dur','Duración estimada (de h a h)'],['desc','Descripción de los trabajos']],
+ sec=[{'t':t,'it':it} for t,it in PTR_SEC],
+ nota='Anexar plano o esquema del área, análisis de riesgo de la actividad y, en trabajos en caliente, la vigilancia contra incendios con nombre, hora y firma de cada revisión.',
+ firmas=['Responsable del área de trabajo','Gerente / supervisor del contratista','Coordinador EHS de NAF','Emisor del permiso']))
+
+nuevos.append(dict(
+ c='EHS-F-067', n='Bitácora de registro y control de permisos para trabajo con riesgo', nk='NOM-009-STPS-2011', tipo='tabla',
+ frec='Continua', orient='landscape',
+ p='Control consecutivo de los permisos emitidos: folio, solicitante, tipo de trabajo peligroso, área, fechas, horario y firma.',
+ campos=[['anio','Año'],['resp','Responsable de la bitácora']],
+ cols=[['folio','Folio del permiso'],['sol','Persona solicitante'],['tipo','Tipo de trabajo peligroso'],['area','Área donde se realizará'],
+   ['fsol','Fecha de solicitud'],['fejec','Fecha de ejecución'],['hora','Hora de inicio y término'],['firma','Firma del solicitante']],
+ nFilas=15,
+ firmas=['Responsable de la bitácora','Coordinación EHS','Gerencia']))
+
+PREG = [
+ '¿Se cuenta con un plan de emergencias actualizado?',
+ '¿Este plan de emergencias está implementado y el personal está capacitado?',
+ '¿Los miembros de la brigada fueron entrenados anualmente?',
+ '¿Todos los empleados se congregaron en el punto de reunión?',
+ '¿Los miembros de la brigada desarrollaron sus tareas asignadas?',
+ '¿Se siguieron todos los elementos del plan de emergencias durante el simulacro?',
+ '¿Está documentada la capacitación en el plan de emergencias?',
+ '¿Los empleados evacuaron o se refugiaron siguiendo las salidas indicadas?',
+ '¿Existieron deficiencias o fallas durante la realización del simulacro?',
+ '¿Participaron visitantes, subcontratistas o chóferes?',
+ '¿Se utilizaron las rutas y salidas de emergencia correctas?',
+ '¿Hubo algún peligro durante la evacuación (persona trepando, obstrucción, etc.)?',
+ '¿Se sacaron los botiquines de primeros auxilios de emergencia?',
+ '¿Se tomó la carpeta de emergencia / incendio (incluyendo HDS)?',
+ '¿Se tomaron todas las medidas preventivas sanitarias vigentes?',
+ '¿Se realizó una revisión y análisis de este simulacro por parte del equipo de emergencias?',
+ 'Usando este ejercicio como guía, ¿cree que todos los ocupantes están preparados para una emergencia real?',
+]
+nuevos.append(dict(
+ c='EHS-F-068', n='Evaluación del simulacro', nk='NOM-002-STPS-2010', tipo='cuestionario',
+ frec='Por simulacro', orient='portrait',
+ p='Evaluación posterior al simulacro: plan de emergencias, brigada, punto de reunión, rutas y salidas, tiempos de evacuación y cambios necesarios al plan.',
+ campos=[['fecha','Fecha del simulacro','date'],['area','Sucursal / centro de trabajo'],['emerg','Emergencia simulada'],
+   ['resp','Coordinador de respuesta de emergencia'],['hora','Hora de activación de alarma'],['dur','Duración del simulacro'],
+   ['tEsp','Tiempo de evacuación esperado'],['tReal','Tiempo de evacuación real'],['alarma','¿Cómo se alarmó y notificó a los empleados?']],
+ preguntas=PREG,
+ bloques=[{'t':'Cambios necesarios al plan de emergencias','rows':3},
+          {'t':'Fecha programada para actualizar el plan de emergencias','rows':2},
+          {'t':'Observaciones generales del simulacro','rows':4}],
+ firmas=['Gerente de planta','Asignado EHS','Coordinador de la brigada']))
+
+nuevos.append(dict(
+ c='EHS-F-069', n='Matriz de identificación de peligros y evaluación de riesgos (IPER)', nk='ISO 45001:2018', tipo='tabla',
+ frec='Anual / por cambio', orient='landscape',
+ p='Matriz IPER por área o proceso: tópico, rutinario o no rutinario, clasificación del riesgo, efectos posibles, controles existentes y evaluación impacto × ocurrencia.',
+ campos=[['area','Área / proceso'],['fecha','Fecha de evaluación','date'],['dueno','Dueño del proceso'],['resp','Elaboró (Depto. EHS)']],
+ cols=[['top','Tópico'],['rut','Rutinario / No rutinario'],['cla','Clasificación de riesgos'],['act','Actividades'],
+   ['efe','Efectos posibles de riesgos'],['tc','Tipo de control'],['ctrl','Control'],['imp','Impacto (I)'],['ocu','Ocurrencia (O)'],['idx','Índice (I×O)']],
+ nFilas=14,
+ nota='Índice de riesgo = impacto × ocurrencia. Jerarquía de controles: eliminación, sustitución, ingeniería, administrativos y EPP.',
+ firmas=['Dueño del proceso','Depto. EHS','Gerencia']))
+
+# Reemplaza la investigación de accidentes por la estructura completa del reporte NAF
+upd['EHS-F-062'] = dict(
+ n='Reporte de investigación de accidentes e incidentes', tipo='acta', frec='Por evento', orient='portrait',
+ p='Investigación completa: datos generales, equipo investigador, detalles y clasificación, cronología, causas contributivas, 5 porqués, notificaciones, acciones de contención y correctivas, fotografías y declaraciones.',
+ campos=[['fecha','Fecha del accidente','date'],['folio','Número de control'],['area','Sucursal / centro de trabajo'],['resp','Investigador principal'],['pers','Persona lesionada o involucrada']],
+ bloques=[
+  {'t':'1. Datos generales (fecha y hora del accidente, sucursal, lugar: habitual del trabajo o no habitual, turno)','rows':4},
+  {'t':'2. Equipo de investigación (nombre, posición y teléfono o correo de cada integrante)','rows':5},
+  {'t':'3. Datos de la persona lesionada y testigos (nombre, número de empleado, departamento, horario del turno, fecha de contratación y antigüedad)','rows':5},
+  {'t':'4. Descripción detallada del accidente (qué, cuándo, dónde, cómo; parte del cuerpo afectada y lesión)','rows':6},
+  {'t':'5. Clasificación del accidente (espacio confinado, electricidad, falla en el equipo, caída del mismo nivel, relacionado con montacargas, calor o frío, operaciones de elevación, manipulación manual, resbalón o tropiezo, otros)','rows':3},
+  {'t':'6. Factores identificados (diseño, ambientales, humanos o de comportamiento, formación y reglas de la instalación)','rows':4},
+  {'t':'7. Maquinaria involucrada (nombre, fabricante, modelo, número de serie, quién la inspeccionó)','rows':3},
+  {'t':'8. Cronología de los eventos (cronograma y tarea · qué ocurrió · por qué ocurrió)','rows':7},
+  {'t':'9. Análisis de causa raíz: causas contributivas (comportamiento, diseño y ergonomía, medio ambiente, equipo defectuoso, equipo usado incorrectamente, falta o información incorrecta, levantamiento inseguro, mantenimiento, procedimiento ignorado o inadecuado, recursos y carga de trabajo, formación, barreras de seguridad ignoradas o inadecuadas)','rows':7},
+  {'t':'10. Metodología de los 5 porqués (problema, por qué 1 a 5, causa raíz y acción para implementar)','rows':7},
+  {'t':'11. Personas o agencias externas notificadas (fecha y hora, persona o agencia)','rows':3},
+  {'t':'12. Métodos de trabajo, SOP y procesos de HSE relacionados','rows':3},
+  {'t':'13. Seguimiento y supervisión (inspecciones, auditorías, observaciones previas)','rows':3},
+  {'t':'14. Acciones de contención (descripción de la acción y fecha)','rows':3},
+  {'t':'15. Acciones correctivas y preventivas (acción, persona responsable, fecha compromiso, fecha de cierre)','rows':5},
+  {'t':'16. Fotografías (descripción y locación de cada evidencia)','rows':3},
+  {'t':'17. Declaración de la persona empleada (nombre, descripción de lo ocurrido, cómo pudo haberse evitado, fecha)','rows':5},
+  {'t':'18. Declaración de testigos (nombre y número de empleado, qué sucedió, si notó algo inusual, fecha)','rows':5}],
+ firmas=['Gerente de la sucursal','Investigador principal','Coordinación EHS'])
+
+json.dump({'nuevos':nuevos,'upd':upd}, open(os.path.join(OUT,'formatos_c.json'),'w'), ensure_ascii=False, indent=1)
+for f in nuevos: print(f['c'], f['tipo'], sum(len(s['it']) for s in f.get('sec',[])) or len(f.get('cols',[])) or len(f.get('preguntas',[])), f['n'][:60])
+print('UPD', list(upd))

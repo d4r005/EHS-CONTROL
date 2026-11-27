@@ -42,7 +42,8 @@ Este proyecto tiene el modo automático habilitado mediante `.claude/settings.js
 
 - **Panel** — Resumen de cumplimiento, hallazgos abiertos/vencidos, incidentes, registros
 - **Marco normativo** — Catálogo con 35 NOM + ISO 14001/45001 + trámites IMSS, aplicabilidad por centro
-- **Formatos** — 65 formatos imprimibles (EHS-F-001 a EHS-F-065), llenables en navegador; tipos: check, tabla, acta, programa
+- **Formatos** — 69 formatos imprimibles (EHS-F-001 a EHS-F-069), llenables en navegador; tipos: check, tabla, acta, programa, seleccion, cuestionario
+- **Brigadas** — organigrama de la brigada de emergencias (integrantes y funciones editables)
 - **Documentos** — 9 programas, procedimientos, manuales y planes (EHS-D-001 a 009), lectura e impresión
 - **Registros** — Búsqueda, reimpresión, exportación de documentos llenados
 - **Hallazgos** — Generación automática desde NC, seguimiento con responsable/fecha compromiso

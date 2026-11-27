@@ -60,10 +60,43 @@ test("el manual de primeros auxilios conserva su extensión", () => {
   assert.ok(palabras > 9000, "palabras: " + palabras);
 });
 
-test("la app registra la vista Documentos y el tipo programa", () => {
+const C = extraer("FORMATOS_C");
+
+test("segundo lote: códigos únicos desde EHS-F-066 y estructura por tipo", () => {
+  const cods = C.map(f => f.c);
+  assert.strictEqual(new Set(cods).size, cods.length);
+  cods.forEach(c => assert.ok(+c.slice(6) >= 66, c));
+  for (const f of C) {
+    assert.ok(["seleccion", "cuestionario", "tabla"].includes(f.tipo), f.c);
+    if (f.tipo === "seleccion") assert.ok(f.sec.length >= 10 && f.sec.every(s => s.it.length), f.c);
+    if (f.tipo === "cuestionario") assert.ok(f.preguntas.length >= 15, f.c);
+    if (f.tipo === "tabla") assert.ok(f.cols.length >= 8, f.c);
+  }
+});
+
+test("brigada de emergencias: integrantes sin duplicados", () => {
+  const m = html.match(/const BRIGADA_SEED=\{[\s\S]*?\n  miembros:\[([\s\S]*?)\]\};/);
+  assert.ok(m, "no se encontró BRIGADA_SEED");
+  const nombres = [...m[1].matchAll(/n:'([^']+)'/g)].map(x => x[1]);
+  assert.ok(nombres.length >= 13, "integrantes: " + nombres.length);
+  assert.strictEqual(new Set(nombres).size, nombres.length);
+});
+
+test("no se publican datos personales del reporte de accidente", () => {
+  // El reporte real se usó solo como modelo de estructura: no debe viajar con nombres ni lesiones
+  for (const dato of ["Palestina", "Ariana", "1008", "antebrazo y mano izquierda"]) {
+    assert.ok(!html.includes(dato), "dato personal publicado: " + dato);
+  }
+});
+
+test("la app registra la vista Documentos, Brigadas y los tipos nuevos", () => {
   assert.match(html, /documentos:vDocumentos/);
   assert.match(html, /id:'documentos'/);
   assert.match(html, /tipo==='programa'/);
+  assert.match(html, /brigadas:vBrigadas/);
+  assert.match(html, /id:'brigadas'/);
+  assert.match(html, /tipo==='seleccion'/);
+  assert.match(html, /tipo==='cuestionario'/);
 });
 
 test("no se filtran secretos ni la llave de servicio de Supabase", () => {

@@ -3,6 +3,7 @@ import os
 HERE=os.path.dirname(os.path.abspath(__file__)); R=''; DAT='data/biblioteca/'
 s=open(R+'index.html').read()
 F=json.load(open(DAT+'formatos.json')); D=json.load(open(DAT+'docs.json'))
+C=json.load(open(DAT+'formatos_c.json'))
 def js(o): return json.dumps(o,ensure_ascii=False,separators=(',',':'))
 # limpiar bloque previo (idempotente)
 s=re.sub(r'<script>\n/\* @@AUTOGEN-INICIO@@ \*/.*?/\* @@AUTOGEN-FIN@@ \*/\n</script>\n','',s,flags=re.S)
@@ -20,8 +21,18 @@ Object.keys(FORMATOS_REF_UPD).forEach(c=>{{ const f=FORMATOS.find(x=>x.c===c); i
   FORMATOS_REF.forEach(f=>{{ (porNorma[f.nk]=porNorma[f.nk]||[]).push(f.c); }});
   Object.keys(porNorma).forEach(k=>{{ const n=(typeof NORMAS!=='undefined')&&NORMAS.find(x=>x.k===k); if(n){{ n.f=n.f||[]; porNorma[k].forEach(c=>{{ if(!n.f.includes(c)) n.f.push(c); }}); }} }});
 }})();
+const FORMATOS_C = {js(C['nuevos'])};
+const FORMATOS_C_UPD = {js(C['upd'])};
+FORMATOS_C.forEach(n=>{{ if(!FORMATOS.some(f=>f.c===n.c)) FORMATOS.push(n); }});
+Object.keys(FORMATOS_C_UPD).forEach(c=>{{ const f=FORMATOS.find(x=>x.c===c); if(f) Object.assign(f,FORMATOS_C_UPD[c]); }});
+(function(){{
+  const porNorma={{}};
+  FORMATOS_C.forEach(f=>{{ (porNorma[f.nk]=porNorma[f.nk]||[]).push(f.c); }});
+  Object.keys(porNorma).forEach(k=>{{ const n=(typeof NORMAS!=='undefined')&&NORMAS.find(x=>x.k===k); if(n){{ n.f=n.f||[]; porNorma[k].forEach(c=>{{ if(!n.f.includes(c)) n.f.push(c); }}); }} }});
+}})();
 const DOCUMENTOS = {js(D)};
 {view}
+{open(HERE+'/brigadas.js').read()}
 /* @@AUTOGEN-FIN@@ */
 </script>
 """
