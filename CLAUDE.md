@@ -20,7 +20,7 @@ Este proyecto tiene el modo automático habilitado mediante `.claude/settings.js
 
 | Comando | Descripción |
 |---|---|
-| `npm test` | Ejecuta las 5 pruebas del catálogo normativo |
+| `npm test` | Pruebas del catálogo normativo y de la biblioteca de formatos y documentos |
 | `npm run build` | Regenera `data/normas.json` desde `data/normas.js` |
 
 ## Estructura del proyecto
@@ -42,7 +42,8 @@ Este proyecto tiene el modo automático habilitado mediante `.claude/settings.js
 
 - **Panel** — Resumen de cumplimiento, hallazgos abiertos/vencidos, incidentes, registros
 - **Marco normativo** — Catálogo con 35 NOM + ISO 14001/45001 + trámites IMSS, aplicabilidad por centro
-- **Formatos** — 37 formatos imprimibles (EHS-F-001 a EHS-F-037), llenables en navegador
+- **Formatos** — 65 formatos imprimibles (EHS-F-001 a EHS-F-065), llenables en navegador; tipos: check, tabla, acta, programa
+- **Documentos** — 9 programas, procedimientos, manuales y planes (EHS-D-001 a 009), lectura e impresión
 - **Registros** — Búsqueda, reimpresión, exportación de documentos llenados
 - **Hallazgos** — Generación automática desde NC, seguimiento con responsable/fecha compromiso
 - **Incidentes** — Registro con días de incapacidad, control de aviso ST-7

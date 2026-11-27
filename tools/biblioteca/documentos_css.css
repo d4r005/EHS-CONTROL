@@ -1,0 +1,7 @@
+.pdoc .dbody{margin-top:10px;font-size:9pt;line-height:1.5}
+.pdoc .dbody h2{margin:14px 0 4px;break-after:avoid}
+.pdoc .dbody p{margin:0 0 6px;text-align:justify}
+.pdoc .dbody ul{margin:2px 0 8px 18px;padding:0}
+.pdoc .dbody li{margin:0 0 2px}
+.pdoc .dbody table.tb th,.pdoc .dbody table.tb td{height:auto}
+.pdoc-long .sig{break-inside:avoid}

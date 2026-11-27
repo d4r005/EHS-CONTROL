@@ -1,0 +1,1493 @@
+{
+ "nuevos": [
+  {
+   "c": "EHS-F-045",
+   "n": "Programa de mantenimiento de las instalaciones del centro de trabajo",
+   "nk": "NOM-001-STPS-2008",
+   "tipo": "programa",
+   "frec": "Anual",
+   "orient": "landscape",
+   "p": "Programa anual (ene-dic) de mantenimiento de puertas, escaleras, techos, desagües, aire acondicionado, pisos, plafones, sanitarios y estructuras.",
+   "campos": [
+    [
+     "anio",
+     "Año del programa"
+    ],
+    [
+     "area",
+     "Área / ubicación"
+    ],
+    [
+     "resp",
+     "Responsable del programa"
+    ]
+   ],
+   "filas": [
+    {
+     "g": "Puertas"
+    },
+    {
+     "e": "Funcionalidad"
+    },
+    {
+     "e": "Condición física"
+    },
+    {
+     "e": "Comprobación de apertura puertas de emergencia"
+    },
+    {
+     "g": "Escaleras"
+    },
+    {
+     "e": "Condición física"
+    },
+    {
+     "e": "Antiderrapante"
+    },
+    {
+     "e": "Pasamanos en buenas condiciones o fijo"
+    },
+    {
+     "g": "Techos y sistemas de desagüe de Techos"
+    },
+    {
+     "e": "Condiciones generales de Techo/Tragaluz"
+    },
+    {
+     "e": "Revisión de canaletas y sistema de desagüe"
+    },
+    {
+     "g": "Sistema de desagüe en patios"
+    },
+    {
+     "e": "Revisión de desagüe de alcantarillas"
+    },
+    {
+     "g": "Equipos de aire acondicionado"
+    },
+    {
+     "e": "Revisión de termostato"
+    },
+    {
+     "e": "Limpieza de filtros"
+    },
+    {
+     "e": "Condición de aislamiento térmico"
+    },
+    {
+     "e": "Revisión de fugas"
+    },
+    {
+     "g": "Pisos, pasillos y accesos"
+    },
+    {
+     "e": "Condición física"
+    },
+    {
+     "g": "Plafones"
+    },
+    {
+     "e": "Revisión y remplazo de plafones"
+    },
+    {
+     "g": "Limpieza general de instalaciones"
+    },
+    {
+     "e": "Limpieza de pisos y oficinas"
+    },
+    {
+     "g": "Sanitarios"
+    },
+    {
+     "e": "Limpieza de sanitarios"
+    },
+    {
+     "g": "Estructuras y paredes"
+    },
+    {
+     "e": "Revisión general para identificar daños"
+    }
+   ]
+  },
+  {
+   "c": "EHS-F-046",
+   "n": "Registro de resultados de mantenimiento de las instalaciones del centro de trabajo",
+   "nk": "NOM-001-STPS-2008",
+   "tipo": "check",
+   "frec": "Según programa",
+   "p": "Resultados de cada revisión del programa de mantenimiento de las instalaciones, con acción correctiva y responsable.",
+   "campos": [
+    [
+     "fecha",
+     "Fecha de revisión",
+     "date"
+    ],
+    [
+     "area",
+     "Áreas revisadas"
+    ],
+    [
+     "resp",
+     "Responsable de la revisión"
+    ],
+    [
+     "puesto",
+     "Puesto"
+    ]
+   ],
+   "sec": [
+    {
+     "t": "Puertas",
+     "it": [
+      "Funcionalidad",
+      "Condición física",
+      "Comprobación de apertura puertas de emergencia"
+     ]
+    },
+    {
+     "t": "Escaleras",
+     "it": [
+      "Condición física",
+      "Antiderrapante",
+      "Pasamanos en buenas condiciones o fijo"
+     ]
+    },
+    {
+     "t": "Techos y sistemas de desagüe de Techos",
+     "it": [
+      "Condiciones generales de Techo/Tragaluz",
+      "Revisión de canaletas y sistema de desagüe"
+     ]
+    },
+    {
+     "t": "Sistema de desagüe en patios",
+     "it": [
+      "Revisión de desagüe de alcantarillas"
+     ]
+    },
+    {
+     "t": "Equipos de aire acondicionado",
+     "it": [
+      "Revisión de termostato",
+      "Limpieza de filtros",
+      "Condición de aislamiento térmico",
+      "Revisión de fugas"
+     ]
+    },
+    {
+     "t": "Pisos, pasillos y accesos",
+     "it": [
+      "Condición física"
+     ]
+    },
+    {
+     "t": "Plafones",
+     "it": [
+      "Revisión y remplazo de plafones"
+     ]
+    },
+    {
+     "t": "Limpieza general de instalaciones",
+     "it": [
+      "Limpieza de pisos y oficinas"
+     ]
+    },
+    {
+     "t": "Sanitarios",
+     "it": [
+      "Limpieza de sanitarios"
+     ]
+    },
+    {
+     "t": "Estructuras y paredes",
+     "it": [
+      "Revisión general para identificar daños"
+     ]
+    }
+   ]
+  },
+  {
+   "c": "EHS-F-047",
+   "n": "Programa de mantenimiento a los sistemas de ventilación artificial",
+   "nk": "NOM-001-STPS-2008",
+   "tipo": "programa",
+   "frec": "Anual",
+   "orient": "landscape",
+   "p": "Programa anual de mantenimiento a los sistemas de ventilación artificial (NOM-001-STPS-2008, numeral 8.3).",
+   "campos": [
+    [
+     "anio",
+     "Año del programa"
+    ],
+    [
+     "area",
+     "Área / ubicación"
+    ],
+    [
+     "resp",
+     "Responsable del programa"
+    ]
+   ],
+   "filas": [
+    {
+     "e": "La admisión del ventilador se encuentra libre de obstaculos"
+    },
+    {
+     "e": "Existe fisuras o desprendimiento de partes"
+    },
+    {
+     "e": "Conductos de aire, libre de suciedad y humedad"
+    },
+    {
+     "e": "La guarda se encuentra fija y estable"
+    },
+    {
+     "e": "El aire extraido no contamina otras áreas"
+    },
+    {
+     "e": "Se requiere cambio de filtros, lubricante o bandas"
+    },
+    {
+     "e": "Existen cuerpos extraños o suciedad acumulada en aspas/ rotor/banda/guardas"
+    },
+    {
+     "e": "Se detecta sobrecalentamiento o vibraciones en el equipo"
+    },
+    {
+     "e": "Los componentes rotatorios giran alrededor de un eje de rotación que no coincide con el eje principal de inercia"
+    },
+    {
+     "e": "Existe daños en los componentes electricos del equipo de ventilación"
+    },
+    {
+     "e": "Otros (especifique)"
+    }
+   ]
+  },
+  {
+   "c": "EHS-F-048",
+   "n": "Registro de resultados de mantenimiento a los sistemas de ventilación artificial",
+   "nk": "NOM-001-STPS-2008",
+   "tipo": "check",
+   "frec": "Según programa",
+   "p": "Resultados de la revisión a ventiladores, conductos, guardas, filtros y componentes eléctricos.",
+   "campos": [
+    [
+     "fecha",
+     "Fecha de revisión",
+     "date"
+    ],
+    [
+     "area",
+     "Áreas revisadas"
+    ],
+    [
+     "resp",
+     "Responsable de la revisión"
+    ],
+    [
+     "puesto",
+     "Puesto"
+    ]
+   ],
+   "sec": [
+    {
+     "t": "Puntos a revisar",
+     "it": [
+      "La admisión del ventilador se encuentra libre de obstaculos",
+      "Existe fisuras o desprendimiento de partes",
+      "Conductos de aire, libre de suciedad y humedad",
+      "La guarda se encuentra fija y estable",
+      "El aire extraido no contamina otras áreas",
+      "Se requiere cambio de filtros, lubricante o bandas",
+      "Existen cuerpos extraños o suciedad acumulada en aspas/ rotor/banda/guardas",
+      "Se detecta sobrecalentamiento o vibraciones en el equipo",
+      "Los componentes rotatorios giran alrededor de un eje de rotación que no coincide con el eje principal de inercia",
+      "Existe daños en los componentes electricos del equipo de ventilación",
+      "Otros (especifique)"
+     ]
+    }
+   ]
+  },
+  {
+   "c": "EHS-F-049",
+   "n": "Programa anual de revisión a las instalaciones eléctricas",
+   "nk": "NOM-002-STPS-2010",
+   "tipo": "programa",
+   "frec": "Anual",
+   "orient": "landscape",
+   "p": "Programa anual de revisión de tableros, conductores, contactos, interruptores, luminarias y puesta a tierra (numeral 7.5).",
+   "campos": [
+    [
+     "anio",
+     "Año del programa"
+    ],
+    [
+     "area",
+     "Área / ubicación"
+    ],
+    [
+     "resp",
+     "Responsable del programa"
+    ]
+   ],
+   "filas": [
+    {
+     "e": "Tableros de distribucion"
+    },
+    {
+     "e": "Conductores"
+    },
+    {
+     "e": "Cajas de conexiones"
+    },
+    {
+     "e": "Contactos"
+    },
+    {
+     "e": "Interruptores"
+    },
+    {
+     "e": "Luminarias"
+    },
+    {
+     "e": "Protecciones en circuitos alimentadores y derivados"
+    },
+    {
+     "e": "Puesta a tierra de equipos y circuitos"
+    }
+   ]
+  },
+  {
+   "c": "EHS-F-050",
+   "n": "Registro de resultados de la revisión a las instalaciones eléctricas",
+   "nk": "NOM-002-STPS-2010",
+   "tipo": "check",
+   "frec": "Según programa",
+   "p": "Resultados de la revisión eléctrica: aspectos generales, instalaciones temporales y puesta a tierra (numeral 7.7).",
+   "campos": [
+    [
+     "fecha",
+     "Fecha de revisión",
+     "date"
+    ],
+    [
+     "area",
+     "Áreas revisadas"
+    ],
+    [
+     "resp",
+     "Responsable de la revisión"
+    ],
+    [
+     "puesto",
+     "Puesto"
+    ]
+   ],
+   "sec": [
+    {
+     "t": "Aspectos generales",
+     "it": [
+      "Los cables principales y las derivaciones de las instalaciones eléctricas están entubados o empotrados.",
+      "Para el caso de instalaciones expuestas, se cuenta con canaletas, accesorios y/o fijación apropiados.",
+      "Los tableros o cajas de control eléctrico están adecuadamente señalizados (riesgo eléctrico).",
+      "Los tableros o cajas de control eléctrico se mantienen limpios.",
+      "Los circuitos en el tablero o caja de control están marcados o rotulados indicando la tensión y el circuito que alimenta",
+      "Enchufes y tomacorrientes en buenas condiciones (de preferencia sellados y blindados).",
+      "Los tomacorrientes expuestos a la intemperie cuentan con protección contra posibles salpicaduras de agua.",
+      "En oficinas los equipos eléctricos de cómputo cuentan con supresores de pico y/o estabilizadores de corriente antes de su conexión a tomacorrientes",
+      "Se realiza mantenimiento de las instalaciones eléctricas en forma anual.",
+      "Fecha de último mantenimiento: __________________"
+     ]
+    },
+    {
+     "t": "Instalaciones electricas temporales",
+     "it": [
+      "No tienen una permanencia mayor a un día.",
+      "Cables vulcanizados en buenas condiciones.",
+      "Empalmes sólo mediante enchufes y tomacorrientes.",
+      "Los cables y conexiones no pasan por zonas expuestas a bordes afilados, impactos, aprisionamientos, rozamiento mecánico.",
+      "Los cables y conexiones no pasan por zonas expuestas a chispas u otras fuentes de calor.",
+      "Los cables no tienen contacto con agua y en caso sea así los cables y conexiones cuentan con aislamiento a prueba de agua.",
+      "Los cables y conexiones no pasan por vías de circulación, caso contrario están protegidos o enterrados."
+     ]
+    },
+    {
+     "t": "Puesta a Tierra",
+     "it": [
+      "Las instalaciones eléctricas del taller de mantenimiento cuentan con sistema de puesta a tierra.",
+      "El pozo del sistema de puesta a tierra está adecuadamente señalizado.",
+      "Se realiza mantenimiento de la puesta a tierra por lo menos dos veces al año. Fecha de último mantenimiento: _________________"
+     ]
+    }
+   ]
+  },
+  {
+   "c": "EHS-F-051",
+   "n": "Programa anual de revisión a las instalaciones de gas L.P. y/o natural",
+   "nk": "NOM-002-STPS-2010",
+   "tipo": "programa",
+   "frec": "Anual",
+   "orient": "landscape",
+   "p": "Programa anual de revisión a tuberías, tanque y componentes de la instalación de gas (numeral 7.6).",
+   "campos": [
+    [
+     "anio",
+     "Año del programa"
+    ],
+    [
+     "area",
+     "Área / ubicación"
+    ],
+    [
+     "resp",
+     "Responsable del programa"
+    ]
+   ],
+   "filas": [
+    {
+     "e": "Condiciones fisicas de la tuberia en interiores"
+    },
+    {
+     "e": "Condiciones fisicas de la tuberia en exteriores"
+    },
+    {
+     "e": "Condiciones físicas del tanque y/o componentes de la instalación"
+    }
+   ]
+  },
+  {
+   "c": "EHS-F-052",
+   "n": "Registro de resultados de la revisión a las instalaciones de gas L.P. y/o natural",
+   "nk": "NOM-002-STPS-2010",
+   "tipo": "check",
+   "frec": "Según programa",
+   "p": "Resultados de la revisión de tuberías interiores y exteriores, tanque y componentes. Si hay olor a gas, avisar de inmediato al responsable de seguridad e higiene.",
+   "campos": [
+    [
+     "fecha",
+     "Fecha de revisión",
+     "date"
+    ],
+    [
+     "area",
+     "Áreas revisadas"
+    ],
+    [
+     "resp",
+     "Responsable de la revisión"
+    ],
+    [
+     "puesto",
+     "Puesto"
+    ]
+   ],
+   "sec": [
+    {
+     "t": "Condiciones físicas de la tubería en interiores",
+     "it": [
+      "Tubería totalmente fija, rígida, sin movimiento",
+      "Tubería sin señales de fuga",
+      "Tubería con señalización visible y legible de color de seguridad, flecha de flujo e información de la sustancia",
+      "La tubería no tiene señales de corrosión o daño físico"
+     ]
+    },
+    {
+     "t": "Condiciones físicas de la tubería en exteriores",
+     "it": [
+      "Tubería totalmente fija, rígida, sin movimiento",
+      "Tubería sin señales de fuga",
+      "Tubería con señalización visible y legible de color de seguridad, flecha de flujo e información de la sustancia",
+      "La tubería no tiene señales de corrosión o daño físico"
+     ]
+    },
+    {
+     "t": "Condiciones físicas del tanque y/o componentes de la instalación",
+     "it": [
+      "El tanque esta anclado/sujetado",
+      "Área del tanque identificada y señalizada",
+      "No se observan señales de corrosión o daño físico",
+      "Manómetro y regulador en buenas condiciones"
+     ]
+    }
+   ]
+  },
+  {
+   "c": "EHS-F-053",
+   "n": "Análisis de condiciones para trabajos en altura",
+   "nk": "NOM-009-STPS-2011",
+   "tipo": "check",
+   "frec": "Por evento",
+   "p": "Lista de verificación previa a trabajos a más de 1.80 m: trabajos en altura, andamios, escaleras y plataformas de elevación (numeral 5.1).",
+   "campos": [
+    [
+     "fecha",
+     "Fecha y hora de la actividad"
+    ],
+    [
+     "area",
+     "Lugar y área"
+    ],
+    [
+     "pers",
+     "Nombre del personal"
+    ],
+    [
+     "resp",
+     "Responsable del personal"
+    ],
+    [
+     "act",
+     "Tipo de actividad a realizar"
+    ]
+   ],
+   "sec": [
+    {
+     "t": "Trabajos en altura",
+     "it": [
+      "Existe autorización para realizar el trabajo.",
+      "Hay evidencias documental del personal autorizado para trabajos en altura.",
+      "El personal autorizado para trabajos de altura se le ha revisado medicamente y se encuentra apto para realizar actividades.",
+      "Hay evidencia documental del entrenamiento que ha recibido el personal en trabajos de altura.",
+      "Los accesos a los trabajos en altura son los adecuados y seguros cumpliendo con lo establecido en procedimientos y normas.",
+      "Estan preparadas las líneas de vida horizontales y/o verticales para engancharse y se observa que los trabajadores las respetan.",
+      "Los trabajadores hacen uso de casco con barbiquejo y bolsa portaherramientas para evitar la caída.",
+      "Las herramientas manuales utilizadas en los trabajos en altura se encuentran sujetadas evitando con ello caída.",
+      "La zona inferior se encuentra delimitada ante la probable caída de objetos, y está en buen estado para evitar la intrusión de personal no autorizado.",
+      "Al entrevistar a trabajadores sobre el conocimiento de los riesgos de su operación estos contestan correctamente ejemplo: forma de sujetarse, revisión de arnes, etc.",
+      "El responsable de la supervisión de seguridad identifica de manera preventiva los riesgos estableciendo acciones preventivas que eviten la reincidencia.",
+      "Existen condiciones climáticas apropiadas (sin lluvia, viento fuerte).",
+      "En caso de trabajar cerca de líneas energizadas, se consideró la distancia de seguridad o el bloqueo de energía.",
+      "En caso de trabajar cerca de líneas energizadas, ¿se cuenta con el equipo de protección personal para trabajar cerca de ellas?",
+      "Existen puntos de anclaje aprobados",
+      "Existen líneas de vida horizontal y/o vertical aprobadas",
+      "Se cuenta con el equipo de protección completo para detención de caídas (arnés, línea de vida con amortiguador, conectores)",
+      "Existen sistemas de comunicación (radios o celulares para comunicación interna y externa)",
+      "En caso de caída, se consideró el efecto pendulo para determinar el retirar obstáculos y establecer un radio de seguridad"
+     ]
+    },
+    {
+     "t": "Andamios",
+     "it": [
+      "El personal que se encuentra armando andamios esta acreditado para esta actividad.",
+      "Se encuentran las tarjetas correspondientes (roja-verde) colocadas en lugar visible y estan correctamente llenadas y en buen estado.",
+      "La zona de riesgo ante posibles caídas de materiales y herramientas está señalizada y acordonada para evitar que el personal propio como ajeno entre al área de trabajo.",
+      "El andamio se encuentra estable sin movimientos que afecten la estabilidad del trabajador.",
+      "La base del andamio se apoya sobre una superficie estable y suficientemente amplia y nivelada (uso de maderas de apoyo para repartir cargas y husillos de nivelación).",
+      "La plataforma de trabajo tiene una anchura mínima de 60 cm. y está sujeta en sus apoyos de forma que se evitan los movimientos por deslizamiento o vuelco.",
+      "La plataforma dispone de barandillas resistentes a una altura de 90 cm., listón intermedio a 45 cm. y rodapiés de 15 cm. de altura.",
+      "Al accesar a las plataformas no hay huecos que provoquen una condición peligrosa con riesgo de caída para los trabajadores.",
+      "Las escaleras sobre salen de la plataforma 90 cm como minimo.",
+      "Se considero la distancia de seguridad próxima a las líneas energizadas.",
+      "La plataforma se encuentra libre de productos químicos y/o de sustancias que puedan hacerla resbaladiza o generar cualquier otro riesgo.",
+      "Se cuenta con líneas de vida de sujección u otro elemento que permita la sujección del trabajador de forma correcta."
+     ]
+    },
+    {
+     "t": "Escaleras",
+     "it": [
+      "No se utilizan escaleras improvisadas para accesar a alturas (escaleras de andamios o de extensiones).",
+      "Las escaleras estan sujetadas de la parte superios e inferior para una mayor estabilidad.",
+      "Las escaleras estan en buen estado no presentando daños que pudieran poner en riesgo la seguridad de los trabajadores.",
+      "Las escaleras tienen la inclinacion adecuada para un ascenso y descenso seguro.",
+      "Las escaleras utilizadas sobresalen de la parte superior del plano de trabajo como minimo 90 cm.",
+      "No se utiliza la escalera de forma simultánea por 2 o más trabajadores.",
+      "Si no es posible amarrar la escalera de la parte superior un operario la sujeta durante el tiempo que dura el trabajo de su compañero.",
+      "Cuando la escalera presenta inestabilidad por lo largo de esta (mayor a 7 mts utilzan andamios para un ascenso y desenso seguro).",
+      "Al momento de ascender por la escalera a la parte superior hay puntos de sujecion para evitar la caída de los trabajadores.",
+      "Cuando la altura en la escalera es superior es igual o mayor a 6 metros de altura se utilizan sistemas retractiles contra caída."
+     ]
+    },
+    {
+     "t": "Plataformas de elevación",
+     "it": [
+      "El personal que va operar la plataforma esta acreditado para esta actividad",
+      "La plataforma de elevación cuenta con canastilla, integrada al equipo, la cual deberá contener una protección lateral con una altura mínima de 90 cm.",
+      "Existen dispositivos de seguridad para asegurar su nivelación o estabilizadores en el sitio de trabajo",
+      "Se cuenta con sistema automático de alarma sonora, para indicar el ascenso, descenso, desplazamiento delantero o trasero-, y cualquier otro tipo de movimiento.",
+      "Se cuenta con dispositivo de anclaje, para conexión del sistema de protección personal para interrumpir caídas de altura integrado a la canastilla",
+      "Se realizó una revisión visual y prueba funcional de la plataforma de elevación, ¿se tiene registro?",
+      "Las condiciones del suelo permiten el manejo seguro de la plataforma",
+      "Se consideró la distancia de seguridad proxima a las lineas energizadas",
+      "Se consideró que la carga máxima no excede la capacidad nominal",
+      "La zona inferior se encuentra delimitada ante la probable caída de objetos, y esta en buen estado para evitar la intrusion de personal no autorizado.",
+      "Se consideró que al usar un platafora de combustión interna en interiores, se cuenten con ventilación adecuada para evitar la acumulación de humos y gases tóxicos",
+      "Estacionar la base de la plataforma elevada, apagada y protegida contra accionamiento no autorizado, cuando se encuentre fuera de servicio",
+      "Recargar las baterías en un espacio ventilado, donde no exista riesgo de incendio o explosión.",
+      "Se cuenta con extintor de acuerdo al tipo de incendio que se pueda presentar, cerca del equipo"
+     ]
+    }
+   ],
+   "firmas": [
+    "Responsable del personal",
+    "Coordinación EHS",
+    "Gerencia"
+   ]
+  },
+  {
+   "c": "EHS-F-054",
+   "n": "Programa específico de mantenimiento a luminarias y lámparas de emergencia",
+   "nk": "NOM-025-STPS-2008",
+   "tipo": "programa",
+   "frec": "Anual",
+   "orient": "landscape",
+   "p": "Programa anual de limpieza, ventilación y reemplazo de luminarias y lámparas de emergencia (numeral 5.10).",
+   "campos": [
+    [
+     "anio",
+     "Año del programa"
+    ],
+    [
+     "area",
+     "Área / ubicación"
+    ],
+    [
+     "resp",
+     "Responsable del programa"
+    ]
+   ],
+   "filas": [
+    {
+     "e": "Limpieza de las luminarias"
+    },
+    {
+     "e": "Ventilacion de las luminarias"
+    },
+    {
+     "e": "Reemplazo de las luminarias"
+    },
+    {
+     "e": "Elementos que evitan el deslumbramiento directo y por reflexión, así como el efecto estroboscópico"
+    },
+    {
+     "e": "Elementos de preencendido o precalentamiento."
+    },
+    {
+     "e": "Otros (especifique)"
+    }
+   ]
+  },
+  {
+   "c": "EHS-F-055",
+   "n": "Registro de resultados del programa de mantenimiento a luminarias",
+   "nk": "NOM-025-STPS-2008",
+   "tipo": "check",
+   "frec": "Según programa",
+   "p": "Resultados de la revisión a luminarias y lámparas de emergencia (numeral 5.10).",
+   "campos": [
+    [
+     "fecha",
+     "Fecha de revisión",
+     "date"
+    ],
+    [
+     "area",
+     "Áreas revisadas"
+    ],
+    [
+     "resp",
+     "Responsable de la revisión"
+    ],
+    [
+     "puesto",
+     "Puesto"
+    ]
+   ],
+   "sec": [
+    {
+     "t": "Puntos a revisar",
+     "it": [
+      "Limpieza de las luminarias",
+      "Ventilacion de las luminarias",
+      "Reemplazo de las luminarias",
+      "Elementos que evitan el deslumbramiento directo y por reflexión, así como el efecto estroboscópico",
+      "Elementos de preencendido o precalentamiento.",
+      "Otros (especifique)"
+     ]
+    }
+   ]
+  },
+  {
+   "c": "EHS-F-056",
+   "n": "Análisis para la clasificación del riesgo de incendio",
+   "nk": "NOM-002-STPS-2010",
+   "tipo": "acta",
+   "frec": "Anual / por cambio",
+   "p": "Datos del centro de trabajo, inventarios máximos y cálculo del grado de riesgo de incendio (ordinario o alto) por sección (numeral 5.1).",
+   "campos": [
+    [
+     "fecha",
+     "Fecha de la determinación final",
+     "date"
+    ],
+    [
+     "area",
+     "Sección analizada"
+    ],
+    [
+     "resp",
+     "Responsable de la clasificación"
+    ]
+   ],
+   "bloques": [
+    {
+     "t": "a) Razón social y b) domicilio completo del centro de trabajo",
+     "rows": 3
+    },
+    {
+     "t": "c) Descripción general del proceso productivo, materiales y cantidades que se emplean",
+     "rows": 5
+    },
+    {
+     "t": "d) Número máximo de trabajadores por turno y e) personas externas (contratistas y visitantes)",
+     "rows": 3
+    },
+    {
+     "t": "f) Superficie construida en metros cuadrados",
+     "rows": 2
+    },
+    {
+     "t": "g) Inventario máximo del año: gases inflamables (L, umbral 3000), líquidos inflamables (L, 1400), líquidos combustibles (L, 2000), sólidos combustibles (kg, 15000), pirofóricos y explosivos (cualquier cantidad = alto)",
+     "rows": 6
+    },
+    {
+     "t": "h) Cálculo: suma de (inventario ÷ umbral). Resultado menor a 1 = riesgo ORDINARIO; igual o mayor a 1 = riesgo ALTO",
+     "rows": 4
+    },
+    {
+     "t": "j) Tipo de riesgo de incendio por sección del centro de trabajo (ordinario / alto)",
+     "rows": 4
+    }
+   ],
+   "firmas": [
+    "Responsable de la clasificación",
+    "Coordinación EHS",
+    "Gerencia"
+   ]
+  },
+  {
+   "c": "EHS-F-057",
+   "n": "Planeación de simulacros de emergencias de incendio",
+   "nk": "NOM-002-STPS-2010",
+   "tipo": "acta",
+   "frec": "Anual",
+   "p": "Planeación del simulacro: coordinación, medidas de seguridad, fecha, alcance, escenario, funciones, cronología y apoyo externo (numeral 10.2).",
+   "campos": [
+    [
+     "fecha",
+     "Fecha y hora del simulacro",
+     "date"
+    ],
+    [
+     "area",
+     "Alcance del simulacro"
+    ],
+    [
+     "resp",
+     "Coordinador del simulacro"
+    ],
+    [
+     "hipo",
+     "Escenario / hipótesis"
+    ]
+   ],
+   "bloques": [
+    {
+     "t": "1. Coordinación del simulacro (nombre, puesto y área de seguridad responsable)",
+     "rows": 3
+    },
+    {
+     "t": "2. Medidas de seguridad durante el simulacro (guion, horarios, objetivos, participantes, rutas y puntos de reunión)",
+     "rows": 5
+    },
+    {
+     "t": "3. Fecha y hora de ejecución",
+     "rows": 2
+    },
+    {
+     "t": "4. Alcance del simulacro (áreas administrativas y operativas)",
+     "rows": 3
+    },
+    {
+     "t": "5. Tipo de escenario del simulacro",
+     "rows": 4
+    },
+    {
+     "t": "Funciones: coordinación operativa, jefe de piso, brigadistas, observadores y evaluadores",
+     "rows": 6
+    },
+    {
+     "t": "6. Cronología: detección, evaluación, alarma, atención del conato, desalojo, corte de energía, conteo en punto de reunión, abatimiento y reincorporación (con tiempos)",
+     "rows": 8
+    },
+    {
+     "t": "7. Participación de cuerpos especializados de auxilio (interno o externo)",
+     "rows": 3
+    }
+   ],
+   "firmas": [
+    "Coordinador del simulacro",
+    "Coordinación EHS",
+    "Gerencia"
+   ]
+  },
+  {
+   "c": "EHS-F-058",
+   "n": "Registro de los resultados de los simulacros de emergencias de incendio",
+   "nk": "NOM-002-STPS-2010",
+   "tipo": "acta",
+   "frec": "Anual",
+   "p": "Resultados del simulacro: áreas, personas participantes, recursos, desviaciones, recomendaciones, duración y encargados (numeral 10.3).",
+   "campos": [
+    [
+     "fecha",
+     "Fecha del simulacro",
+     "date"
+    ],
+    [
+     "area",
+     "Áreas donde se realizó"
+    ],
+    [
+     "resp",
+     "Coordinador"
+    ],
+    [
+     "pers",
+     "Personas que intervinieron (operadores / administrativos)"
+    ]
+   ],
+   "bloques": [
+    {
+     "t": "1. Razón social y 2. domicilio completo del centro de trabajo",
+     "rows": 3
+    },
+    {
+     "t": "3. Áreas del centro de trabajo en las que se realizó el simulacro",
+     "rows": 3
+    },
+    {
+     "t": "5. Recursos utilizados (rutas y salidas señalizadas, alarma audible y visible, extintores, brigadas, otros)",
+     "rows": 5
+    },
+    {
+     "t": "6. Detección de desviaciones en las acciones planeadas",
+     "rows": 6
+    },
+    {
+     "t": "7. Recomendaciones para actualizar el plan de atención a emergencias de incendio",
+     "rows": 6
+    },
+    {
+     "t": "8. Duración del simulacro (evacuación total desde la activación de alarmas: minutos y segundos)",
+     "rows": 2
+    },
+    {
+     "t": "9. Encargados de coordinarlo: coordinador, jefes de piso, brigadistas, observadores y evaluadores",
+     "rows": 6
+    }
+   ],
+   "firmas": [
+    "Coordinador del simulacro",
+    "Coordinación EHS",
+    "Gerencia"
+   ]
+  },
+  {
+   "c": "EHS-F-059",
+   "n": "Requisitos para elaborar el croquis, plano o mapa de áreas con riesgo de incendio",
+   "nk": "NOM-002-STPS-2010",
+   "tipo": "check",
+   "frec": "Anual / por cambio",
+   "p": "Verificación del contenido mínimo del croquis contra incendio (numeral 5.2).",
+   "campos": [
+    [
+     "fecha",
+     "Fecha",
+     "date"
+    ],
+    [
+     "area",
+     "Centro de trabajo"
+    ],
+    [
+     "resp",
+     "Elaboró"
+    ]
+   ],
+   "sec": [
+    {
+     "t": "Contenido del croquis, plano o mapa",
+     "it": [
+      "a) Nombre, denominación o razón social del centro de trabajo y su domicilio",
+      "b) Identificación de los predios colindantes",
+      "c) Identificación de las principales áreas o zonas con riesgo de incendio (material inflamable, combustible, pirofórico o explosivo)",
+      "d) Ubicación de los medios de detección de incendio, equipos y sistemas contra incendio",
+      "e) Rutas de evacuación (ruta de salida y descarga), salidas de emergencia, escaleras de emergencia y lugares seguros",
+      "f) Ubicación del equipo de protección personal de las brigadas contra incendio",
+      "g) Ubicación de materiales y equipo para prestar los primeros auxilios"
+     ]
+    }
+   ],
+   "firmas": [
+    "Elaboró",
+    "Coordinación EHS",
+    "Gerencia"
+   ]
+  },
+  {
+   "c": "EHS-F-060",
+   "n": "Autorización para trabajos de alto riesgo",
+   "nk": "NOM-009-STPS-2011",
+   "tipo": "check",
+   "frec": "Por evento",
+   "p": "Autorización previa para trabajos con energías, espacios confinados, caídas, izaje, techos y corte y soldadura, con EPP, maquinaria, documentación y bloqueo.",
+   "campos": [
+    [
+     "fecha",
+     "Fecha",
+     "date"
+    ],
+    [
+     "folio",
+     "Folio"
+    ],
+    [
+     "area",
+     "Compañía / depto. / área"
+    ],
+    [
+     "ubi",
+     "Ubicación de la actividad"
+    ],
+    [
+     "pers",
+     "Cantidad de personal"
+    ],
+    [
+     "act",
+     "Descripción de la actividad"
+    ]
+   ],
+   "sec": [
+    {
+     "t": "Tipo de trabajo",
+     "it": [
+      "Trabajo con energías",
+      "Espacios confinados",
+      "Riesgos de caída",
+      "Trabajos de izaje",
+      "Trabajos en techos",
+      "Corte y soldadura",
+      "Otro (especifique)"
+     ]
+    },
+    {
+     "t": "Equipo de protección personal requerido",
+     "it": [
+      "Casco de seguridad",
+      "Barbiquejo",
+      "Lentes de seguridad",
+      "Goggles",
+      "Careta de acrílico",
+      "Careta de soldador",
+      "Anteojos para soldar",
+      "Protección auditiva",
+      "Protección respiratoria",
+      "Mascarilla",
+      "Equipo de respiración autónomo",
+      "Guante de algodón",
+      "Guante Kevlar",
+      "Guante de carnaza",
+      "Guante dieléctrico",
+      "Guante de nitrilo",
+      "Guante de látex",
+      "Mangas Kevlar",
+      "Calzado dieléctrico",
+      "Calzado con casquillo",
+      "Botas de hule",
+      "Camisola",
+      "Traje retardante de fuego",
+      "Chaleco reflejante",
+      "Tyvek",
+      "Línea de vida doble",
+      "Arnés pullover",
+      "Puntos de anclaje",
+      "Línea de vida horizontal",
+      "Línea de vida vertical",
+      "Otro (especifique)"
+     ]
+    },
+    {
+     "t": "Maquinaria",
+     "it": [
+      "Montacargas",
+      "Grúa",
+      "Equipo para izar",
+      "Carro eléctrico",
+      "Plataforma de elevación",
+      "Máquina de soldar",
+      "Equipo de oxicorte",
+      "Esmeril / cortador / sierra",
+      "Barredora",
+      "Fregadora",
+      "Maquinaria pesada",
+      "Herramientas de poder",
+      "Otro (especifique)"
+     ]
+    },
+    {
+     "t": "Documentación adicional requerida",
+     "it": [
+      "Licencia multihabilidades",
+      "Licencia para equipo móvil",
+      "Permiso de corte y soldadura",
+      "Examen médico",
+      "Permiso de espacios confinados",
+      "Permiso de fin de semana",
+      "Formato de libranza",
+      "MSDS (materiales químicos)",
+      "DC-3 (STPS)",
+      "Otro (especifique)"
+     ]
+    },
+    {
+     "t": "Energías a controlar (bloqueo)",
+     "it": [
+      "Eléctrica",
+      "Neumática",
+      "Hidráulica",
+      "Química",
+      "Gravedad",
+      "Residual",
+      "Otro (especifique)"
+     ]
+    }
+   ],
+   "firmas": [
+    "Elaboró (contratista)",
+    "Aprobación EHS",
+    "Jefe de área"
+   ]
+  },
+  {
+   "c": "EHS-F-061",
+   "n": "Análisis de riesgo de la actividad (trabajos de alto riesgo)",
+   "nk": "NOM-009-STPS-2011",
+   "tipo": "tabla",
+   "frec": "Por evento",
+   "p": "Desglose por actividad: riesgos identificados, medidas de seguridad y responsable. Anexo a la autorización de trabajos de alto riesgo.",
+   "campos": [
+    [
+     "fecha",
+     "Fecha",
+     "date"
+    ],
+    [
+     "folio",
+     "Folio de la autorización"
+    ],
+    [
+     "area",
+     "Compañía / depto. / área"
+    ]
+   ],
+   "cols": [
+    [
+     "n",
+     "No."
+    ],
+    [
+     "act",
+     "Actividad a realizar"
+    ],
+    [
+     "rie",
+     "Riesgos identificados"
+    ],
+    [
+     "med",
+     "Medidas de seguridad"
+    ],
+    [
+     "resp",
+     "Responsable"
+    ]
+   ],
+   "nFilas": 12,
+   "firmas": [
+    "Elaboró (contratista)",
+    "Aprobación EHS",
+    "Jefe de área"
+   ]
+  },
+  {
+   "c": "EHS-F-062",
+   "n": "Calendario anual de recorridos de la comisión de seguridad e higiene",
+   "nk": "NOM-019-STPS-2011",
+   "tipo": "programa",
+   "frec": "Anual",
+   "orient": "landscape",
+   "p": "Programación mensual de los recorridos de verificación de la comisión.",
+   "campos": [
+    [
+     "anio",
+     "Año del calendario"
+    ],
+    [
+     "area",
+     "Centro de trabajo"
+    ],
+    [
+     "resp",
+     "Coordinador de la comisión"
+    ]
+   ],
+   "filas": [
+    {
+     "e": "Recorrido de verificación (ordinario)"
+    },
+    {
+     "e": "Recorrido extraordinario"
+    },
+    {
+     "e": "Reunión de la comisión"
+    },
+    {
+     "e": "Seguimiento a acuerdos de recorridos anteriores"
+    }
+   ],
+   "firmas": [
+    "Coordinador de la comisión",
+    "Secretario de la comisión",
+    "Gerencia"
+   ]
+  },
+  {
+   "c": "EHS-F-063",
+   "n": "Programa de seguridad y salud en el trabajo: relación de acciones preventivas o correctivas",
+   "nk": "NOM-030-STPS-2009",
+   "tipo": "tabla",
+   "frec": "Anual",
+   "orient": "landscape",
+   "p": "Relación de acciones preventivas o correctivas con estatus, fechas y responsables (numerales 4.4 y 7.1 inciso a).",
+   "campos": [
+    [
+     "fecha",
+     "Fecha de última revisión",
+     "date"
+    ],
+    [
+     "prox",
+     "Fecha de próxima revisión",
+     "date"
+    ],
+    [
+     "resp",
+     "Responsable del programa"
+    ]
+   ],
+   "cols": [
+    [
+     "acc",
+     "Acción preventiva o correctiva necesaria para el cumplimiento"
+    ],
+    [
+     "tipo",
+     "Preventiva / Correctiva / No aplica"
+    ],
+    [
+     "ini",
+     "Fecha de inicio"
+    ],
+    [
+     "fin",
+     "Fecha de conclusión"
+    ],
+    [
+     "resp",
+     "Responsable"
+    ]
+   ],
+   "nFilas": 12,
+   "firmas": [
+    "Responsable de SST",
+    "Coordinación EHS",
+    "Gerencia"
+   ]
+  },
+  {
+   "c": "EHS-F-064",
+   "n": "Análisis de factores de riesgo ergonómico: empuje y arrastre de cargas",
+   "nk": "NOM-036-1-STPS-2018",
+   "tipo": "tabla",
+   "frec": "Anual / por cambio",
+   "p": "Evaluación por color y valor de empuje y arrastre de cargas, sin equipo auxiliar (numeral 7.3). Complementa EHS-F-025.",
+   "campos": [
+    [
+     "fecha",
+     "Fecha",
+     "date"
+    ],
+    [
+     "area",
+     "Área de trabajo"
+    ],
+    [
+     "puesto",
+     "Puesto de trabajo"
+    ],
+    [
+     "resp",
+     "Evaluó"
+    ]
+   ],
+   "cols": [
+    [
+     "f",
+     "Factor de riesgo"
+    ],
+    [
+     "rod",
+     "Rodando (color / valor)"
+    ],
+    [
+     "gir",
+     "Girando sobre su base (color / valor)"
+    ],
+    [
+     "arr",
+     "Arrastrando, jalando o deslizando (color / valor)"
+    ]
+   ],
+   "filasFijas": [
+    "Peso de la carga",
+    "Postura",
+    "Agarre de la mano",
+    "Patrón de trabajo",
+    "Distancia por viaje",
+    "Superficie de trabajo",
+    "Obstáculos a lo largo de la ruta",
+    "Otros factores",
+    "Puntuación total",
+    "Nivel de riesgo (0-4 bajo · 5-12 medio · 13-20 alto · 21-32 muy alto)"
+   ],
+   "firmas": [
+    "Evaluó",
+    "Coordinación EHS",
+    "Gerencia"
+   ]
+  },
+  {
+   "c": "EHS-F-065",
+   "n": "Investigación de accidentes de trabajo (informe del trabajador, testigos y supervisor)",
+   "nk": "ISO 45001:2018",
+   "tipo": "acta",
+   "frec": "Por evento",
+   "p": "Informe médico, relato del trabajador, testigos y análisis de causa raíz del supervisor (por qué 1 al 5), tipo de riesgo y acto inseguro. Complementa EHS-F-032.",
+   "campos": [
+    [
+     "fecha",
+     "Fecha del accidente",
+     "date"
+    ],
+    [
+     "area",
+     "Departamento / área"
+    ],
+    [
+     "resp",
+     "Supervisor"
+    ],
+    [
+     "emp",
+     "Nombre y número del empleado"
+    ]
+   ],
+   "bloques": [
+    {
+     "t": "Datos generales: puesto, antigüedad, horario, turno, hora del riesgo, aviso inmediato, hora de atención y a quién avisó",
+     "rows": 4
+    },
+    {
+     "t": "I. Informe del servicio médico: diagnóstico, tipo de lesión, parte afectada, antecedentes, acción tomada y gravedad",
+     "rows": 6
+    },
+    {
+     "t": "II. Informe del trabajador: instrucciones de seguridad que recibe, cómo sucedió el riesgo (lugar, máquina, equipo, material) y medida sugerida para evitar la reocurrencia",
+     "rows": 7
+    },
+    {
+     "t": "III. Informe de testigos: nombres, números de empleado y descripción",
+     "rows": 4
+    },
+    {
+     "t": "IV. Informe del supervisor: qué ocurrió y por qué (1 al 5) hasta la causa raíz",
+     "rows": 8
+    },
+    {
+     "t": "Tipo de riesgo: golpeado por/contra, prensado, caída (mismo o diferente nivel), resbalón, tropezón, quemadura física/química, inhalación, ingestión, choque eléctrico, cortadura, esfuerzo excesivo, otro",
+     "rows": 3
+    },
+    {
+     "t": "Causa raíz y acto inseguro",
+     "rows": 4
+    }
+   ],
+   "firmas": [
+    "Trabajador",
+    "Supervisor",
+    "Coordinación EHS"
+   ]
+  }
+ ],
+ "upd": {
+  "EHS-F-041": {
+   "n": "Bitácora de inspección a sistema de bombeo para incendios",
+   "tipo": "check",
+   "frec": "Semanal / mensual",
+   "p": "Revisiones semanales, bombas, motor a explosión y pruebas semanales y mensuales del sistema de bombeo (NOM-002-STPS-2010, numeral 7.4). Al terminar las pruebas verificar que el equipo queda en AUTOMÁTICO y las válvulas abiertas y precintadas.",
+   "campos": [
+    [
+     "fecha",
+     "Fecha",
+     "date"
+    ],
+    [
+     "resp",
+     "Nombre de quien revisa"
+    ],
+    [
+     "area",
+     "Casa de bombas"
+    ]
+   ],
+   "sec": [
+    {
+     "t": "A. Depósitos",
+     "it": [
+      "A.1 Estado General de los Depósitos",
+      "A.2 Nivel de Agua",
+      "A.3 Estado del Sistema de Reposición (sus elementos deben estar en posición correcta)"
+     ]
+    },
+    {
+     "t": "B. Líneas de Alimentación de Bombas",
+     "it": [
+      "B.1 Válvulas Abiertas y precintadas"
+     ]
+    },
+    {
+     "t": "C. Bombas",
+     "it": [
+      "C.1 Válvula de aspiración de bomba principal abierta y precintada",
+      "C.2 Válvula de impulsiónde bomba principal abierta y precintada",
+      "C.3 Válvula de aspiración de bomba Jockey abierta y precintada",
+      "C.4 Válvula de impulsiónde bomba Jockey abierta y precintada",
+      "C.5 Arranque y parada de bomba Jockey en \"AUTOMÁTICO\"",
+      "C.6 Número de arranques de bomba Jockey es normal (de acuerdo a instalador)",
+      "C.7 Válvula de corte del Colector de pruebas/retorno cerrada",
+      "C.8 Sala de Bombas limpia y sin materiales combustibles ajenos a la misma",
+      "C.9 Extintor estado y situación correctos",
+      "C.10 Temperatura de Sala superior a 4°C",
+      "C.11 Interruptor principal conectado",
+      "C.12 Lámpara de presencia de tensión encendida",
+      "C.13 Cuadro de Control de la Bomba principal en posición \"AUTOMÁTICO\""
+     ]
+    },
+    {
+     "t": "D. Bombas accionadas por motor a explosión",
+     "it": [
+      "D.1 Nivel de agua de Baterías",
+      "D.2 Estado de carga de Baterías",
+      "D.3 Nivel de aceite de motor",
+      "D.4 Nivel de agua de refrigeración de motor",
+      "D.5 Depósito de combustible lleno",
+      "D.6 Válvula de entrada de combustible al motor abierta y precintada",
+      "D.7 En cuadro de control lámparas de baterías encendidas",
+      "D.8 Cargador de Baterías encendido y funcionando"
+     ]
+    },
+    {
+     "t": "E. Pruebas Semanales",
+     "it": [
+      "E.1 Recircular agua para comprobar arranque automático del compresor a la presión correcta.",
+      "E.2 Arrancar manualmente el compresor y mantener funcionando por 14 minutos comprobando temperaturas de aceite y agua",
+      "E.3 Prueba de lámparas en cuadro de maniobra mediante pulsación de botón de prueba",
+      "E.4 Recircular agua para que arranque la Bomba Jockey. Verificar en manómeros presión de conexión y desconexión correctas.",
+      "E.5 Recircular agua hasta que arranque Bomba Principal. Verificar presión de arranque correcta. Alarmas ópticas y Acústicas deben funcionar. Mantener funcionando 15 minutos (motor eléctrico) o 30 minutos (motor a explosión)",
+      "E.6 Paro de Bomba mediante pulsador de cuadro de control",
+      "E.7 Arranque Manual de Bomba comprobando presión a caudal 0.",
+      "E.8 Cortar alimentación eléctrica para comprobar alarma óptica y acústica."
+     ]
+    },
+    {
+     "t": "F. Pruebas Mensuales",
+     "it": [
+      "F.1 Desprecintar Válvula de la Bomba y probar"
+     ]
+    }
+   ],
+   "firmas": [
+    "Responsable de Mantenimiento",
+    "Coordinación EHS",
+    "Gerencia"
+   ]
+  },
+  "EHS-F-006": {
+   "sec": [
+    {
+     "t": "Revisión diaria (SAT = satisfactorio, INS = insatisfactorio, N/A = no aplica)",
+     "it": [
+      "Llanta / revestimiento / presión de aire",
+      "Todas la luces",
+      "Dispositivos de advertencia",
+      "Número de horas / millaje",
+      "Relojes indicadores",
+      "Daños a la carroceria",
+      "Escapes de aceite / fluido / combustible / agua",
+      "Nivel de aceite de motor",
+      "Nivel del refrigerante",
+      "Nivel de combustible",
+      "Nivel de aceite hidráulico",
+      "Bateria",
+      "Puntos de lubricación externa",
+      "Nivel de tanque de gas",
+      "Claxon",
+      "Dirección Hidráulica",
+      "Freno",
+      "Freno de emergencia",
+      "Inclinación de las cuchillas",
+      "Subir y bajar las cuchillas",
+      "Aditamentos hidráulicos",
+      "Estado y seguro de las cuchillas",
+      "Cinturón de seguridad",
+      "Transmisión / Dirección",
+      "Equipo de protección contra incendio",
+      "Alarma de reversa"
+     ]
+    }
+   ],
+   "campos": [
+    [
+     "fecha",
+     "Fecha",
+     "date"
+    ],
+    [
+     "maq",
+     "Identificación del montacargas"
+    ],
+    [
+     "resp",
+     "Nombre del operador"
+    ],
+    [
+     "turno",
+     "Turno",
+     "sel:Matutino|Vespertino|Nocturno|Mixto"
+    ]
+   ]
+  }
+ }
+}

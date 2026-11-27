@@ -16,7 +16,8 @@ Aplicación web de un solo archivo (`index.html`), sin dependencias externas ni 
 |---|---|
 | Panel | Cobertura de evidencia por norma, hallazgos abiertos/vencidos, incidentes del año, registros y capacitación |
 | Marco normativo | Catálogo completo con aplicabilidad por centro de trabajo, requisitos clave, evidencias y formatos ligados |
-| Formatos | 37 formatos imprimibles (EHS-F-001 a EHS-F-037) en hoja carta con el diseño F-SH: encabezado con logo, barra dorada de título, bloque de control (código, revisión, fecha, página), tabla de verificación C/NC/N/A y firmas |
+| Formatos | 65 formatos imprimibles (EHS-F-001 a EHS-F-065): listas de verificación, tablas, actas y programas anuales con matriz de 12 meses, en hoja carta con el diseño F-SH: encabezado con logo, barra dorada de título, bloque de control (código, revisión, fecha, página), tabla de verificación C/NC/N/A y firmas |
+| Documentos | 9 programas, procedimientos, manuales, planes e instructivos (EHS-D-001 a 009) con el texto íntegro de los documentos F-SH / D-SH, imprimibles con el encabezado de la empresa |
 | Registros | Documentos llenados, búsqueda, reimpresión y exportación |
 | Hallazgos | Generación automática desde NC en listas de verificación, responsable, fecha compromiso, cierre |
 | Incidentes | Registro, días de incapacidad, control de aviso ST-7 |
@@ -113,6 +114,9 @@ La clave publicable (`sb_publishable_…`) va embebida en `index.html` porque es
 ├── data/normas.json                # catálogo exportado (build.js)
 ├── js/formatos.js                  # generador de formato imprimible + conversión NC → hallazgo
 ├── tests/catalogo.test.js          # 5 pruebas del catálogo y del generador
+├── tests/biblioteca.test.js        # integridad de formatos y documentos incrustados en index.html
+├── data/biblioteca/                # formatos.json y docs.json generados desde la carpeta Formatos
+├── tools/biblioteca/               # scripts que regeneran el bloque AUTOGEN de index.html (ver su README)
 ├── build.js                        # regenera data/normas.json
 ├── package.json                    # scripts build y test
 ├── .github/workflows/ci.yml        # CI: pruebas + revisión de que no haya llaves service_role
@@ -136,6 +140,6 @@ Pendientes antes de usarlo en auditoría:
 - Faltan 12 normas para llegar a las 35 del README (003, 007, 008, 012, 013, 014, 016, 023, 031, 034, 037 y las de producto excluidas).
 
 ```bash
-npm test          # corre las 5 pruebas
+npm test          # corre las pruebas del catálogo y de la biblioteca
 npm run build     # regenera data/normas.json desde normas.js
 ```

@@ -8,6 +8,6 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       - run: node build.js
-      - run: node --test tests/catalogo.test.js
+      - run: node --test tests/catalogo.test.js tests/biblioteca.test.js
       - name: Sin llaves service_role en el repo
         run: "! grep -rIl 'service_role' --include='*.html' --include='*.js' --include='*.json' . | grep -v node_modules"
