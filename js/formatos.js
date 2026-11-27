@@ -7,8 +7,8 @@
 
   function esc(s) {
     return String(s == null ? "" : s)
-      .replace(/&/g, "&").replace(/</g, "<").replace(/>/g, ">")
-      .replace(/"/g, """).replace(/'/g, "'");
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
 
   var ESTILO = "@page{size:letter;margin:14mm}" +
