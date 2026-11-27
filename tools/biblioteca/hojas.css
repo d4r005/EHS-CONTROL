@@ -1,0 +1,32 @@
+/* --- hojas especiales: PTR y evaluacion de simulacro (diseno del original) --- */
+.pdoc .ck{display:inline-block;width:9px;height:9px;border:1px solid #111;margin-right:4px;vertical-align:-1px;position:relative}
+.pdoc .ck.on{background:#111}
+.pdoc .ck.on:after{content:"";position:absolute;left:2px;top:0;width:2px;height:5px;border:solid #fff;border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+.pdoc .it{display:flex;align-items:flex-start;gap:2px;font-size:7.4pt;line-height:1.25;padding:1px 0}
+.pdoc .it .t{flex:1}
+.pdoc table.fm{width:100%;border-collapse:collapse;font-size:7.6pt}
+.pdoc table.fm td,.pdoc table.fm th{border:1px solid #111;padding:2px 4px;vertical-align:top}
+.pdoc table.fm th{background:#e9edf2;font-weight:700;font-size:7.2pt;text-align:left}
+.pdoc .lbl-in{font-size:6.8pt;text-transform:uppercase;letter-spacing:.2px;color:#333;display:block}
+.pdoc .sec-ptr{font-weight:700;font-size:7.6pt;background:#111;color:#fff;padding:2px 5px;margin:4px 0 2px}
+.pdoc .col2{column-count:2;column-gap:8px}
+.pdoc .chips{display:flex;gap:3px;margin:2px 0 4px}
+.pdoc .chip6{flex:1;border:1px solid #111;padding:2px 3px;font-size:7pt;font-weight:700;text-align:center}
+.pdoc .ptr-2col{display:grid;grid-template-columns:1.12fr 1fr;gap:6px}
+.pdoc .box{border:1px solid #111;padding:3px 4px}
+.pdoc .h-sec{font-weight:700;font-size:7.4pt;background:#e9edf2;border-bottom:1px solid #111;padding:2px 4px;margin:-3px -4px 3px}
+.pdoc .sig2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.pdoc .sig2 .sg{border-top:1px solid #111;padding-top:3px;text-align:center;font-size:7.4pt}
+.pdoc .fotos{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:4px}
+.pdoc .fotos div{border:1px dashed #666;height:70px;font-size:6.6pt;color:#555;padding:2px;text-align:center}
+.pdoc .ptr-p2{page-break-before:always}
+
+/* ajuste fino del PTR para que quepa en dos paginas */
+.pdoc.ptrdoc table.fm td,.pdoc.ptrdoc table.fm th{padding:1px 3px;font-size:7pt}
+.pdoc.ptrdoc .it{font-size:6.8pt;line-height:1.2;padding:0}
+.pdoc.ptrdoc .sec-ptr{font-size:7pt;padding:1px 4px;margin:3px 0 1px}
+.pdoc.ptrdoc .chip6{font-size:6.6pt;padding:1px 2px}
+.pdoc.ptrdoc .box{padding:2px 3px}
+.pdoc.ptrdoc .h-sec{font-size:7pt;padding:1px 3px;margin:-2px -3px 2px}
+.pdoc.ptrdoc .title h1{font-size:13pt}
+.pdoc.ptrdoc .title{margin-bottom:5px}

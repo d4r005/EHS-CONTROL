@@ -42,7 +42,7 @@ PTR_SEC = [
 ]
 
 nuevos.append(dict(
- c='EHS-F-066', n='Permiso para realizar trabajos peligrosos (PTR)', nk='NOM-009-STPS-2011', tipo='seleccion',
+ c='EHS-F-066', n='Permiso para realizar trabajos peligrosos (PTR)', nk='NOM-009-STPS-2011', tipo='seleccion', hoja='ptr',
  frec='Por evento', orient='portrait',
  p='Permiso por evento para trabajos de alto riesgo: tipo de trabajo, evaluación de riesgos, precauciones, EPP específico, confirmaciones previas, capacitación DC-3 y documentación revisada.',
  campos=[['fecha','Fecha de trámite','date'],['folio','Permiso N°'],['hora','Hora de trámite'],['resp','Responsable del área'],
@@ -82,7 +82,7 @@ PREG = [
  'Usando este ejercicio como guía, ¿cree que todos los ocupantes están preparados para una emergencia real?',
 ]
 nuevos.append(dict(
- c='EHS-F-068', n='Evaluación del simulacro', nk='NOM-002-STPS-2010', tipo='cuestionario',
+ c='EHS-F-068', n='Evaluación del simulacro', nk='NOM-002-STPS-2010', tipo='cuestionario', hoja='simulacro',
  frec='Por simulacro', orient='portrait',
  p='Evaluación posterior al simulacro: plan de emergencias, brigada, punto de reunión, rutas y salidas, tiempos de evacuación y cambios necesarios al plan.',
  campos=[['fecha','Fecha del simulacro','date'],['area','Sucursal / centro de trabajo'],['emerg','Emergencia simulada'],

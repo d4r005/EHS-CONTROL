@@ -1,9 +1,30 @@
-.bcard{border:1px solid var(--line);border-radius:9px;padding:9px 11px;background:#fff;text-align:center;box-shadow:0 1px 2px rgba(15,23,42,.05)}
+/* organigrama en pantalla */
+.brig-banner{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#111;color:#fff;border-radius:8px;padding:10px 14px;margin:6px 0 12px}
+.brig-banner b{display:block;font-size:14px;letter-spacing:.5px}
+.brig-banner span{font-size:11.5px;color:#d6dbe1}
+.brig-meta{font-size:11px;text-align:right;color:#d6dbe1;line-height:1.4}
+.brig-jefe{display:flex;justify-content:center;margin-bottom:10px}
+.brig-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.bcard{border-radius:8px;padding:8px 10px;color:#fff;text-align:center;box-shadow:0 1px 3px rgba(15,23,42,.18)}
 .bcard b{display:block;font-size:12.5px;line-height:1.25}
-.bcard span{display:block;font-size:11px;color:var(--muted,#667085);margin-top:2px}
-.bcard.top{border:2px solid var(--accent,#ECB324);min-width:230px;padding:11px 14px}
-.pdoc .bgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:6px}
-.pdoc .bcard{border:1px solid #111;border-radius:4px;padding:6px 5px;background:#fff;text-align:center}
-.pdoc .bcard b{font-size:7.6pt;line-height:1.2}
-.pdoc .bcard span{font-size:6.6pt;color:#333;margin-top:1px}
-.pdoc .bcard.top{border:2px solid #111;min-width:180px}
+.bcard span{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.3px;opacity:.9;margin-bottom:2px}
+.bcard.top{min-width:240px}
+.brig-leyenda{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted,#667085);margin-top:10px}
+.brig-leyenda i{width:14px;height:10px;border-radius:2px;display:inline-block}
+/* hoja imprimible del organigrama */
+.pdoc .og-top{display:flex;align-items:center;gap:8px;border-bottom:2px solid #111;padding-bottom:5px}
+.pdoc .og-logo{height:34px;max-width:110px;object-fit:contain}
+.pdoc .og-banner{flex:1;text-align:center}
+.pdoc .og-banner b{display:block;font-size:12pt;letter-spacing:.6px}
+.pdoc .og-banner span{font-size:8pt;letter-spacing:.4px}
+.pdoc .og-meta{font-size:7pt;text-align:right;line-height:1.35;white-space:nowrap}
+.pdoc .og-jefe{display:flex;justify-content:center;margin:8px 0}
+.pdoc .og-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.pdoc .og-card{border-radius:5px;padding:5px 6px;color:#fff;display:flex;gap:6px;align-items:center;min-height:44px}
+.pdoc .og-card.top{min-width:190px;justify-content:center}
+.pdoc .og-ph{width:20px;height:22px;border:1.2px solid rgba(255,255,255,.85);border-radius:3px;flex:none;position:relative}
+.pdoc .og-ph:before{content:"";position:absolute;left:5px;top:3px;width:8px;height:8px;border:1.2px solid rgba(255,255,255,.85);border-radius:50%}
+.pdoc .og-card .og-tx{min-width:0}
+.pdoc .og-card span{display:block;font-size:5.8pt;text-transform:uppercase;letter-spacing:.3px;opacity:.95}
+.pdoc .og-card b{display:block;font-size:7.4pt;line-height:1.15}
+.pdoc .og-pie{display:flex;justify-content:space-between;font-size:6.4pt;color:#444;margin-top:10px;border-top:1px solid #bbb;padding-top:3px}

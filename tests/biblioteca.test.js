@@ -123,6 +123,18 @@ test("las actualizaciones no pisan el formato equivocado", () => {
   assert.ok(inv && inv.bloques.length >= 15, "la investigación de accidentes debe tener el reporte completo");
 });
 
+test("las hojas con diseño propio (PTR y simulacro) se despachan", () => {
+  const ptr = C.find(f => f.c === "EHS-F-066"), sim = C.find(f => f.c === "EHS-F-068");
+  assert.strictEqual(ptr.hoja, "ptr");
+  assert.strictEqual(sim.hoja, "simulacro");
+  assert.match(html, /window\['hoja_'\+f\.hoja\]/);
+  assert.match(html, /function hojaPTR/);
+  assert.match(html, /function hojaSimulacro/);
+  // el PTR conserva los seis recuadros de color del original
+  assert.match(html, /00B0F0/);
+  assert.match(html, /C00000/);
+});
+
 test("brigada de emergencias: integrantes sin duplicados", () => {
   const m = html.match(/const BRIGADA_SEED=\{[\s\S]*?\n  miembros:\[([\s\S]*?)\]\};/);
   assert.ok(m, "no se encontró BRIGADA_SEED");

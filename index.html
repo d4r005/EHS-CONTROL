@@ -189,15 +189,36 @@ label.fld span{display:block;font-size:11.5px;font-weight:650;color:var(--ink-2)
 .pdoc-long .sig{break-inside:avoid}
 /* @@CSS-DOC-FIN@@ */
 /* @@TIPOSCSS-INICIO@@ */
-.bcard{border:1px solid var(--line);border-radius:9px;padding:9px 11px;background:#fff;text-align:center;box-shadow:0 1px 2px rgba(15,23,42,.05)}
+/* organigrama en pantalla */
+.brig-banner{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#111;color:#fff;border-radius:8px;padding:10px 14px;margin:6px 0 12px}
+.brig-banner b{display:block;font-size:14px;letter-spacing:.5px}
+.brig-banner span{font-size:11.5px;color:#d6dbe1}
+.brig-meta{font-size:11px;text-align:right;color:#d6dbe1;line-height:1.4}
+.brig-jefe{display:flex;justify-content:center;margin-bottom:10px}
+.brig-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.bcard{border-radius:8px;padding:8px 10px;color:#fff;text-align:center;box-shadow:0 1px 3px rgba(15,23,42,.18)}
 .bcard b{display:block;font-size:12.5px;line-height:1.25}
-.bcard span{display:block;font-size:11px;color:var(--muted,#667085);margin-top:2px}
-.bcard.top{border:2px solid var(--accent,#ECB324);min-width:230px;padding:11px 14px}
-.pdoc .bgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:6px}
-.pdoc .bcard{border:1px solid #111;border-radius:4px;padding:6px 5px;background:#fff;text-align:center}
-.pdoc .bcard b{font-size:7.6pt;line-height:1.2}
-.pdoc .bcard span{font-size:6.6pt;color:#333;margin-top:1px}
-.pdoc .bcard.top{border:2px solid #111;min-width:180px}
+.bcard span{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.3px;opacity:.9;margin-bottom:2px}
+.bcard.top{min-width:240px}
+.brig-leyenda{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted,#667085);margin-top:10px}
+.brig-leyenda i{width:14px;height:10px;border-radius:2px;display:inline-block}
+/* hoja imprimible del organigrama */
+.pdoc .og-top{display:flex;align-items:center;gap:8px;border-bottom:2px solid #111;padding-bottom:5px}
+.pdoc .og-logo{height:34px;max-width:110px;object-fit:contain}
+.pdoc .og-banner{flex:1;text-align:center}
+.pdoc .og-banner b{display:block;font-size:12pt;letter-spacing:.6px}
+.pdoc .og-banner span{font-size:8pt;letter-spacing:.4px}
+.pdoc .og-meta{font-size:7pt;text-align:right;line-height:1.35;white-space:nowrap}
+.pdoc .og-jefe{display:flex;justify-content:center;margin:8px 0}
+.pdoc .og-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.pdoc .og-card{border-radius:5px;padding:5px 6px;color:#fff;display:flex;gap:6px;align-items:center;min-height:44px}
+.pdoc .og-card.top{min-width:190px;justify-content:center}
+.pdoc .og-ph{width:20px;height:22px;border:1.2px solid rgba(255,255,255,.85);border-radius:3px;flex:none;position:relative}
+.pdoc .og-ph:before{content:"";position:absolute;left:5px;top:3px;width:8px;height:8px;border:1.2px solid rgba(255,255,255,.85);border-radius:50%}
+.pdoc .og-card .og-tx{min-width:0}
+.pdoc .og-card span{display:block;font-size:5.8pt;text-transform:uppercase;letter-spacing:.3px;opacity:.95}
+.pdoc .og-card b{display:block;font-size:7.4pt;line-height:1.15}
+.pdoc .og-pie{display:flex;justify-content:space-between;font-size:6.4pt;color:#444;margin-top:10px;border-top:1px solid #bbb;padding-top:3px}
 .lbl{border:2px solid #111;border-radius:4px;padding:8px 10px;background:#fff;font-size:11px;line-height:1.3}
 .lbl .lb-co{font-size:9px;text-align:right;color:#444}
 .lbl .lb-t{font-size:11px;font-weight:800;letter-spacing:.4px;text-align:center;margin:2px 0 5px}
@@ -214,6 +235,38 @@ label.fld span{display:block;font-size:11.5px;font-weight:650;color:var(--ink-2)
 .lbl table.lb-f td{padding:1px 2px;border-bottom:1px dotted #bbb}
 .lbl-sheet{display:grid;grid-template-columns:1fr 1fr;gap:6mm;page-break-after:always;padding:6mm}
 .lbl-sheet .lbl{min-height:62mm}
+/* --- hojas especiales: PTR y evaluacion de simulacro (diseno del original) --- */
+.pdoc .ck{display:inline-block;width:9px;height:9px;border:1px solid #111;margin-right:4px;vertical-align:-1px;position:relative}
+.pdoc .ck.on{background:#111}
+.pdoc .ck.on:after{content:"";position:absolute;left:2px;top:0;width:2px;height:5px;border:solid #fff;border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+.pdoc .it{display:flex;align-items:flex-start;gap:2px;font-size:7.4pt;line-height:1.25;padding:1px 0}
+.pdoc .it .t{flex:1}
+.pdoc table.fm{width:100%;border-collapse:collapse;font-size:7.6pt}
+.pdoc table.fm td,.pdoc table.fm th{border:1px solid #111;padding:2px 4px;vertical-align:top}
+.pdoc table.fm th{background:#e9edf2;font-weight:700;font-size:7.2pt;text-align:left}
+.pdoc .lbl-in{font-size:6.8pt;text-transform:uppercase;letter-spacing:.2px;color:#333;display:block}
+.pdoc .sec-ptr{font-weight:700;font-size:7.6pt;background:#111;color:#fff;padding:2px 5px;margin:4px 0 2px}
+.pdoc .col2{column-count:2;column-gap:8px}
+.pdoc .chips{display:flex;gap:3px;margin:2px 0 4px}
+.pdoc .chip6{flex:1;border:1px solid #111;padding:2px 3px;font-size:7pt;font-weight:700;text-align:center}
+.pdoc .ptr-2col{display:grid;grid-template-columns:1.12fr 1fr;gap:6px}
+.pdoc .box{border:1px solid #111;padding:3px 4px}
+.pdoc .h-sec{font-weight:700;font-size:7.4pt;background:#e9edf2;border-bottom:1px solid #111;padding:2px 4px;margin:-3px -4px 3px}
+.pdoc .sig2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.pdoc .sig2 .sg{border-top:1px solid #111;padding-top:3px;text-align:center;font-size:7.4pt}
+.pdoc .fotos{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:4px}
+.pdoc .fotos div{border:1px dashed #666;height:70px;font-size:6.6pt;color:#555;padding:2px;text-align:center}
+.pdoc .ptr-p2{page-break-before:always}
+
+/* ajuste fino del PTR para que quepa en dos paginas */
+.pdoc.ptrdoc table.fm td,.pdoc.ptrdoc table.fm th{padding:1px 3px;font-size:7pt}
+.pdoc.ptrdoc .it{font-size:6.8pt;line-height:1.2;padding:0}
+.pdoc.ptrdoc .sec-ptr{font-size:7pt;padding:1px 4px;margin:3px 0 1px}
+.pdoc.ptrdoc .chip6{font-size:6.6pt;padding:1px 2px}
+.pdoc.ptrdoc .box{padding:2px 3px}
+.pdoc.ptrdoc .h-sec{font-size:7pt;padding:1px 3px;margin:-2px -3px 2px}
+.pdoc.ptrdoc .title h1{font-size:13pt}
+.pdoc.ptrdoc .title{margin-bottom:5px}
 .pdoc table.sel{width:100%;border-collapse:collapse;font-size:7.8pt;margin-top:2px}
 .pdoc table.sel td{border:1px solid #111;padding:2px 5px}
 .pdoc table.sel td.bx{width:16px;text-align:center;font-weight:700}
@@ -947,7 +1000,7 @@ Object.keys(FORMATOS_REF_UPD).forEach(c=>{ const f=FORMATOS.find(x=>x.c===c); if
   FORMATOS_REF.forEach(f=>{ (porNorma[f.nk]=porNorma[f.nk]||[]).push(f.c); });
   Object.keys(porNorma).forEach(k=>{ const n=(typeof NORMAS!=='undefined')&&NORMAS.find(x=>x.k===k); if(n){ n.f=n.f||[]; porNorma[k].forEach(c=>{ if(!n.f.includes(c)) n.f.push(c); }); } });
 })();
-const FORMATOS_C = [{"c":"EHS-F-066","n":"Permiso para realizar trabajos peligrosos (PTR)","nk":"NOM-009-STPS-2011","tipo":"seleccion","frec":"Por evento","orient":"portrait","p":"Permiso por evento para trabajos de alto riesgo: tipo de trabajo, evaluación de riesgos, precauciones, EPP específico, confirmaciones previas, capacitación DC-3 y documentación revisada.","campos":[["fecha","Fecha de trámite","date"],["folio","Permiso N°"],["hora","Hora de trámite"],["resp","Responsable del área"],["sitio","Sitio y área de realización del trabajo"],["ejec","Trabajo a realizar por (NAF interno / contratista)"],["cia","Nombre de la compañía contratista"],["fEjec","Fecha de ejecución","date"],["dur","Duración estimada (de h a h)"],["desc","Descripción de los trabajos"]],"sec":[{"t":"Tipo de trabajo a realizar (marcar los que apliquen)","it":["Trabajos en alturas (1.8 m)","Trabajos de elevación","Trabajos en caliente","Trabajos eléctricos","Trabajos LOTO","Trabajos Hazmat"]},{"t":"Evaluación de riesgos — trabajos en alturas","it":["Caída desde alturas","Caída de materiales usados en altura","Caída de escalera, plataforma o canastilla","Caída por agujeros o a través de materiales frágiles","Choque con personas u objetos cuando se trabaja en altura","Contacto con líneas vivas o equipos energizados"]},{"t":"Evaluación de riesgos — trabajos de elevación","it":["Caída de cargas","Colapso de equipos de elevación","Contacto con líneas o equipos eléctricos","Golpear personas u objetos durante la elevación"]},{"t":"Evaluación de riesgos — trabajos en caliente","it":["Incendio","Explosión","Quemaduras","Cortes","Salpicaduras"]},{"t":"Evaluación de riesgos — trabajos eléctricos","it":["Contacto eléctrico directo","Arco eléctrico","Contacto eléctrico indirecto","Proyección de materiales","Explosiones","Electricidad estática"]},{"t":"Evaluación de riesgos — LOTO","it":["Riesgo eléctrico","Riesgo mecánico","Hidráulico","Neumático","Químico"]},{"t":"Precauciones previas y durante el trabajo — alturas","it":["Andamios","Canasta","Escalera","Segregación temporal","Línea de vida temporal","Solo la herramienta necesaria","Herramientas amarradas","Redes de seguridad","Delimitación del área","Línea de vida con o sin amortiguador","Anticaídas retráctil (carrete)","Casco con barbiquejo (obligatorio)","Puntos de anclaje designados"]},{"t":"Precauciones — trabajos en caliente","it":["Extintor de CO2","Extintor de espuma","Extintor de polvo","Despejar el área a un radio de 10 m","Vigilancia en la zona de trabajo"]},{"t":"Precauciones — trabajos de elevación","it":["Gancho","Cable","Cáncamos","Eslingas cadena","Cuerdas fibra","Argollas","Gancho de rescate","Material asegurado a tarima"]},{"t":"Precauciones — trabajos eléctricos","it":["Bloqueo y señalización de energía","Magnetotérmico / interruptor diferencial","Puesta a tierra","Vestimenta sin portes metálicos","Doble aislamiento","Separación eléctrica de circuitos"]},{"t":"EPP específico — trabajos en caliente","it":["Casco de seguridad","Careta de soldar / esmerilar","Guantes resistentes para el calor","Ropa de protección de cuero cromado","Zapatos de seguridad con punta de acero","Respirador y filtros para humos metálicos"]},{"t":"EPP específico — trabajos eléctricos","it":["Calzado de seguridad dieléctrico","Guantes dieléctricos","Ropa de trabajo ignífuga","Casco dieléctrico","Alfombras aislantes","Banquetas aislantes","Pértigas aislantes"]},{"t":"EPP específico — trabajos Hazmat","it":["Guantes químicos","Botas contra químicos","Traje Tyvek","Respirador de media cara o cara completa","Número NIOSH de filtro verificado","Hojas de Seguridad de S.Q.P. disponibles"]},{"t":"EPP específico — trabajos LOTO","it":["Botas de seguridad eléctrica","Guantes de seguridad eléctrica","Gafas de seguridad"]},{"t":"Confirmaciones previas (Sí)","it":["Área circundante verificada y limpia","EPP adecuado y usado por toda persona involucrada","Equipos de extinción de incendios adecuados y disponibles","Lona contra chispas o ignífuga","Equipo eléctricamente aislado / puesto a tierra","Área de trabajo despejada, demarcada, cubierta y etiquetada","Materiales flamables retirados del lugar al menos a 11 m","Trabajadores cercanos informados del trabajo a efectuarse","Capacitación adecuada proporcionada a toda persona involucrada","Medios adecuados de salida disponibles","El emisor y el receptor del permiso revisan el área de forma conjunta","Plática informativa dada a todos los trabajadores afectados por este permiso"]},{"t":"Capacitación y requisitos (DC-3)","it":["Capacitación general en trabajo en alturas (DC-3)","Entrenamiento en uso de arnés (DC-3)","Capacitación general para trabajos en caliente (DC-3)","Capacitación general en Lock Out - Tag Out","Capacitación general en mantenimiento a instalaciones eléctricas (DC-3)"]},{"t":"Documentación revisada","it":["Seguro Social IMSS (SUA)","Seguro de Responsabilidad Civil"]}],"nota":"Anexar plano o esquema del área, análisis de riesgo de la actividad y, en trabajos en caliente, la vigilancia contra incendios con nombre, hora y firma de cada revisión.","firmas":["Responsable del área de trabajo","Gerente / supervisor del contratista","Coordinador EHS de NAF","Emisor del permiso"]},{"c":"EHS-F-067","n":"Bitácora de registro y control de permisos para trabajo con riesgo","nk":"NOM-009-STPS-2011","tipo":"tabla","frec":"Continua","orient":"landscape","p":"Control consecutivo de los permisos emitidos: folio, solicitante, tipo de trabajo peligroso, área, fechas, horario y firma.","campos":[["anio","Año"],["resp","Responsable de la bitácora"]],"cols":[["folio","Folio del permiso"],["sol","Persona solicitante"],["tipo","Tipo de trabajo peligroso"],["area","Área donde se realizará"],["fsol","Fecha de solicitud"],["fejec","Fecha de ejecución"],["hora","Hora de inicio y término"],["firma","Firma del solicitante"]],"nFilas":15,"firmas":["Responsable de la bitácora","Coordinación EHS","Gerencia"]},{"c":"EHS-F-068","n":"Evaluación del simulacro","nk":"NOM-002-STPS-2010","tipo":"cuestionario","frec":"Por simulacro","orient":"portrait","p":"Evaluación posterior al simulacro: plan de emergencias, brigada, punto de reunión, rutas y salidas, tiempos de evacuación y cambios necesarios al plan.","campos":[["fecha","Fecha del simulacro","date"],["area","Sucursal / centro de trabajo"],["emerg","Emergencia simulada"],["resp","Coordinador de respuesta de emergencia"],["hora","Hora de activación de alarma"],["dur","Duración del simulacro"],["tEsp","Tiempo de evacuación esperado"],["tReal","Tiempo de evacuación real"],["alarma","¿Cómo se alarmó y notificó a los empleados?"]],"preguntas":["¿Se cuenta con un plan de emergencias actualizado?","¿Este plan de emergencias está implementado y el personal está capacitado?","¿Los miembros de la brigada fueron entrenados anualmente?","¿Todos los empleados se congregaron en el punto de reunión?","¿Los miembros de la brigada desarrollaron sus tareas asignadas?","¿Se siguieron todos los elementos del plan de emergencias durante el simulacro?","¿Está documentada la capacitación en el plan de emergencias?","¿Los empleados evacuaron o se refugiaron siguiendo las salidas indicadas?","¿Existieron deficiencias o fallas durante la realización del simulacro?","¿Participaron visitantes, subcontratistas o chóferes?","¿Se utilizaron las rutas y salidas de emergencia correctas?","¿Hubo algún peligro durante la evacuación (persona trepando, obstrucción, etc.)?","¿Se sacaron los botiquines de primeros auxilios de emergencia?","¿Se tomó la carpeta de emergencia / incendio (incluyendo HDS)?","¿Se tomaron todas las medidas preventivas sanitarias vigentes?","¿Se realizó una revisión y análisis de este simulacro por parte del equipo de emergencias?","Usando este ejercicio como guía, ¿cree que todos los ocupantes están preparados para una emergencia real?"],"bloques":[{"t":"Cambios necesarios al plan de emergencias","rows":3},{"t":"Fecha programada para actualizar el plan de emergencias","rows":2},{"t":"Observaciones generales del simulacro","rows":4}],"firmas":["Gerente de planta","Asignado EHS","Coordinador de la brigada"]},{"c":"EHS-F-069","n":"Matriz de identificación de peligros y evaluación de riesgos (IPER)","nk":"ISO 45001:2018","tipo":"tabla","frec":"Anual / por cambio","orient":"landscape","p":"Matriz IPER por área o proceso: tópico, rutinario o no rutinario, clasificación del riesgo, efectos posibles, controles existentes y evaluación impacto × ocurrencia.","campos":[["area","Área / proceso"],["fecha","Fecha de evaluación","date"],["dueno","Dueño del proceso"],["resp","Elaboró (Depto. EHS)"]],"cols":[["top","Tópico"],["rut","Rutinario / No rutinario"],["cla","Clasificación de riesgos"],["act","Actividades"],["efe","Efectos posibles de riesgos"],["tc","Tipo de control"],["ctrl","Control"],["imp","Impacto (I)"],["ocu","Ocurrencia (O)"],["idx","Índice (I×O)"]],"nFilas":14,"nota":"Índice de riesgo = impacto × ocurrencia. Jerarquía de controles: eliminación, sustitución, ingeniería, administrativos y EPP.","firmas":["Dueño del proceso","Depto. EHS","Gerencia"]}];
+const FORMATOS_C = [{"c":"EHS-F-066","n":"Permiso para realizar trabajos peligrosos (PTR)","nk":"NOM-009-STPS-2011","tipo":"seleccion","hoja":"ptr","frec":"Por evento","orient":"portrait","p":"Permiso por evento para trabajos de alto riesgo: tipo de trabajo, evaluación de riesgos, precauciones, EPP específico, confirmaciones previas, capacitación DC-3 y documentación revisada.","campos":[["fecha","Fecha de trámite","date"],["folio","Permiso N°"],["hora","Hora de trámite"],["resp","Responsable del área"],["sitio","Sitio y área de realización del trabajo"],["ejec","Trabajo a realizar por (NAF interno / contratista)"],["cia","Nombre de la compañía contratista"],["fEjec","Fecha de ejecución","date"],["dur","Duración estimada (de h a h)"],["desc","Descripción de los trabajos"]],"sec":[{"t":"Tipo de trabajo a realizar (marcar los que apliquen)","it":["Trabajos en alturas (1.8 m)","Trabajos de elevación","Trabajos en caliente","Trabajos eléctricos","Trabajos LOTO","Trabajos Hazmat"]},{"t":"Evaluación de riesgos — trabajos en alturas","it":["Caída desde alturas","Caída de materiales usados en altura","Caída de escalera, plataforma o canastilla","Caída por agujeros o a través de materiales frágiles","Choque con personas u objetos cuando se trabaja en altura","Contacto con líneas vivas o equipos energizados"]},{"t":"Evaluación de riesgos — trabajos de elevación","it":["Caída de cargas","Colapso de equipos de elevación","Contacto con líneas o equipos eléctricos","Golpear personas u objetos durante la elevación"]},{"t":"Evaluación de riesgos — trabajos en caliente","it":["Incendio","Explosión","Quemaduras","Cortes","Salpicaduras"]},{"t":"Evaluación de riesgos — trabajos eléctricos","it":["Contacto eléctrico directo","Arco eléctrico","Contacto eléctrico indirecto","Proyección de materiales","Explosiones","Electricidad estática"]},{"t":"Evaluación de riesgos — LOTO","it":["Riesgo eléctrico","Riesgo mecánico","Hidráulico","Neumático","Químico"]},{"t":"Precauciones previas y durante el trabajo — alturas","it":["Andamios","Canasta","Escalera","Segregación temporal","Línea de vida temporal","Solo la herramienta necesaria","Herramientas amarradas","Redes de seguridad","Delimitación del área","Línea de vida con o sin amortiguador","Anticaídas retráctil (carrete)","Casco con barbiquejo (obligatorio)","Puntos de anclaje designados"]},{"t":"Precauciones — trabajos en caliente","it":["Extintor de CO2","Extintor de espuma","Extintor de polvo","Despejar el área a un radio de 10 m","Vigilancia en la zona de trabajo"]},{"t":"Precauciones — trabajos de elevación","it":["Gancho","Cable","Cáncamos","Eslingas cadena","Cuerdas fibra","Argollas","Gancho de rescate","Material asegurado a tarima"]},{"t":"Precauciones — trabajos eléctricos","it":["Bloqueo y señalización de energía","Magnetotérmico / interruptor diferencial","Puesta a tierra","Vestimenta sin portes metálicos","Doble aislamiento","Separación eléctrica de circuitos"]},{"t":"EPP específico — trabajos en caliente","it":["Casco de seguridad","Careta de soldar / esmerilar","Guantes resistentes para el calor","Ropa de protección de cuero cromado","Zapatos de seguridad con punta de acero","Respirador y filtros para humos metálicos"]},{"t":"EPP específico — trabajos eléctricos","it":["Calzado de seguridad dieléctrico","Guantes dieléctricos","Ropa de trabajo ignífuga","Casco dieléctrico","Alfombras aislantes","Banquetas aislantes","Pértigas aislantes"]},{"t":"EPP específico — trabajos Hazmat","it":["Guantes químicos","Botas contra químicos","Traje Tyvek","Respirador de media cara o cara completa","Número NIOSH de filtro verificado","Hojas de Seguridad de S.Q.P. disponibles"]},{"t":"EPP específico — trabajos LOTO","it":["Botas de seguridad eléctrica","Guantes de seguridad eléctrica","Gafas de seguridad"]},{"t":"Confirmaciones previas (Sí)","it":["Área circundante verificada y limpia","EPP adecuado y usado por toda persona involucrada","Equipos de extinción de incendios adecuados y disponibles","Lona contra chispas o ignífuga","Equipo eléctricamente aislado / puesto a tierra","Área de trabajo despejada, demarcada, cubierta y etiquetada","Materiales flamables retirados del lugar al menos a 11 m","Trabajadores cercanos informados del trabajo a efectuarse","Capacitación adecuada proporcionada a toda persona involucrada","Medios adecuados de salida disponibles","El emisor y el receptor del permiso revisan el área de forma conjunta","Plática informativa dada a todos los trabajadores afectados por este permiso"]},{"t":"Capacitación y requisitos (DC-3)","it":["Capacitación general en trabajo en alturas (DC-3)","Entrenamiento en uso de arnés (DC-3)","Capacitación general para trabajos en caliente (DC-3)","Capacitación general en Lock Out - Tag Out","Capacitación general en mantenimiento a instalaciones eléctricas (DC-3)"]},{"t":"Documentación revisada","it":["Seguro Social IMSS (SUA)","Seguro de Responsabilidad Civil"]}],"nota":"Anexar plano o esquema del área, análisis de riesgo de la actividad y, en trabajos en caliente, la vigilancia contra incendios con nombre, hora y firma de cada revisión.","firmas":["Responsable del área de trabajo","Gerente / supervisor del contratista","Coordinador EHS de NAF","Emisor del permiso"]},{"c":"EHS-F-067","n":"Bitácora de registro y control de permisos para trabajo con riesgo","nk":"NOM-009-STPS-2011","tipo":"tabla","frec":"Continua","orient":"landscape","p":"Control consecutivo de los permisos emitidos: folio, solicitante, tipo de trabajo peligroso, área, fechas, horario y firma.","campos":[["anio","Año"],["resp","Responsable de la bitácora"]],"cols":[["folio","Folio del permiso"],["sol","Persona solicitante"],["tipo","Tipo de trabajo peligroso"],["area","Área donde se realizará"],["fsol","Fecha de solicitud"],["fejec","Fecha de ejecución"],["hora","Hora de inicio y término"],["firma","Firma del solicitante"]],"nFilas":15,"firmas":["Responsable de la bitácora","Coordinación EHS","Gerencia"]},{"c":"EHS-F-068","n":"Evaluación del simulacro","nk":"NOM-002-STPS-2010","tipo":"cuestionario","hoja":"simulacro","frec":"Por simulacro","orient":"portrait","p":"Evaluación posterior al simulacro: plan de emergencias, brigada, punto de reunión, rutas y salidas, tiempos de evacuación y cambios necesarios al plan.","campos":[["fecha","Fecha del simulacro","date"],["area","Sucursal / centro de trabajo"],["emerg","Emergencia simulada"],["resp","Coordinador de respuesta de emergencia"],["hora","Hora de activación de alarma"],["dur","Duración del simulacro"],["tEsp","Tiempo de evacuación esperado"],["tReal","Tiempo de evacuación real"],["alarma","¿Cómo se alarmó y notificó a los empleados?"]],"preguntas":["¿Se cuenta con un plan de emergencias actualizado?","¿Este plan de emergencias está implementado y el personal está capacitado?","¿Los miembros de la brigada fueron entrenados anualmente?","¿Todos los empleados se congregaron en el punto de reunión?","¿Los miembros de la brigada desarrollaron sus tareas asignadas?","¿Se siguieron todos los elementos del plan de emergencias durante el simulacro?","¿Está documentada la capacitación en el plan de emergencias?","¿Los empleados evacuaron o se refugiaron siguiendo las salidas indicadas?","¿Existieron deficiencias o fallas durante la realización del simulacro?","¿Participaron visitantes, subcontratistas o chóferes?","¿Se utilizaron las rutas y salidas de emergencia correctas?","¿Hubo algún peligro durante la evacuación (persona trepando, obstrucción, etc.)?","¿Se sacaron los botiquines de primeros auxilios de emergencia?","¿Se tomó la carpeta de emergencia / incendio (incluyendo HDS)?","¿Se tomaron todas las medidas preventivas sanitarias vigentes?","¿Se realizó una revisión y análisis de este simulacro por parte del equipo de emergencias?","Usando este ejercicio como guía, ¿cree que todos los ocupantes están preparados para una emergencia real?"],"bloques":[{"t":"Cambios necesarios al plan de emergencias","rows":3},{"t":"Fecha programada para actualizar el plan de emergencias","rows":2},{"t":"Observaciones generales del simulacro","rows":4}],"firmas":["Gerente de planta","Asignado EHS","Coordinador de la brigada"]},{"c":"EHS-F-069","n":"Matriz de identificación de peligros y evaluación de riesgos (IPER)","nk":"ISO 45001:2018","tipo":"tabla","frec":"Anual / por cambio","orient":"landscape","p":"Matriz IPER por área o proceso: tópico, rutinario o no rutinario, clasificación del riesgo, efectos posibles, controles existentes y evaluación impacto × ocurrencia.","campos":[["area","Área / proceso"],["fecha","Fecha de evaluación","date"],["dueno","Dueño del proceso"],["resp","Elaboró (Depto. EHS)"]],"cols":[["top","Tópico"],["rut","Rutinario / No rutinario"],["cla","Clasificación de riesgos"],["act","Actividades"],["efe","Efectos posibles de riesgos"],["tc","Tipo de control"],["ctrl","Control"],["imp","Impacto (I)"],["ocu","Ocurrencia (O)"],["idx","Índice (I×O)"]],"nFilas":14,"nota":"Índice de riesgo = impacto × ocurrencia. Jerarquía de controles: eliminación, sustitución, ingeniería, administrativos y EPP.","firmas":["Dueño del proceso","Depto. EHS","Gerencia"]}];
 const FORMATOS_C_UPD = {"EHS-F-065":{"n":"Reporte de investigación de accidentes e incidentes","tipo":"acta","frec":"Por evento","orient":"portrait","p":"Investigación completa: datos generales, equipo investigador, detalles y clasificación, cronología, causas contributivas, 5 porqués, notificaciones, acciones de contención y correctivas, fotografías y declaraciones.","campos":[["fecha","Fecha del accidente","date"],["folio","Número de control"],["area","Sucursal / centro de trabajo"],["resp","Investigador principal"],["pers","Persona lesionada o involucrada"]],"bloques":[{"t":"1. Datos generales (fecha y hora del accidente, sucursal, lugar: habitual del trabajo o no habitual, turno)","rows":4},{"t":"2. Equipo de investigación (nombre, posición y teléfono o correo de cada integrante)","rows":5},{"t":"3. Datos de la persona lesionada y testigos (nombre, número de empleado, departamento, horario del turno, fecha de contratación y antigüedad)","rows":5},{"t":"4. Descripción detallada del accidente (qué, cuándo, dónde, cómo; parte del cuerpo afectada y lesión)","rows":6},{"t":"5. Clasificación del accidente (espacio confinado, electricidad, falla en el equipo, caída del mismo nivel, relacionado con montacargas, calor o frío, operaciones de elevación, manipulación manual, resbalón o tropiezo, otros)","rows":3},{"t":"6. Factores identificados (diseño, ambientales, humanos o de comportamiento, formación y reglas de la instalación)","rows":4},{"t":"7. Maquinaria involucrada (nombre, fabricante, modelo, número de serie, quién la inspeccionó)","rows":3},{"t":"8. Cronología de los eventos (cronograma y tarea · qué ocurrió · por qué ocurrió)","rows":7},{"t":"9. Análisis de causa raíz: causas contributivas (comportamiento, diseño y ergonomía, medio ambiente, equipo defectuoso, equipo usado incorrectamente, falta o información incorrecta, levantamiento inseguro, mantenimiento, procedimiento ignorado o inadecuado, recursos y carga de trabajo, formación, barreras de seguridad ignoradas o inadecuadas)","rows":7},{"t":"10. Metodología de los 5 porqués (problema, por qué 1 a 5, causa raíz y acción para implementar)","rows":7},{"t":"11. Personas o agencias externas notificadas (fecha y hora, persona o agencia)","rows":3},{"t":"12. Métodos de trabajo, SOP y procesos de HSE relacionados","rows":3},{"t":"13. Seguimiento y supervisión (inspecciones, auditorías, observaciones previas)","rows":3},{"t":"14. Acciones de contención (descripción de la acción y fecha)","rows":3},{"t":"15. Acciones correctivas y preventivas (acción, persona responsable, fecha compromiso, fecha de cierre)","rows":5},{"t":"16. Fotografías (descripción y locación de cada evidencia)","rows":3},{"t":"17. Declaración de la persona empleada (nombre, descripción de lo ocurrido, cómo pudo haberse evitado, fecha)","rows":5},{"t":"18. Declaración de testigos (nombre y número de empleado, qué sucedió, si notó algo inusual, fecha)","rows":5}],"firmas":["Gerente de la sucursal","Investigador principal","Coordinación EHS"]}};
 FORMATOS_C.forEach(n=>{ if(!FORMATOS.some(f=>f.c===n.c)) FORMATOS.push(n); });
 Object.keys(FORMATOS_C_UPD).forEach(c=>{ const f=FORMATOS.find(x=>x.c===c); if(f) Object.assign(f,FORMATOS_C_UPD[c]); });
@@ -1060,6 +1113,8 @@ const BRIGADA_SEED={fecha:'2026-05-20',elaboro:'Dario Robles',titulo:'Brigada de
   {n:'Miguel Ángel Duarte Orozco',rol:'Brigadista',area:''},
   {n:'Gregorio Cruz',rol:'Brigadista',area:''}]};
 const ROLES=['Jefe de brigada','Coordinador de evacuación','Brigadista','Brigada de primeros auxilios','Brigada contra incendio','Brigada de comunicación','Brigada de búsqueda y rescate'];
+/* colores del organigrama original: una columna por color */
+const BRIG_COL=['#00B050','#00B0F0','#FFCC00','#C00000'];
 function brigada(){ if(!DB.brigadas) DB.brigadas=JSON.parse(JSON.stringify(BRIGADA_SEED)); return DB.brigadas; }
 function setBrig(i,k,v){ const b=brigada(); b.miembros[i][k]=v; save(); }
 function addBrig(){ const b=brigada(); b.miembros.push({n:'',rol:'Brigadista',area:''}); save(); document.getElementById('view').innerHTML=vBrigadas(); }
@@ -1068,12 +1123,12 @@ function setBrigMeta(k,v){ const b=brigada(); b[k]=v; save(); }
 
 function vBrigadas(){
   const b=brigada(), m=b.miembros||[];
-  const roles=[...new Set(m.map(x=>x.rol||'Brigadista'))];
-  const porRol=r=>m.filter(x=>(x.rol||'Brigadista')===r);
-  const jefe=m.find(x=>/jefe/i.test(x.rol||''));
+  const jefe=m.filter(x=>/jefe/i.test(x.rol||''));
+  const resto=m.filter(x=>!/jefe/i.test(x.rol||''));
+  const color=(i)=>BRIG_COL[i%BRIG_COL.length];
   return `<div class="grid g4" style="margin-bottom:14px">
-    <div class="card kpi"><div class="lbl">Integrantes</div><div class="val">${m.length}</div><div class="hint">${roles.length} funciones</div></div>
-    <div class="card kpi ${jefe?'ok':'warn'}"><div class="lbl">Jefe de brigada</div><div class="val" style="font-size:15px;padding-top:8px">${esc(jefe?jefe.n:'Sin asignar')}</div></div>
+    <div class="card kpi"><div class="lbl">Integrantes</div><div class="val">${m.length}</div><div class="hint">${new Set(m.map(x=>x.rol||'Brigadista')).size} funciones</div></div>
+    <div class="card kpi ${jefe.length?'ok':'warn'}"><div class="lbl">Jefe de brigada</div><div class="val" style="font-size:15px;padding-top:8px">${esc(jefe[0]?jefe[0].n:'Sin asignar')}</div></div>
     <div class="card kpi"><div class="lbl">Fecha del organigrama</div><div class="val" style="font-size:15px;padding-top:8px">${esc(fdate(b.fecha)||'—')}</div></div>
     <div class="card kpi"><div class="lbl">Elaboró</div><div class="val" style="font-size:15px;padding-top:8px">${esc(b.elaboro||'—')}</div></div>
   </div>
@@ -1087,11 +1142,13 @@ function vBrigadas(){
   </div>
   <div class="card pad" style="margin-bottom:14px">
     <h3 class="sec">Organigrama</h3>
-    ${jefe?`<div style="display:flex;justify-content:center;margin:4px 0 14px"><div class="bcard top"><b>${esc(jefe.n)}</b><span>${esc(jefe.rol)}</span></div></div>
-      <div style="height:1px;background:var(--line);margin:0 10% 14px"></div>`:''}
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px">
-      ${m.filter(x=>x!==jefe).map(x=>`<div class="bcard"><b>${esc(x.n||'(sin nombre)')}</b><span>${esc(x.rol||'Brigadista')}${x.area?' · '+esc(x.area):''}</span></div>`).join('')}
+    <div class="brig-banner"><div><b>${esc((b.titulo||'Brigada de emergencias').toUpperCase())}</b><span>${esc(DB.org.nombre||'')}</span></div>
+      <div class="brig-meta">Fecha: ${esc(fdate(b.fecha)||'—')}<br>Elaborado por: ${esc(b.elaboro||'—')}</div></div>
+    ${jefe.length?`<div class="brig-jefe">${jefe.map((x,k)=>`<div class="bcard top" style="--bc:${color(0)}"><span>${esc(x.rol)}</span><b>${esc(x.n)}</b></div>`).join('')}</div>`:''}
+    <div class="brig-grid">
+      ${resto.map((x,i)=>`<div class="bcard" style="--bc:${color(i%4)}"><span>${esc(x.rol||'Brigadista')}</span><b>${esc(x.n||'(sin nombre)')}</b></div>`).join('')}
     </div>
+    <div class="brig-leyenda">${BRIG_COL.map(c=>`<i style="background:${c}"></i>`).join('')} Colores del organigrama original</div>
   </div>
   <div class="card" style="overflow:auto">
     <div class="subhead" style="padding:10px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px">
@@ -1106,15 +1163,25 @@ function vBrigadas(){
     <div style="padding:10px 14px;border-top:1px solid var(--line)"><button class="btn sm" onclick="addBrig()">+ Agregar integrante</button></div>
   </div>`;
 }
+
+/* Hoja imprimible: replica el organigrama del PPTX (4 columnas de color, banner y logos) */
 function brigadaHojaHTML(){
-  const b=brigada(), m=b.miembros||[]; const jefe=m.find(x=>/jefe/i.test(x.rol||''));
+  const b=brigada(), m=b.miembros||[];
+  const jefe=m.filter(x=>/jefe/i.test(x.rol||''));
+  const resto=m.filter(x=>!/jefe/i.test(x.rol||''));
+  const color=i=>BRIG_COL[i%BRIG_COL.length];
   const co=colorEmp();
-  return `<div class="pdoc" style="--co:${co};--co-txt:${textoColor(co)};--co-soft:${tinte(co,.12)}"><div class="sheet">
-    <div class="hdr"><img src="${logoSrc()}" alt=""><div class="co"><div class="n">${esc(DB.org.nombre||'')}</div><div class="s">Seguridad y Salud en el Trabajo</div><div class="c">${esc(DB.org.centro||'')}</div></div><div class="rev"><b>${esc(b.fecha?b.fecha.slice(0,4):'')}</b>Organigrama</div></div>
-    <div class="title"><h1>${esc(b.titulo||'Brigada de emergencias')}</h1><div class="n">Fecha: ${esc(fdate(b.fecha)||'—')} · Elaboró: ${esc(b.elaboro||'—')}</div></div>
-    ${jefe?`<div style="display:flex;justify-content:center;margin:14px 0 10px"><div class="bcard top"><b>${esc(jefe.n)}</b><span>${esc(jefe.rol)}</span></div></div><div style="height:1px;background:#111;margin:0 18% 12px"></div>`:''}
-    <div class="bgrid">${m.filter(x=>x!==jefe).map(x=>`<div class="bcard"><b>${esc(x.n)}</b><span>${esc(x.rol||'Brigadista')}${x.area?' · '+esc(x.area):''}</span></div>`).join('')}</div>
-    <div class="sig" style="margin-top:26px">${['Elaboró — Coordinación EHS','Revisó — Gerencia de planta'].map(x=>`<div class="sg"><span class="l"></span><div class="nm"></div><div>${esc(x)}</div></div>`).join('')}</div>
+  const tarj=(x,i,extra)=>`<div class="og-card${extra?' top':''}" style="background:${color(i)}">
+    <div class="og-ph"></div><div class="og-tx"><span>${esc(x.rol||'Brigadista')}</span><b>${esc(x.n||'')}</b></div></div>`;
+  return `<div class="pdoc ogdoc" style="--co:${co};--co-txt:${textoColor(co)};--co-soft:${tinte(co,.12)}"><div class="sheet">
+    <div class="og-top">
+      <img class="og-logo" src="${logoSrc()}" alt="">
+      <div class="og-banner"><b>${esc((b.titulo||'Brigada de emergencias').toUpperCase())}</b><span>${esc(DB.org.nombre||'')}</span></div>
+      <div class="og-meta">Fecha: ${esc(fdate(b.fecha)||'—')}<br>Elaborado por: ${esc(b.elaboro||'—')}</div>
+    </div>
+    ${jefe.length?`<div class="og-jefe">${jefe.map((x,k)=>tarj(x,0,true)).join('')}</div>`:''}
+    <div class="og-grid">${resto.map((x,i)=>tarj(x,i)).join('')}</div>
+    <div class="og-pie"><span>${esc(DB.org.centro||'')}</span><span>Brigada de emergencias · NOM-002-STPS-2010</span></div>
   </div></div>`;
 }
 function imprimirBrigada(){ document.getElementById('printRoot').innerHTML=brigadaHojaHTML(); window.print(); }
@@ -1200,6 +1267,181 @@ function imprimirEtiqueta(n){
   for(let i=0;i<hojas;i++) html+=`<div class="lbl-sheet">${Array.from({length:4},()=>uno).join('')}</div>`;
   document.getElementById('printRoot').innerHTML=html; window.print();
 }
+
+/* ============================ HOJAS CON DISEÑO DEL ORIGINAL ============================ */
+/* Permiso para realizar trabajos peligrosos: replica el formato NAF de 2 paginas */
+function _secIdx(f,pref){ return (f.sec||[]).findIndex(s=>(s.t||'').toLowerCase().startsWith(pref.toLowerCase())); }
+function _items(f,pref){ const i=_secIdx(f,pref); return i<0?[]:(f.sec[i].it||[]).map((t,ii)=>({t,on:!!((d_sel||{})[`s${i}i${ii}`])})); }
+let d_sel=null;
+function _lista(f,d,pref,cols){
+  d_sel=d.sel||{};
+  const its=_items(f,pref);
+  const html=its.map(x=>`<div class="it"><i class="ck${x.on?' on':''}"></i><span class="t">${esc(x.t)}</span></div>`).join('');
+  return cols===2?`<div class="col2">${html}</div>`:html;
+}
+function hojaPTR(d,f){
+  d_sel=d.sel||{};
+  const cam=k=>esc((d.f||{})[k]||'');
+  const F=k=>esc(fdate((d.f||{})[k])||'');
+  const co=colorEmp();
+  const tip=_items(f,'Tipo de trabajo');
+  const chipCol=['#00B0F0','#FFC000','#FF66CC','#92D050','#FFFF00','#FF0000'];
+  const chips=tip.map((x,i)=>`<div class="chip6" style="background:${chipCol[i]||'#eee'}"><i class="ck${x.on?' on':''}"></i>${esc(x.t.replace(' (1.8 m)','').replace('Trabajos en ','').replace('Trabajos ',''))}</div>`).join('');
+  const conf=_items(f,'Confirmaciones previas');
+  const cap=_items(f,'Capacitación y requisitos');
+  const doc=_items(f,'Documentación revisada');
+  const bloqueo=Array.from({length:10},(_,i)=>`<tr><td style="height:13px">${i+1}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>`).join('');
+  const ins=Array.from({length:11},(_,i)=>`<tr><td>${i+1}</td><td></td><td style="width:26px"></td><td style="width:26px"></td><td>${i+12}</td><td></td><td style="width:26px"></td><td style="width:26px"></td></tr>`).join('');
+  return `<div class="pdoc ptrdoc" style="--co:${co};--co-txt:${textoColor(co)};--co-soft:${tinte(co,.12)}"><div class="sheet">
+  <div class="hdr"><img src="${logoSrc()}" alt=""><div class="co"><div class="n">${esc(DB.org.nombre||'')}</div><div class="s">Seguridad y Salud en el Trabajo</div><div class="c">${esc(DB.org.centro||'')}</div></div><div class="rev"><b>PTR</b>Permiso de trabajo</div></div>
+  <div class="title"><h1>Permiso para realizar trabajos peligrosos</h1><div class="n">Permiso N°: ${cam('folio')||'________'} &nbsp;·&nbsp; Página 1 de 2</div></div>
+
+  <table class="fm" style="margin-bottom:3px"><tr>
+    <td style="width:22%"><span class="lbl-in">Fecha (de trámite)</span>${F('fecha')}</td>
+    <td style="width:16%"><span class="lbl-in">Hora (de trámite)</span>${cam('hora')}</td>
+    <td style="width:31%"><span class="lbl-in">Responsable del área</span>${cam('resp')}</td>
+    <td style="width:31%"><span class="lbl-in">Sitio y área de realización del trabajo</span>${cam('sitio')}</td></tr></table>
+  <table class="fm" style="margin-bottom:3px"><tr>
+    <td style="width:38%"><span class="lbl-in">Trabajo a realizar por</span><i class="ck${/interno/i.test(cam('ejec'))?' on':''}"></i>NAF interno &nbsp;&nbsp;<i class="ck${/contratista/i.test(cam('ejec'))?' on':''}"></i>Contratista</td>
+    <td style="width:26%"><span class="lbl-in">Nombre de la compañía contratista</span>${cam('cia')}</td>
+    <td style="width:36%"><span class="lbl-in">Descripción de los trabajos</span>${cam('desc')||'&nbsp;'}</td></tr></table>
+  <table class="fm" style="margin-bottom:4px"><tr>
+    <td style="width:30%"><span class="lbl-in">Fecha de ejecución del trabajo</span>${F('fEjec')}</td>
+    <td style="width:30%"><span class="lbl-in">Duración estimada</span>De: ${cam('dur')||'&nbsp;&nbsp;&nbsp;h'} &nbsp; A: &nbsp;&nbsp;h</td>
+    <td style="width:40%"><span class="lbl-in">Listado del personal ejecutor</span>&nbsp;</td></tr></table>
+
+  <div class="sec-ptr">Tipo de trabajo a realizar (marcar con una X)</div>
+  <div class="chips">${chips}</div>
+
+  <div class="ptr-2col">
+    <div class="box"><div class="h-sec">Evaluación de riesgos (seleccione los riesgos adecuados)</div>
+      ${['Evaluación de riesgos — trabajos en alturas','Evaluación de riesgos — trabajos de elevación','Evaluación de riesgos — trabajos en caliente','Evaluación de riesgos — trabajos eléctricos','Evaluación de riesgos — LOTO']
+        .map(pref=>`<div style="margin-bottom:2px"><b style="font-size:7pt">${esc(pref.replace('Evaluación de riesgos — ','').toUpperCase())}</b>${_lista(f,d,pref,2)}</div>`).join('')}
+    </div>
+    <div>
+      <div class="box" style="margin-bottom:4px"><div class="h-sec">Precauciones a tomarse previo al comienzo y durante el trabajo</div>
+        ${['Precauciones previas y durante el trabajo — alturas','Precauciones — trabajos en caliente','Precauciones — trabajos de elevación','Precauciones — trabajos eléctricos']
+          .map(pref=>`<div style="margin-bottom:2px"><b style="font-size:7pt">${esc(pref.split('—').pop().trim().toUpperCase())}</b>${_lista(f,d,pref,2)}</div>`).join('')}
+      </div>
+      <div class="box"><div class="h-sec">EPP específicos</div>
+        ${['EPP específico — trabajos en caliente','EPP específico — trabajos eléctricos','EPP específico — Hazmat','EPP específico — LOTO']
+          .map(pref=>`<div style="margin-bottom:2px"><b style="font-size:7pt">${esc(pref.split('—').pop().trim().toUpperCase())}</b>${_lista(f,d,pref,2)}</div>`).join('')}
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-top:4px"><div class="h-sec">¿Confirma que los siguientes elementos están totalmente disponibles o implementados?</div>
+    <div class="col2">${conf.map(x=>`<div class="it"><i class="ck${x.on?' on':''}"></i><span class="t">${esc(x.t)}</span><b style="margin-left:auto;font-size:6.6pt">Sí</b></div>`).join('')}</div></div>
+
+  <div class="ptr-2col" style="margin-top:4px">
+    <table class="fm"><tr><th colspan="3">Capacitación</th><th style="width:22%">¿Se necesita?</th></tr>
+      ${cap.map(x=>`<tr><td colspan="3" style="font-size:7pt">${esc(x.t)}</td><td style="text-align:center"><i class="ck${x.on?' on':''}"></i>Sí &nbsp;<i class="ck${!x.on?' on':''}"></i>No</td></tr>`).join('')}
+    </table>
+    <table class="fm"><tr><th colspan="2">Documentación</th></tr>
+      ${doc.map(x=>`<tr><td style="font-size:7pt">${esc(x.t)}</td><td style="width:34px;text-align:center"><i class="ck${x.on?' on':''}"></i>Revisada</td></tr>`).join('')}
+    </table>
+  </div>
+
+  <div class="sec-ptr" style="margin-top:4px">Dispositivos de bloqueo aplicados / retirados (LOTO)</div>
+  <table class="fm"><tr><th style="width:6%">#</th><th style="width:34%">Identificación del equipo aislante de energía</th>
+    <th>Eléctrico</th><th>Hidráulico</th><th>Neumático</th><th>Mecánico</th><th>Químico</th>
+    <th style="width:14%">Tipo de dispositivo</th><th style="width:12%">Código</th><th style="width:10%">Retirado</th></tr>
+    ${Array.from({length:10},(_,i)=>`<tr><td>${i+1}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>`).join('')}</table>
+  <div class="note">Colocar el permiso visiblemente en el lugar de trabajo. Validez máxima: un día.</div>
+  </div>
+
+  <div class="sheet ptr-p2">
+  <div class="hdr"><img src="${logoSrc()}" alt=""><div class="co"><div class="n">${esc(DB.org.nombre||'')}</div><div class="s">Seguridad y Salud en el Trabajo</div><div class="c">${esc(DB.org.centro||'')}</div></div><div class="rev"><b>PTR</b>Permiso de trabajo</div></div>
+  <div class="title"><h1>Permiso para realizar trabajos peligrosos</h1><div class="n">Permiso N°: ${cam('folio')||'________'} &nbsp;·&nbsp; Página 2 de 2</div></div>
+
+  <div class="box"><div class="h-sec">Contenido de la sesión informativa para este permiso</div>
+    <div style="font-size:7.2pt;line-height:1.4">A) Aplicación del permiso &nbsp;·&nbsp; B) Evaluación de riesgos &nbsp;·&nbsp; C) Esquema de aislamiento de energías &nbsp;·&nbsp; D) EPP requerido &nbsp;·&nbsp; E) Rutas de evacuación y punto de reunión</div></div>
+
+  <table class="fm" style="margin-top:5px"><tr><th style="width:34%">Nombre y apellidos</th><th style="width:26%">Fecha y hora</th><th>Firma</th></tr>
+    <tr><td style="height:22px">Responsable del área de trabajo</td><td></td><td></td></tr>
+    <tr><td style="height:22px">Gerente / supervisor del contratista</td><td></td><td></td></tr>
+    <tr><td style="height:22px">Coordinador EHS de NAF</td><td></td><td></td></tr></table>
+
+  <div class="sec-ptr">Inspección de equipos a utilizar</div>
+  <table class="fm"><tr><th style="width:4%">#</th><th style="width:32%">Elemento a revisar</th><th>Aplicable</th><th>#1</th><th style="width:4%">#</th><th style="width:32%">Elemento a revisar</th><th>Aplicable</th><th>#2</th></tr>
+    ${ins}</table>
+  <div class="note">Marcar con ✓ si el equipo cumple con el requerimiento. CN canastilla · ES escalera simple · ED escalera doble · EE escalera extensible · EA escalera articulada · EM equipo móvil · SL soldadura · EMG equipo contra incendio.</div>
+
+  <div class="sec-ptr">Vigilancia y supervisión contra incendios (trabajos en caliente)</div>
+  <table class="fm"><tr><th style="width:14%">Revisión</th><th style="width:34%">Nombre</th><th style="width:18%">Hora</th><th>Firma</th></tr>
+    ${[1,2,3].map(n=>`<tr><td>Revisión ${n}</td><td></td><td></td><td></td></tr>`).join('')}</table>
+
+  <div class="ptr-2col" style="margin-top:5px">
+    <div class="box"><div class="h-sec">Emisión del permiso</div>
+      <div style="font-size:7pt;line-height:1.35">Se otorga el permiso de trabajo con las condiciones especificadas anteriormente.</div>
+      <table class="fm" style="margin-top:3px"><tr><td style="width:40%"><span class="lbl-in">Validez (1 día máx.)</span></td><td><span class="lbl-in">De</span> &nbsp;h <span class="lbl-in">A</span> &nbsp;h</td></tr>
+      <tr><td style="height:20px">Responsable del área NAF</td><td></td></tr>
+      <tr><td style="height:20px">Coordinador EHS de NAF</td><td></td></tr></table></div>
+    <div class="box"><div class="h-sec">Finalización del permiso</div>
+      <div style="font-size:7pt;line-height:1.35">Certifico que este permiso de trabajo se ha detenido y que los trabajos quedaron concluidos en el área.</div>
+      <div style="font-size:7pt;margin-top:4px"><i class="ck"></i> Terminado correctamente<br><i class="ck"></i> Detenidos o suspendidos a las ____:____ horas del día ____________<br><i class="ck"></i> Todo el personal se retiró y el área quedó limpia y segura</div>
+      <table class="fm" style="margin-top:4px"><tr><td style="width:34%"><span class="lbl-in">Nombre</span></td><td style="width:26%"><span class="lbl-in">Fecha y hora</span></td><td><span class="lbl-in">Firma</span></td></tr>
+      <tr><td style="height:18px"></td><td></td><td></td></tr></table></div>
+  </div>
+  </div></div>`;
+}
+
+/* Evaluacion del simulacro: replica la tabla del formato NAF */
+function hojaSimulacro(d,f){
+  const cam=k=>esc((d.f||{})[k]||'');
+  const F=k=>esc(fdate((d.f||{})[k])||'');
+  const q=(d.q||{}), qx=(d.qx||{});
+  const preg=f.preguntas||[];
+  const fila=(p,i)=>{
+    const v=q[i]||'';
+    const ex=(qx[i]||'')||(v==='NA'?'N/A':'');
+    return `<tr><td>${esc(p)}</td><td class="c" style="width:7%">${v==='Si'?'X':''}</td>
+      <td class="c" style="width:7%">${v==='No'?'X':''}</td><td style="width:31%">${esc(ex)}</td></tr>`;
+  };
+  const prim=preg.slice(0,15).map((p,i)=>fila(p,i)).join('');
+  const seg=preg.slice(15).map((p,i)=>fila(p,i+15)).join('');
+  const co=colorEmp();
+  return `<div class="pdoc" style="--co:${co};--co-txt:${textoColor(co)};--co-soft:${tinte(co,.12)}"><div class="sheet">
+  <div class="hdr"><img src="${logoSrc()}" alt=""><div class="co"><div class="n">${esc(DB.org.nombre||'')}</div><div class="s">Seguridad y Salud en el Trabajo</div><div class="c">${esc(DB.org.centro||'')}</div></div><div class="rev"><b>SIM</b>Simulacro</div></div>
+  <div class="title"><h1>Evaluación del simulacro</h1><div class="n">${esc(f.nk)} · ${esc(f.c)}</div></div>
+
+  <table class="fm" style="margin-bottom:4px">
+    <tr><td style="width:20%"><b>Fecha del simulacro:</b></td><td style="width:30%">${F('fecha')}</td>
+        <td style="width:16%"><b>Sucursal:</b></td><td>${cam('area')}</td></tr>
+    <tr><td><b>Emergencia simulada:</b></td><td>${cam('emerg')}</td>
+        <td><b>Hora de activación:</b></td><td>${cam('hora')}</td></tr>
+    <tr><td><b>Coordinador (a) de respuesta:</b></td><td>${cam('resp')}</td>
+        <td><b>Duración del simulacro:</b></td><td>${cam('dur')}</td></tr>
+  </table>
+
+  <table class="fm">
+    <tr><th style="width:52%">Observaciones</th><th style="width:7%">Sí</th><th style="width:7%">No</th><th>Explique</th></tr>
+    ${prim}
+  </table>
+
+  <table class="fm" style="margin-top:4px">
+    <tr><td style="width:52%"><b>Tiempo de evacuación (esperado):</b></td><td>${cam('tEsp')}</td></tr>
+    <tr><td><b>Tiempo de evacuación (real):</b></td><td>${cam('tReal')}</td></tr>
+  </table>
+
+  <table class="fm" style="margin-top:4px">
+    ${seg}
+    <tr><td><b>¿Qué cambios se necesitan hacer al plan de emergencias?</b></td><td colspan="3">${esc((d.bl||{})[0]||'')}</td></tr>
+    <tr><td><b>Fecha programada para actualizar el plan de emergencias</b></td><td colspan="3">${esc((d.bl||{})[1]||'')}</td></tr>
+  </table>
+
+  <table class="fm" style="margin-top:4px"><tr><th colspan="4">Fotografías del simulacro</th></tr>
+    <tr><td style="width:25%">Foto 1</td><td style="width:25%">Foto 2</td><td style="width:25%">Foto 3</td><td>Foto 4</td></tr>
+    <tr><td style="height:52px"></td><td></td><td></td><td></td></tr></table>
+
+  <table class="fm" style="margin-top:6px">
+    <tr><td style="width:50%"><b>Fecha:</b> ${F('fecha')}</td><td><b>Firma del Gerente de Planta:</b></td></tr>
+    <tr><td><b>Fecha:</b> ${F('fecha')}</td><td><b>Firma del asignado EHS:</b></td></tr>
+    <tr><td colspan="2" style="height:26px"></td></tr></table>
+  </div></div>`;
+}
+
+window.hoja_ptr=hojaPTR; window.hoja_simulacro=hojaSimulacro;
 
 /* @@AUTOGEN-FIN@@ */
 </script>
@@ -1776,6 +2018,12 @@ const VIEWS=[
     {id:'brigadas',t:'Brigadas',ico:'⚑'},
     {id:'etiquetas',t:'Etiquetas',ico:'⌘'},
     {id:'brigadas',t:'Brigadas',ico:'⚑'},
+    {id:'etiquetas',t:'Etiquetas',ico:'⌘'},
+    {id:'brigadas',t:'Brigadas',ico:'⚑'},
+    {id:'etiquetas',t:'Etiquetas',ico:'⌘'},
+    {id:'brigadas',t:'Brigadas',ico:'⚑'},
+    {id:'etiquetas',t:'Etiquetas',ico:'⌘'},
+    {id:'brigadas',t:'Brigadas',ico:'⚑'},
     {id:'brigadas',t:'Brigadas',ico:'⚑'},
     {id:'registros',t:'Registros',ico:'▣'},
     {id:'hallazgos',t:'Hallazgos',ico:'⚑'},
@@ -1820,9 +2068,9 @@ function renderNav(){
   const bs=document.getElementById('brandSub'); if(bs) bs.textContent=(DB.org.nombre||'').split('/')[0].trim()||'Seguridad · Higiene · Ambiente';
 }
 
-const TITLES={panel:['Panel','Resumen de cumplimiento y pendientes'],formatos:['Formatos','Biblioteca de formatos por norma'],documentos:['Documentos','Programas, procedimientos, manuales y planes'],documento:['Documento','Lectura e impresión'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],registros:['Registros','Documentos generados y archivados'],hallazgos:['Hallazgos','Condiciones y acciones en seguimiento'],incidentes:['Incidentes','Registro e investigación de eventos'],normas:['Marco normativo','NOM de la STPS vigentes, ISO 14001 / 45001 y trámites IMSS'],comision:['Comisión de seguridad e higiene','NOM-019-STPS-2011'],quimicos:['Sustancias químicas','NOM-005 / NOM-018 — inventario y SDS'],capacitacion:['Capacitación','DC-3 y matriz de necesidades'],datos:['Organización y datos','Configuración y respaldo']};
+const TITLES={panel:['Panel','Resumen de cumplimiento y pendientes'],formatos:['Formatos','Biblioteca de formatos por norma'],documentos:['Documentos','Programas, procedimientos, manuales y planes'],documento:['Documento','Lectura e impresión'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],registros:['Registros','Documentos generados y archivados'],hallazgos:['Hallazgos','Condiciones y acciones en seguimiento'],incidentes:['Incidentes','Registro e investigación de eventos'],normas:['Marco normativo','NOM de la STPS vigentes, ISO 14001 / 45001 y trámites IMSS'],comision:['Comisión de seguridad e higiene','NOM-019-STPS-2011'],quimicos:['Sustancias químicas','NOM-005 / NOM-018 — inventario y SDS'],capacitacion:['Capacitación','DC-3 y matriz de necesidades'],datos:['Organización y datos','Configuración y respaldo']};
 
-function go(v){ VIEW=v; try{history.replaceState(null,'','#'+v)}catch(e){} renderNav(); const [t,s]=TITLES[v]||['','']; document.getElementById('pageTitle').textContent=t; document.getElementById('pageSub').textContent=s; document.getElementById('topActions').innerHTML=''; document.getElementById('view').innerHTML=({panel:vPanel,formatos:vFormatos,documentos:vDocumentos,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,brigadas:vBrigadas,registros:vRegistros,hallazgos:vHallazgos,incidentes:vIncidentes,normas:vNormas,comision:vComision,quimicos:vQuimicos,capacitacion:vCapacitacion,datos:vDatos}[v]||(()=>''))(); window.scrollTo(0,0); }
+function go(v){ VIEW=v; try{history.replaceState(null,'','#'+v)}catch(e){} renderNav(); const [t,s]=TITLES[v]||['','']; document.getElementById('pageTitle').textContent=t; document.getElementById('pageSub').textContent=s; document.getElementById('topActions').innerHTML=''; document.getElementById('view').innerHTML=({panel:vPanel,formatos:vFormatos,documentos:vDocumentos,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,brigadas:vBrigadas,registros:vRegistros,hallazgos:vHallazgos,incidentes:vIncidentes,normas:vNormas,comision:vComision,quimicos:vQuimicos,capacitacion:vCapacitacion,datos:vDatos}[v]||(()=>''))(); window.scrollTo(0,0); }
 
 /* ============================ PANEL ============================ */
 function vPanel(){
@@ -2009,6 +2257,12 @@ function previewFormato(c){
   if(f.tipo==='cuestionario'){ demo.q={}; demo.qx={}; (f.bloques||[]).forEach((b,i)=>demo.bl[i]=''); }
   if(f.tipo==='seleccion') demo.sel={};
   if(f.tipo==='cuestionario'){ demo.q={}; demo.qx={}; (f.bloques||[]).forEach((b,i)=>demo.bl[i]=''); }
+  if(f.tipo==='seleccion') demo.sel={};
+  if(f.tipo==='cuestionario'){ demo.q={}; demo.qx={}; (f.bloques||[]).forEach((b,i)=>demo.bl[i]=''); }
+  if(f.tipo==='seleccion') demo.sel={};
+  if(f.tipo==='cuestionario'){ demo.q={}; demo.qx={}; (f.bloques||[]).forEach((b,i)=>demo.bl[i]=''); }
+  if(f.tipo==='seleccion') demo.sel={};
+  if(f.tipo==='cuestionario'){ demo.q={}; demo.qx={}; (f.bloques||[]).forEach((b,i)=>demo.bl[i]=''); }
   modal(`${f.c} — ${esc(f.n)}`,
     `<div class="sheet-wrap"><div class="sheet-zoom">${sheetHTML(demo,f)}</div></div>
      <p class="small muted" style="margin:10px 0 0">${esc(f.p||'')}<br>${esc(f.nk)} · ${esc(f.frec)} · Firmas: ${(f.firmas||FIRMAS_BASE).join(' · ')}</p>`,
@@ -2023,6 +2277,12 @@ function nuevoDoc(c){
   if(f.tipo==='tabla'){ d.tb=Array.from({length:f.nFilas||6},(_,i)=>f.cols.map((c,ci)=>((f.filasFijas&&ci===0&&f.filasFijas[i])||''))); }
   if(f.tipo==='acta'){ f.bloques.forEach((b,i)=>d.bl[i]=''); }
   if(f.tipo==='programa'){ d.pm={}; d.pf={}; }
+  if(f.tipo==='seleccion'){ d.sel={}; }
+  if(f.tipo==='cuestionario'){ d.q={}; d.qx={}; (f.bloques||[]).forEach((b,i)=>d.bl[i]=''); }
+  if(f.tipo==='seleccion'){ d.sel={}; }
+  if(f.tipo==='cuestionario'){ d.q={}; d.qx={}; (f.bloques||[]).forEach((b,i)=>d.bl[i]=''); }
+  if(f.tipo==='seleccion'){ d.sel={}; }
+  if(f.tipo==='cuestionario'){ d.q={}; d.qx={}; (f.bloques||[]).forEach((b,i)=>d.bl[i]=''); }
   if(f.tipo==='seleccion'){ d.sel={}; }
   if(f.tipo==='cuestionario'){ d.q={}; d.qx={}; (f.bloques||[]).forEach((b,i)=>d.bl[i]=''); }
   if(f.tipo==='seleccion'){ d.sel={}; }
@@ -2077,6 +2337,102 @@ function vDoc(){
         <td style="padding:4px"><button class="btn sm ghost" onclick="delFila('${d.id}',${ri})" title="Eliminar fila">✕</button></td></tr>`).join('')}</tbody></table>
       <div style="padding:10px 14px;border-top:1px solid var(--line)"><button class="btn sm" onclick="addFila('${d.id}')">+ Agregar fila</button></div>
     </div>`;
+  } else if(d.tipo==='seleccion'){
+    cuerpo=(f.sec||[]).map((s,si)=>{
+      const marc=(s.it||[]).filter((_,ii)=>(d.sel||{})[`s${si}i${ii}`]).length;
+      return `<div class="card" style="margin-bottom:12px;overflow:hidden">
+        <div class="subhead" style="padding:10px 14px;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center">
+          <b style="font-size:13px">${esc(s.t)}</b>
+          <span class="small muted" style="margin-left:auto">${marc} de ${(s.it||[]).length} marcados</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:6px;padding:10px 14px">
+          ${(s.it||[]).map((t,ii)=>{const k=`s${si}i${ii}`;const on=(d.sel||{})[k];
+            return `<button class="btn sm" onclick="setSel('${d.id}','${k}')" style="justify-content:flex-start;text-align:left;${on?'background:var(--ok-bg);border-color:#86efac;font-weight:600':''}"><span style="font-weight:700;margin-right:6px">${on?'☑':'☐'}</span>${esc(t)}</button>`}).join('')}
+        </div>
+      </div>`}).join('');
+  } else if(d.tipo==='cuestionario'){
+    cuerpo=`<div class="card" style="overflow:hidden;margin-bottom:12px">
+      <div class="subhead" style="padding:10px 14px;border-bottom:1px solid var(--line)"><b style="font-size:13px">Cuestionario</b>
+        <span class="small muted" style="margin-left:8px">Sí / No / N/A y explicación</span></div>
+      ${(f.preguntas||[]).map((p,i)=>{const v=(d.q||{})[i]||'';
+        return `<div style="padding:10px 14px;border-bottom:1px solid #eef2f6">
+          <div style="display:grid;grid-template-columns:1fr 150px;gap:10px;align-items:start">
+            <div style="font-size:13px">${i+1}. ${esc(p)}</div>
+            <div style="display:flex;gap:4px;justify-content:flex-end">
+              ${[['Si','Sí'],['No','No'],['NA','N/A']].map(([o,l])=>`<button class="btn sm" onclick="setQ('${d.id}',${i},'${o}')" style="min-width:44px;justify-content:center;${v===o?`background:${o==='Si'?'var(--ok-bg)':o==='No'?'var(--danger-bg)':'#eef2f6'};border-color:${o==='Si'?'#86efac':o==='No'?'#fecaca':'#cbd5e1'};font-weight:700`:''}">${l}</button>`).join('')}
+            </div>
+          </div>
+          <input type="text" placeholder="Explique (opcional)" value="${esc((d.qx||{})[i]||'')}" oninput="setQx('${d.id}',${i},this.value)" style="margin-top:7px;font-size:12.5px">
+        </div>`}).join('')}
+    </div>
+    <div class="card pad">${(f.bloques||[]).map((b,i)=>`
+      <label class="fld"><span>${esc(b.t)}</span>
+        <textarea rows="${b.rows||4}" oninput="setBl('${d.id}',${i},this.value)">${esc((d.bl||{})[i]||'')}</textarea>
+      </label>`).join('')}</div>`;
+  } else if(d.tipo==='seleccion'){
+    cuerpo=(f.sec||[]).map((s,si)=>{
+      const marc=(s.it||[]).filter((_,ii)=>(d.sel||{})[`s${si}i${ii}`]).length;
+      return `<div class="card" style="margin-bottom:12px;overflow:hidden">
+        <div class="subhead" style="padding:10px 14px;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center">
+          <b style="font-size:13px">${esc(s.t)}</b>
+          <span class="small muted" style="margin-left:auto">${marc} de ${(s.it||[]).length} marcados</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:6px;padding:10px 14px">
+          ${(s.it||[]).map((t,ii)=>{const k=`s${si}i${ii}`;const on=(d.sel||{})[k];
+            return `<button class="btn sm" onclick="setSel('${d.id}','${k}')" style="justify-content:flex-start;text-align:left;${on?'background:var(--ok-bg);border-color:#86efac;font-weight:600':''}"><span style="font-weight:700;margin-right:6px">${on?'☑':'☐'}</span>${esc(t)}</button>`}).join('')}
+        </div>
+      </div>`}).join('');
+  } else if(d.tipo==='cuestionario'){
+    cuerpo=`<div class="card" style="overflow:hidden;margin-bottom:12px">
+      <div class="subhead" style="padding:10px 14px;border-bottom:1px solid var(--line)"><b style="font-size:13px">Cuestionario</b>
+        <span class="small muted" style="margin-left:8px">Sí / No / N/A y explicación</span></div>
+      ${(f.preguntas||[]).map((p,i)=>{const v=(d.q||{})[i]||'';
+        return `<div style="padding:10px 14px;border-bottom:1px solid #eef2f6">
+          <div style="display:grid;grid-template-columns:1fr 150px;gap:10px;align-items:start">
+            <div style="font-size:13px">${i+1}. ${esc(p)}</div>
+            <div style="display:flex;gap:4px;justify-content:flex-end">
+              ${[['Si','Sí'],['No','No'],['NA','N/A']].map(([o,l])=>`<button class="btn sm" onclick="setQ('${d.id}',${i},'${o}')" style="min-width:44px;justify-content:center;${v===o?`background:${o==='Si'?'var(--ok-bg)':o==='No'?'var(--danger-bg)':'#eef2f6'};border-color:${o==='Si'?'#86efac':o==='No'?'#fecaca':'#cbd5e1'};font-weight:700`:''}">${l}</button>`).join('')}
+            </div>
+          </div>
+          <input type="text" placeholder="Explique (opcional)" value="${esc((d.qx||{})[i]||'')}" oninput="setQx('${d.id}',${i},this.value)" style="margin-top:7px;font-size:12.5px">
+        </div>`}).join('')}
+    </div>
+    <div class="card pad">${(f.bloques||[]).map((b,i)=>`
+      <label class="fld"><span>${esc(b.t)}</span>
+        <textarea rows="${b.rows||4}" oninput="setBl('${d.id}',${i},this.value)">${esc((d.bl||{})[i]||'')}</textarea>
+      </label>`).join('')}</div>`;
+  } else if(d.tipo==='seleccion'){
+    cuerpo=(f.sec||[]).map((s,si)=>{
+      const marc=(s.it||[]).filter((_,ii)=>(d.sel||{})[`s${si}i${ii}`]).length;
+      return `<div class="card" style="margin-bottom:12px;overflow:hidden">
+        <div class="subhead" style="padding:10px 14px;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center">
+          <b style="font-size:13px">${esc(s.t)}</b>
+          <span class="small muted" style="margin-left:auto">${marc} de ${(s.it||[]).length} marcados</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:6px;padding:10px 14px">
+          ${(s.it||[]).map((t,ii)=>{const k=`s${si}i${ii}`;const on=(d.sel||{})[k];
+            return `<button class="btn sm" onclick="setSel('${d.id}','${k}')" style="justify-content:flex-start;text-align:left;${on?'background:var(--ok-bg);border-color:#86efac;font-weight:600':''}"><span style="font-weight:700;margin-right:6px">${on?'☑':'☐'}</span>${esc(t)}</button>`}).join('')}
+        </div>
+      </div>`}).join('');
+  } else if(d.tipo==='cuestionario'){
+    cuerpo=`<div class="card" style="overflow:hidden;margin-bottom:12px">
+      <div class="subhead" style="padding:10px 14px;border-bottom:1px solid var(--line)"><b style="font-size:13px">Cuestionario</b>
+        <span class="small muted" style="margin-left:8px">Sí / No / N/A y explicación</span></div>
+      ${(f.preguntas||[]).map((p,i)=>{const v=(d.q||{})[i]||'';
+        return `<div style="padding:10px 14px;border-bottom:1px solid #eef2f6">
+          <div style="display:grid;grid-template-columns:1fr 150px;gap:10px;align-items:start">
+            <div style="font-size:13px">${i+1}. ${esc(p)}</div>
+            <div style="display:flex;gap:4px;justify-content:flex-end">
+              ${[['Si','Sí'],['No','No'],['NA','N/A']].map(([o,l])=>`<button class="btn sm" onclick="setQ('${d.id}',${i},'${o}')" style="min-width:44px;justify-content:center;${v===o?`background:${o==='Si'?'var(--ok-bg)':o==='No'?'var(--danger-bg)':'#eef2f6'};border-color:${o==='Si'?'#86efac':o==='No'?'#fecaca':'#cbd5e1'};font-weight:700`:''}">${l}</button>`).join('')}
+            </div>
+          </div>
+          <input type="text" placeholder="Explique (opcional)" value="${esc((d.qx||{})[i]||'')}" oninput="setQx('${d.id}',${i},this.value)" style="margin-top:7px;font-size:12.5px">
+        </div>`}).join('')}
+    </div>
+    <div class="card pad">${(f.bloques||[]).map((b,i)=>`
+      <label class="fld"><span>${esc(b.t)}</span>
+        <textarea rows="${b.rows||4}" oninput="setBl('${d.id}',${i},this.value)">${esc((d.bl||{})[i]||'')}</textarea>
+      </label>`).join('')}</div>`;
   } else if(d.tipo==='seleccion'){
     cuerpo=(f.sec||[]).map((s,si)=>{
       const marc=(s.it||[]).filter((_,ii)=>(d.sel||{})[`s${si}i${ii}`]).length;
@@ -2338,6 +2694,15 @@ function setQx(id,i,v){ const d=doc_(id); d.qx=d.qx||{}; d.qx[i]=v; save(); }
 function setSel(id,k){ const d=doc_(id); d.sel=d.sel||{}; d.sel[k]=!d.sel[k]; save(); document.getElementById('view').innerHTML=vDoc(); }
 function setQ(id,i,v){ const d=doc_(id); d.q=d.q||{}; d.q[i]=(d.q[i]===v?'':v); save(); document.getElementById('view').innerHTML=vDoc(); }
 function setQx(id,i,v){ const d=doc_(id); d.qx=d.qx||{}; d.qx[i]=v; save(); }
+function setSel(id,k){ const d=doc_(id); d.sel=d.sel||{}; d.sel[k]=!d.sel[k]; save(); document.getElementById('view').innerHTML=vDoc(); }
+function setQ(id,i,v){ const d=doc_(id); d.q=d.q||{}; d.q[i]=(d.q[i]===v?'':v); save(); document.getElementById('view').innerHTML=vDoc(); }
+function setQx(id,i,v){ const d=doc_(id); d.qx=d.qx||{}; d.qx[i]=v; save(); }
+function setSel(id,k){ const d=doc_(id); d.sel=d.sel||{}; d.sel[k]=!d.sel[k]; save(); document.getElementById('view').innerHTML=vDoc(); }
+function setQ(id,i,v){ const d=doc_(id); d.q=d.q||{}; d.q[i]=(d.q[i]===v?'':v); save(); document.getElementById('view').innerHTML=vDoc(); }
+function setQx(id,i,v){ const d=doc_(id); d.qx=d.qx||{}; d.qx[i]=v; save(); }
+function setSel(id,k){ const d=doc_(id); d.sel=d.sel||{}; d.sel[k]=!d.sel[k]; save(); document.getElementById('view').innerHTML=vDoc(); }
+function setQ(id,i,v){ const d=doc_(id); d.q=d.q||{}; d.q[i]=(d.q[i]===v?'':v); save(); document.getElementById('view').innerHTML=vDoc(); }
+function setQx(id,i,v){ const d=doc_(id); d.qx=d.qx||{}; d.qx[i]=v; save(); }
 function setPm(id,r,m){ const d=doc_(id); d.pm=d.pm||{}; d.pm[r]=d.pm[r]||{}; const c=d.pm[r][m]; d.pm[r][m]=!c?'P':(c==='P'?'R':''); save(); document.getElementById('view').innerHTML=vDoc(); }
 function setPf(id,r,v){ const d=doc_(id); d.pf=d.pf||{}; d.pf[r]=v; save(); }
 function setBl(id,i,v){ const d=doc_(id); d.bl[i]=v; save(); }
@@ -2358,6 +2723,7 @@ function genHallazgos(id){
 
 /* ============================ IMPRESIÓN ============================ */
 function sheetHTML(d,f){
+  if(f.hoja&&typeof window['hoja_'+f.hoja]==='function') return window['hoja_'+f.hoja](d,f);
   const campos=(f.campos&&f.campos.length?f.campos:CAMPOS_BASE);
   const celdas=campos.map(c=>{const raw=(d.f||{})[c[0]]||'';const val=raw?(c[2]==='date'?fdate(raw):raw):'';
     return `<td><b>${esc(c[1])}</b>${esc(val)}</td>`});
@@ -2382,6 +2748,39 @@ function sheetHTML(d,f){
     const cols=f.cols||[];
     cuerpo=`<table class="tb"><thead><tr>${cols.map(c=>`<th>${esc(c[1])}</th>`).join('')}</tr></thead>
       <tbody>${(d.tb||[]).map(r=>`<tr>${cols.map((c,ci)=>`<td>${esc(r[ci]||'')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  } else if(d.tipo==='seleccion'){
+    cuerpo=(f.sec||[]).map((s,si)=>`<div class="avoid"><h2>${esc(s.t)}</h2>
+      <table class="sel"><tbody>${(s.it||[]).map((t,ii)=>{const on=(d.sel||{})[`s${si}i${ii}`];
+        return `<tr><td class="bx">${on?'X':''}</td><td>${esc(t)}</td></tr>`}).join('')}</tbody></table></div>`).join('')
+      +(f.nota?`<div class="note">${esc(f.nota)}</div>`:'');
+  } else if(d.tipo==='cuestionario'){
+    cuerpo=`<table class="tb"><thead><tr><th style="text-align:left">Pregunta</th><th style="width:8%">Sí</th><th style="width:8%">No</th><th style="width:8%">N/A</th><th style="width:30%">Explique</th></tr></thead>
+      <tbody>${(f.preguntas||[]).map((p,i)=>{const v=(d.q||{})[i]||'';
+        return `<tr><td>${esc(p)}</td><td class="c">${v==='Si'?'X':''}</td><td class="c">${v==='No'?'X':''}</td><td class="c">${v==='NA'?'X':''}</td><td>${esc((d.qx||{})[i]||'')}</td></tr>`}).join('')}</tbody></table>`
+      +(f.bloques||[]).map((b,i)=>{const txt=(d.bl||{})[i]||'';
+        return `<div class="avoid"><h2>${esc(b.t)}</h2>${txt?`<div class="txt">${esc(txt)}</div>`:`<div class="blank" style="min-height:${(b.rows||3)*20}px"></div>`}</div>`}).join('');
+  } else if(d.tipo==='seleccion'){
+    cuerpo=(f.sec||[]).map((s,si)=>`<div class="avoid"><h2>${esc(s.t)}</h2>
+      <table class="sel"><tbody>${(s.it||[]).map((t,ii)=>{const on=(d.sel||{})[`s${si}i${ii}`];
+        return `<tr><td class="bx">${on?'X':''}</td><td>${esc(t)}</td></tr>`}).join('')}</tbody></table></div>`).join('')
+      +(f.nota?`<div class="note">${esc(f.nota)}</div>`:'');
+  } else if(d.tipo==='cuestionario'){
+    cuerpo=`<table class="tb"><thead><tr><th style="text-align:left">Pregunta</th><th style="width:8%">Sí</th><th style="width:8%">No</th><th style="width:8%">N/A</th><th style="width:30%">Explique</th></tr></thead>
+      <tbody>${(f.preguntas||[]).map((p,i)=>{const v=(d.q||{})[i]||'';
+        return `<tr><td>${esc(p)}</td><td class="c">${v==='Si'?'X':''}</td><td class="c">${v==='No'?'X':''}</td><td class="c">${v==='NA'?'X':''}</td><td>${esc((d.qx||{})[i]||'')}</td></tr>`}).join('')}</tbody></table>`
+      +(f.bloques||[]).map((b,i)=>{const txt=(d.bl||{})[i]||'';
+        return `<div class="avoid"><h2>${esc(b.t)}</h2>${txt?`<div class="txt">${esc(txt)}</div>`:`<div class="blank" style="min-height:${(b.rows||3)*20}px"></div>`}</div>`}).join('');
+  } else if(d.tipo==='seleccion'){
+    cuerpo=(f.sec||[]).map((s,si)=>`<div class="avoid"><h2>${esc(s.t)}</h2>
+      <table class="sel"><tbody>${(s.it||[]).map((t,ii)=>{const on=(d.sel||{})[`s${si}i${ii}`];
+        return `<tr><td class="bx">${on?'X':''}</td><td>${esc(t)}</td></tr>`}).join('')}</tbody></table></div>`).join('')
+      +(f.nota?`<div class="note">${esc(f.nota)}</div>`:'');
+  } else if(d.tipo==='cuestionario'){
+    cuerpo=`<table class="tb"><thead><tr><th style="text-align:left">Pregunta</th><th style="width:8%">Sí</th><th style="width:8%">No</th><th style="width:8%">N/A</th><th style="width:30%">Explique</th></tr></thead>
+      <tbody>${(f.preguntas||[]).map((p,i)=>{const v=(d.q||{})[i]||'';
+        return `<tr><td>${esc(p)}</td><td class="c">${v==='Si'?'X':''}</td><td class="c">${v==='No'?'X':''}</td><td class="c">${v==='NA'?'X':''}</td><td>${esc((d.qx||{})[i]||'')}</td></tr>`}).join('')}</tbody></table>`
+      +(f.bloques||[]).map((b,i)=>{const txt=(d.bl||{})[i]||'';
+        return `<div class="avoid"><h2>${esc(b.t)}</h2>${txt?`<div class="txt">${esc(txt)}</div>`:`<div class="blank" style="min-height:${(b.rows||3)*20}px"></div>`}</div>`}).join('');
   } else if(d.tipo==='seleccion'){
     cuerpo=(f.sec||[]).map((s,si)=>`<div class="avoid"><h2>${esc(s.t)}</h2>
       <table class="sel"><tbody>${(s.it||[]).map((t,ii)=>{const on=(d.sel||{})[`s${si}i${ii}`];

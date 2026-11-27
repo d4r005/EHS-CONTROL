@@ -37,3 +37,9 @@ npm test
 ```
 
 `docs_d.json` guarda los documentos largos del lote para no pelear con comillas en Python.
+
+## Hojas con diseño del original
+
+`hojas.js` define `hojaPTR` y `hojaSimulacro`; se registran en `window` y `sheetHTML` las
+despacha cuando el formato trae `hoja:'ptr'` o `hoja:'simulacro'`. El editor sigue siendo el
+genérico (selección y cuestionario); solo cambia la hoja impresa.

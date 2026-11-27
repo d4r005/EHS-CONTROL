@@ -58,6 +58,10 @@ rep("  } else if(d.tipo==='programa'){",
       </label>`).join('')}</div>`;
   } else if(d.tipo==='programa'){""")
 
+# --- 2b. despacho a hojas con diseno propio (PTR, simulacro)
+rep("function sheetHTML(d,f){" + chr(10) + "  const campos=",
+    "function sheetHTML(d,f){" + chr(10) + "  if(f.hoja&&typeof window['hoja_'+f.hoja]==='function') return window['hoja_'+f.hoja](d,f);" + chr(10) + "  const campos=")
+
 # --- 3. hoja impresa
 rep("  } else if(d.tipo==='programa'){\n    cuerpo=`<table class=\"tb prg\">",
 """  } else if(d.tipo==='seleccion'){
@@ -95,6 +99,7 @@ rep("documento:['Documento','Lectura e impresión'],",
 # --- 7. CSS
 css = open(os.path.join(HERE,'brigadas.css'), encoding='utf-8').read()
 css += open(os.path.join(HERE,'etiquetas.css'), encoding='utf-8').read()
+css += open(os.path.join(HERE,'hojas.css'), encoding='utf-8').read()
 css += """.pdoc table.sel{width:100%;border-collapse:collapse;font-size:7.8pt;margin-top:2px}
 .pdoc table.sel td{border:1px solid #111;padding:2px 5px}
 .pdoc table.sel td.bx{width:16px;text-align:center;font-weight:700}

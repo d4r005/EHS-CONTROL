@@ -44,6 +44,7 @@ Este proyecto tiene el modo automático habilitado mediante `.claude/settings.js
 - **Marco normativo** — Catálogo con 35 NOM + ISO 14001/45001 + trámites IMSS, aplicabilidad por centro
 - **Formatos** — 84 formatos imprimibles (EHS-F-001 a EHS-F-088), llenables en navegador; tipos: check, tabla, acta, programa, seleccion, cuestionario
 - **Etiquetas** — etiquetas de sustancias químicas y residuos peligrosos (4 por hoja)
+- **Hojas con diseño propio** — `hoja:'ptr'` y `hoja:'simulacro'` en el formato despachan a `hojaPTR` / `hojaSimulacro` (en `tools/biblioteca/hojas.js`)
 - **Brigadas** — organigrama de la brigada de emergencias (integrantes y funciones editables)
 - **Documentos** — 9 programas, procedimientos, manuales y planes (EHS-D-001 a 009), lectura e impresión
 - **Registros** — Búsqueda, reimpresión, exportación de documentos llenados

@@ -50,6 +50,7 @@ const DOCUMENTOS = {js(D+Dl['docs'])};
 {view}
 {open(HERE+'/brigadas.js').read()}
 {open(HERE+'/etiquetas.js').read()}
+{open(HERE+'/hojas.js').read()}
 /* @@AUTOGEN-FIN@@ */
 </script>
 """
