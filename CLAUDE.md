@@ -35,6 +35,7 @@ Este proyecto tiene el modo automático habilitado mediante `.claude/settings.js
 ├── tests/biblioteca.test.js # Pruebas de formatos y documentos
 ├── tests/navegacion.test.js # Menú lateral: ids únicos, títulos y rutas de vista
 ├── tests/catalogo_drift.test.js # index.html y data/normas.js deben cubrir las mismas NOM
+├── tests/formato_investigacion.test.js # EHS-F-032 replica el formato NAF de investigación
 ├── build.js            # Regenera data/normas.json desde normas.js
 ├── package.json        # Scripts build y test
 ├── .github/workflows/ci.yml  # CI: pruebas + validación de service_role

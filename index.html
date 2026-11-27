@@ -271,6 +271,13 @@ label.fld span{display:block;font-size:11.5px;font-weight:650;color:var(--ink-2)
 .pdoc table.sel{width:100%;border-collapse:collapse;font-size:7.8pt;margin-top:2px}
 .pdoc table.sel td{border:1px solid #111;padding:2px 5px}
 .pdoc table.sel td.bx{width:16px;text-align:center;font-weight:700}
+/* --- investigacion de accidentes (EHS-F-032) --- */
+.pdoc.invdoc table.fm td,.pdoc.invdoc table.fm th{padding:1px 3px;font-size:6.9pt}
+.pdoc.invdoc .title h1{font-size:12pt}
+.pdoc.invdoc .sec-inv{font-weight:700;font-size:7.2pt;background:#e9edf2;border:1px solid #111;padding:1px 4px;margin:5px 0 0}
+.pdoc.invdoc .ckline{font-size:6.8pt;line-height:1.45}
+.pdoc.invdoc .inv-p2{page-break-before:always}
+.pdoc.invdoc .lbl-in{font-size:6.2pt}
 /* @@TIPOSCSS-FIN@@ */
 .pdoc .txt{font-size:8.5pt;white-space:pre-wrap;border:1px solid #111;padding:6px;min-height:40px}
 .pdoc .blank{border:1px solid #111}
@@ -1625,6 +1632,234 @@ function hojaSimulacro(d,f){
 
 window.hoja_ptr=hojaPTR; window.hoja_simulacro=hojaSimulacro;
 
+/* ============ Investigación de incidentes y accidentes (EHS-F-032) ============ */
+/* Replica el formato NAF "Reporte de investigación de accidentes" que entregó la empresa. */
+const INV_TABLAS={
+  equipo:['Nombre','Posición','No. de teléfono / email'],
+  crono:['Cronograma y tarea','¿Qué ocurrió?','¿Por qué ocurrió?'],
+  porques:['Problema','¿Por qué? 1','¿Por qué? 2','¿Por qué? 3','¿Por qué? 4','¿Por qué? 5','Causa raíz','Acción para implementar'],
+  contencion:['Descripción de la acción','Fecha de la acción'],
+  acciones:['No','Descripción de la acción','Persona responsable','Fecha compromiso','Fecha de cierre'],
+  fotos:['Foto','Descripción','Locación'],
+  declEmp:['Nombre','Descripción de lo ocurrido (quién, qué, dónde, cuándo, cómo y por qué)','¿Cómo pudo haberse evitado este accidente?','Fecha','Firma'],
+  declTest:['Nombre y No. de empleado','Descripción del accidente: ¿qué sucedió exactamente como lo viste?','¿Notó cualquier cosa inusual antes o durante el accidente?','Fecha','Firma']
+};
+const INV_FILAS={equipo:8,crono:5,porques:3,contencion:3,acciones:5,fotos:3,declEmp:2,declTest:2};
+const INV_LUGAR=[['habitual','Lugar habitual del trabajo'],['viaje','En viaje o traslado por motivo de trabajo'],
+  ['otroLugar','Otro lugar dentro del centro de trabajo'],['trayectoIda','En trayecto del domicilio al trabajo'],
+  ['otroCentro','En otro centro de trabajo'],['trayectoVuelta','En trayecto del trabajo al domicilio'],['noEsp','No especificado']];
+const INV_CLASIF=[['confinado','Espacio confinado'],['electricidad','Electricidad'],['fallaEquipo','Falla en el equipo'],
+  ['mismoNivel','Caída del mismo nivel'],['montacargas','Relacionado con montacargas'],['calorFrio','Calor o frío'],
+  ['elevacion','Operaciones de elevación'],['manual','Manipulación manual'],['resbalon','Resbalón / tropiezo'],['otros','Otros']];
+const INV_CAUSAS=[['disenoErg','Diseño y ergonomía'],['medioAmbiente','Medio ambiente (iluminación, temperatura, clima)'],
+  ['equipoDefectuoso','Equipo defectuoso'],['equipoMalUso','Equipo usado incorrectamente'],
+  ['faltaInfo','Falta información / instrucciones'],['infoIncorrecta','Información / instrucciones incorrectas'],
+  ['levantamiento','Levantamiento inseguro / inadecuado / incorrecto'],['mantenimiento','Problema de mantenimiento'],
+  ['procIgnorado','Procedimiento / reglas ignoradas'],['procInadecuado','Procedimiento / reglas inadecuadas'],
+  ['recursos','Recursos / carga de trabajo'],['formacion','Problemas de formación y conocimiento'],
+  ['barreraIgnorada','Barrera de seguridad / controles ignorados'],['barreraInadecuada','Barrera de seguridad / controles inadecuados'],
+  ['otro1','Otro'],['otro2','Otro']];
+
+function invTablas(){ const o={}; Object.keys(INV_TABLAS).forEach(k=>{ o[k]=Array.from({length:INV_FILAS[k]},()=>INV_TABLAS[k].map(()=>'')); }); return o; }
+function inv_(d){
+  if(!d.tv && d.bl){ d.f=d.f||{}; /* registros capturados con el formato anterior */
+    if(!d.f.descripcion && d.bl[0]) d.f.descripcion=d.bl[0];
+    if(!d.f.comentarios && d.bl[2]) d.f.comentarios='Causa raíz: '+d.bl[2];
+    if(!d.f.seguimiento && d.bl[4]) d.f.seguimiento=d.bl[4]; }
+  if(!d.tv) d.tv=invTablas(); Object.keys(INV_TABLAS).forEach(k=>{ if(!d.tv[k]||!d.tv[k].length) d.tv[k]=Array.from({length:INV_FILAS[k]},()=>INV_TABLAS[k].map(()=>'')); }); return d.tv; }
+function setTv(id,t,r,c,v){ const d=doc_(id); inv_(d); d.tv[t][r][c]=v; save(); }
+function addTv(id,t){ const d=doc_(id); inv_(d); d.tv[t].push(INV_TABLAS[t].map(()=>'')); save(); document.getElementById('view').innerHTML=vDoc(); }
+function delTv(id,t,r){ const d=doc_(id); inv_(d); d.tv[t].splice(r,1); save(); document.getElementById('view').innerHTML=vDoc(); }
+
+/* ---------- editor ---------- */
+function invFld(d,k,lbl,ph,type){
+  const v=(d.f||{})[k]||'';
+  if(type==='date') return `<label class="fld"><span>${esc(lbl)}</span><input type="date" value="${esc(v)}" oninput="setF('${d.id}','${k}',this.value)"></label>`;
+  if(type&&type.indexOf('sel:')===0) return `<label class="fld"><span>${esc(lbl)}</span><select onchange="setF('${d.id}','${k}',this.value)"><option value="">—</option>${type.slice(4).split('|').map(o=>`<option ${v===o?'selected':''}>${esc(o)}</option>`).join('')}</select></label>`;
+  return `<label class="fld"><span>${esc(lbl)}</span><input type="text" value="${esc(v)}" placeholder="${esc(ph||'')}" oninput="setF('${d.id}','${k}',this.value)"></label>`;
+}
+function invTxa(d,k,lbl,rows,ph){
+  return `<label class="fld"><span>${esc(lbl)}</span><textarea rows="${rows||3}" placeholder="${esc(ph||'')}" oninput="setF('${d.id}','${k}',this.value)">${esc((d.f||{})[k]||'')}</textarea></label>`;
+}
+function invBtn(d,k,lbl){
+  const on=!!((d.sel||{})[k]);
+  return `<button class="btn sm" onclick="setSel('${d.id}','${k}')" style="justify-content:flex-start;text-align:left;${on?'background:var(--ok-bg);border-color:#86efac;font-weight:600':''}"><span style="font-weight:700;margin-right:6px">${on?'☑':'☐'}</span>${esc(lbl)}</button>`;
+}
+function invTbl(d,t,titulo){
+  inv_(d);
+  const cols=INV_TABLAS[t], filas=d.tv[t];
+  return `<div class="card" style="overflow:auto;margin-bottom:12px">
+    <div class="subhead" style="padding:10px 14px;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center">
+      <b style="font-size:13px">${esc(titulo)}</b><span class="small muted" style="margin-left:auto">${filas.length} filas</span></div>
+    <table><thead><tr>${cols.map(c=>`<th style="min-width:${cols.length>5?'96':'130'}px;font-size:11.5px">${esc(c)}</th>`).join('')}<th style="width:36px"></th></tr></thead>
+    <tbody>${filas.map((row,ri)=>`<tr>${cols.map((c,ci)=>`<td style="padding:4px"><input type="text" value="${esc(row[ci]||'')}" oninput="setTv('${d.id}','${t}',${ri},${ci},this.value)" style="border:0;background:transparent;padding:4px;width:100%"></td>`).join('')}
+      <td style="padding:4px"><button class="btn sm ghost" onclick="delTv('${d.id}','${t}',${ri})" title="Eliminar fila">✕</button></td></tr>`).join('')}</tbody></table>
+    <div style="padding:10px 14px;border-top:1px solid var(--line)"><button class="btn sm" onclick="addTv('${d.id}','${t}')">+ Agregar fila</button></div>
+  </div>`;
+}
+function vInv(d,f){
+  inv_(d);
+  const grupo=(k,lista)=>`<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px">${lista.map(([kk,ll])=>invBtn(d,k+':'+kk,ll)).join('')}</div>`;
+  return `<div class="card pad" style="margin-bottom:12px">
+      <h3 class="sec">Datos generales</h3>
+      <div class="grid g3">${invFld(d,'fechaHora','Fecha y hora del accidente','dd/mm/aaaa hh:mm')}${invFld(d,'sucursal','Sucursal')}</div>
+    </div>
+    ${invTbl(d,'equipo','Equipo de investigación')}
+    <div class="card pad" style="margin-bottom:12px">
+      <h3 class="sec">Detalles</h3>
+      <div class="grid g2">${invFld(d,'lesionado','Nombre del lesionado / involucra')}${invFld(d,'testigos','Nombre de los testigos')}</div>
+      <div class="grid g4">${invFld(d,'numEmp','No. de empleado')}${invFld(d,'depto','Departamento / área')}${invFld(d,'horario','Horario del turno')}${invFld(d,'contratacion','Fecha de contratación y antigüedad')}</div>
+      <label class="fld"><span>Lugar del accidente</span></label>${grupo('lugar',INV_LUGAR)}
+      <div class="grid g2">${invFld(d,'lugarOtro','Especifique el lugar (si aplica)')}${invFld(d,'cuerpo','Parte del cuerpo afectada')}</div>
+      <div class="grid g3">${invFld(d,'lesionTxt','Ocurrió lesión / problemas de salud (especifique)')}${invFld(d,'drogas','¿Posibilidad razonable de drogas y alcohol?','','sel:Sí|No|Por determinar')}${invFld(d,'prueba','¿Se completó la prueba de drogas?','','sel:Sí|No|No aplica')}</div>
+      ${invTxa(d,'descripcion','Descripción detallada del accidente (qué, cuándo, dónde, quién, por qué y cómo)',4)}
+      <div class="grid g2">${invFld(d,'danios','Ocurrieron daños / derrames-fugas')}${invFld(d,'entrenado','¿Fue entrenado para la tarea que realizaba?','','sel:Sí|No')}</div>
+      <label class="fld"><span>Clasificación de accidentes</span></label>${grupo('clas',INV_CLASIF)}
+      <div class="grid g2">${invFld(d,'clasOtros','Otros (especifique)')}${invFld(d,'otraInfo','Otra información (formación, reglas de la sucursal, etc.)')}</div>
+      <label class="fld"><span>Factores identificados</span></label>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px">${invBtn(d,'fac:diseno','Factores de diseño')}${invBtn(d,'fac:ambiental','Factores ambientales')}${invBtn(d,'fac:humano','Factores humanos (comportamiento)')}</div>
+      ${invFld(d,'factoresTxt','Detalle de los factores humanos (p. ej. exceso de confianza, falta de atención)')}
+      <div class="grid g2">${invFld(d,'maquinaria','Maquinaria involucrada')}${invFld(d,'fabricante','Fabricante')}</div>
+      <div class="grid g3">${invFld(d,'modelo','Modelo')}${invFld(d,'inspeccionado','Inspeccionado por')}${invFld(d,'serie','Número de serie')}</div>
+    </div>
+    ${invTbl(d,'crono','Cronología de los eventos (qué sucedió y cuándo)')}
+    <div class="card pad" style="margin-bottom:12px">
+      <h3 class="sec">Análisis de causa raíz (causas contributivas)</h3>
+      ${invFld(d,'comportamiento','Comportamiento (conducta incorrecta, fatiga, falta de atención, etc.)')}
+      <p class="small muted" style="margin:10px 0 4px">Marca la causa que aplique y anota el detalle; si no aplica, déjalo sin marcar.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:8px">
+        ${INV_CAUSAS.map(([k,l])=>`<div>
+          ${invBtn(d,'ca:'+k,l)}
+          <input type="text" placeholder="Detalle (opcional)" value="${esc((d.f||{})['ca_'+k]||'')}" oninput="setF('${d.id}','ca_${k}',this.value)" style="margin-top:4px;font-size:12.5px">
+        </div>`).join('')}
+      </div>
+      ${invTxa(d,'comentarios','Comentarios',2)}
+    </div>
+    ${invTbl(d,'porques','Metodología 5 porqués')}
+    <div class="card pad" style="margin-bottom:12px">
+      <h3 class="sec">Notificaciones y métodos de trabajo</h3>
+      <div class="grid g2">${invFld(d,'notifHora','Fecha y hora de notificación a personas externas')}${invFld(d,'notifPersona','Persona / agencia notificada (NAF, policía, autoridades, aseguradora)')}</div>
+      ${invTxa(d,'metodos','Detalles de los métodos de trabajo, SOP y/o procesos de HSE implementados',3)}
+      ${invTxa(d,'seguimiento','Detalles de seguimiento y supervisión (inspecciones, auditorías, verificaciones)',3)}
+    </div>
+    ${invTbl(d,'contencion','Acciones de contención (acciones iniciales durante el evento)')}
+    ${invTbl(d,'acciones','Acciones correctivas y preventivas (para evitar la repetición)')}
+    ${invTbl(d,'fotos','Fotos, documentos y evidencias')}
+    ${invTbl(d,'declEmp','Declaración de la persona empleada')}
+    ${invTbl(d,'declTest','Declaración del testigo')}
+    <div class="card pad">
+      <h3 class="sec">Cierre</h3>
+      <div class="grid g2">${invFld(d,'gerente','Gerente de la sucursal')}${invFld(d,'fechaGerente','Fecha del gerente','','date')}</div>
+      <div class="grid g2">${invFld(d,'investigador','Investigador principal')}${invFld(d,'fechaInvestigador','Fecha del investigador','','date')}</div>
+    </div>`;
+}
+
+/* ---------- hoja imprimible ---------- */
+function hojaInvestigacion(d,f){
+  inv_(d);
+  const cam=k=>esc((d.f||{})[k]||'');
+  const ck=on=>`<i class="ck${on?' on':''}"></i>`;
+  const S=k=>!!((d.sel||{})[k]);
+  const co=colorEmp();
+  const T=d.tv;
+  const tbl=(t,anchors,alto)=>`<table class="fm"><thead><tr>${INV_TABLAS[t].map((c,i)=>`<th${anchors&&anchors[i]?` style="width:${anchors[i]}"`:''}>${esc(c)}</th>`).join('')}</tr></thead>
+    <tbody>${T[t].map(r=>`<tr>${r.map((v,i)=>`<td style="height:${alto||13}px">${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  const causas=INV_CAUSAS.map(([k,l])=>{
+    const on=S('ca:'+k), tx=cam('ca_'+k);
+    return `<div class="ckline" style="display:flex;gap:3px">${ck(on)}<span style="flex:1">${esc(l)}: <b>${on?'Sí':'No'}</b>${tx?': '+tx:''}</span></div>`;
+  }).join('');
+  const lugar=INV_LUGAR.map(([k,l])=>`<span class="ckline" style="display:inline-block;width:${k==='habitual'||k==='viaje'?'48%':'32%'}">${ck(S('lugar:'+k))}${esc(l)}</span>`).join('');
+  const clasif=INV_CLASIF.map(([k,l])=>`<span class="ckline" style="display:inline-block;width:32%">${ck(S('clas:'+k))}${esc(l)}</span>`).join('');
+  const facs=[['diseno','Factores de diseño'],['ambiental','Factores ambientales'],['humano','Factores humanos']]
+    .map(([k,l])=>`<span class="ckline" style="display:inline-block;width:32%">${ck(S('fac:'+k))}${esc(l)}</span>`).join('');
+
+  return `<div class="pdoc invdoc" style="--co:${co};--co-txt:${textoColor(co)};--co-soft:${tinte(co,.12)}"><div class="sheet">
+  <div class="hdr"><img src="${logoSrc()}" alt=""><div class="co"><div class="n">${esc(DB.org.nombre||'')}</div><div class="s">Seguridad y Salud en el Trabajo</div><div class="c">${esc(DB.org.centro||'')}</div></div><div class="rev"><b>${esc(d.c)}</b>Rev. 00</div></div>
+  <div class="title"><h1>Investigación de incidentes y accidentes de trabajo</h1><div class="n">${esc(d.nk)}</div></div>
+  <div class="ctrl"><div><b>Código</b>${esc(d.c)}</div><div><b>Revisión</b>00</div><div><b>Fecha</b>${esc(fdate((d.f||{}).fecha))}</div><div><b>Página</b>1 de 3</div></div>
+
+  <div style="display:flex;justify-content:space-between;font-size:7.6pt;margin:0 0 3px"><b>Datos generales:</b><span><b>Número de control:</b> ${cam('folio')||'________'}</span></div>
+  <table class="fm"><tr><td style="width:62%"><span class="lbl-in">Fecha y hora del accidente</span>${cam('fechaHora')||'&nbsp;'}</td>
+    <td style="width:38%"><span class="lbl-in">Sucursal</span>${cam('sucursal')||esc(DB.org.centro||'')}</td></tr></table>
+
+  <div class="sec-inv">Equipo de investigación</div>
+  ${tbl('equipo',['34%','33%','33%'],12)}
+
+  <div class="sec-inv">Detalles</div>
+  <table class="fm">
+    <tr><td style="width:50%"><span class="lbl-in">Nombre del lesionado / involucra</span>${cam('lesionado')||'&nbsp;'}</td>
+        <td colspan="3"><span class="lbl-in">Nombre de los testigos</span>${cam('testigos')||'&nbsp;'}</td></tr>
+    <tr><td><span class="lbl-in">No. de empleado</span>${cam('numEmp')||'&nbsp;'}</td>
+        <td><span class="lbl-in">Departamento / área</span>${cam('depto')||'&nbsp;'}</td>
+        <td><span class="lbl-in">Horario del turno</span>${cam('horario')||'&nbsp;'}</td>
+        <td><span class="lbl-in">Fecha de contratación y antigüedad</span>${cam('contratacion')||'&nbsp;'}</td></tr>
+    <tr><td colspan="4"><span class="lbl-in">Lugar del accidente</span>${lugar}
+      <div class="ckline">${ck(S('lugar:noEsp'))}No especificado: ${cam('lugarOtro')||'________________________________'}</div></td></tr>
+    <tr><td colspan="2"><span class="lbl-in">Clasificación accidente: ocurrió lesión / problemas de salud (especifique)</span>${cam('lesionTxt')||'&nbsp;'}</td>
+        <td colspan="2"><span class="lbl-in">Parte del cuerpo afectada (indicar con una X)</span>${cam('cuerpo')||'&nbsp;'}</td></tr>
+    <tr><td colspan="2"><span class="lbl-in">¿Posibilidad razonable de que el uso de drogas y alcohol fuera un factor?</span>${cam('drogas')||'&nbsp;'}</td>
+        <td colspan="2"><span class="lbl-in">¿Se completó la prueba de drogas?</span>${cam('prueba')||'&nbsp;'}</td></tr>
+    <tr><td colspan="4"><span class="lbl-in">Descripción detallada del accidente (¿qué, cuándo, dónde, quién, por qué y cómo?)</span>
+      <div style="min-height:34px;white-space:pre-wrap">${cam('descripcion')}</div></td></tr>
+    <tr><td colspan="2"><span class="lbl-in">Ocurrieron daños / derrames-fugas</span>${cam('danios')||'&nbsp;'}</td>
+        <td colspan="2"><span class="lbl-in">¿Fue entrenado para la tarea que realizaba?</span>${cam('entrenado')||'&nbsp;'}</td></tr>
+    <tr><td colspan="4"><span class="lbl-in">Clasificación de accidentes</span>${clasif}
+      <div class="ckline">${ck(!!cam('clasOtros'))}Otros: ${cam('clasOtros')||'________________________________'}</div></td></tr>
+    <tr><td colspan="4"><span class="lbl-in">Identificar factores</span>${facs}
+      <div class="ckline">${cam('factoresTxt')}</div></td></tr>
+    <tr><td colspan="4"><span class="lbl-in">Otra información (incluida la formación, las reglas de la sucursal, etc.)</span>${cam('otraInfo')||'&nbsp;'}</td></tr>
+    <tr><td colspan="2"><span class="lbl-in">Maquinaria involucrada</span>${cam('maquinaria')||'&nbsp;'}</td>
+        <td><span class="lbl-in">Fabricante</span>${cam('fabricante')||'&nbsp;'}</td>
+        <td><span class="lbl-in">Modelo</span>${cam('modelo')||'&nbsp;'}</td></tr>
+    <tr><td colspan="2"><span class="lbl-in">Inspeccionado por</span>${cam('inspeccionado')||'&nbsp;'}</td>
+        <td colspan="2"><span class="lbl-in">Número de serie</span>${cam('serie')||'&nbsp;'}</td></tr>
+  </table>
+
+  <div class="sec-inv">Cronología de los eventos (identificar qué sucedió y cuándo sucedió)</div>
+  ${tbl('crono',['30%','37%','33%'],14)}
+
+  <div class="inv-p2"></div>
+  <div class="sec-inv">Análisis de causa raíz (causas contributivas)</div>
+  <table class="fm"><tr><td><span class="lbl-in">Comportamiento (conducta incorrecta, fatiga, falta de atención, etc.)</span>${cam('comportamiento')||'&nbsp;'}</td></tr>
+    <tr><td>${causas}</td></tr>
+    <tr><td><span class="lbl-in">Comentarios</span>${cam('comentarios')||'&nbsp;'}</td></tr></table>
+
+  <div class="sec-inv">Metodología 5 porqués</div>
+  ${tbl('porques',['14%','11%','11%','11%','11%','11%','15%','16%'],16)}
+
+  <table class="fm" style="margin-top:4px">
+    <tr><td style="width:30%"><span class="lbl-in">Fecha y hora de las personas externas notificadas</span>${cam('notifHora')||'&nbsp;'}</td>
+        <td><span class="lbl-in">Persona / agencia notificada (NAF, policía, autoridades, aseguradoras)</span>${cam('notifPersona')||'&nbsp;'}</td></tr>
+    <tr><td colspan="2"><span class="lbl-in">Detalles de los métodos de trabajo, SOP y/o procesos de HSE implementados</span><div style="min-height:26px;white-space:pre-wrap">${cam('metodos')}</div></td></tr>
+    <tr><td colspan="2"><span class="lbl-in">Detalles de seguimiento y supervisión (inspecciones, auditorías, verificaciones)</span><div style="min-height:26px;white-space:pre-wrap">${cam('seguimiento')}</div></td></tr>
+  </table>
+
+  <div class="inv-p2"></div>
+  <div class="sec-inv">Acciones de contención (acciones iniciales tomadas durante el evento para evitar la escalada)</div>
+  ${tbl('contencion',['70%','30%'],15)}
+
+  <div class="sec-inv">Acciones correctivas y preventivas (acciones posteriores para evitar la repetición)</div>
+  ${tbl('acciones',['6%','44%','20%','15%','15%'],15)}
+
+  <div class="sec-inv">Fotos, documentos clave y evidencias</div>
+  ${tbl('fotos',['26%','44%','30%'],40)}
+
+  <div class="sec-inv">Declaración de la persona empleada (con o sin lesión)</div>
+  ${tbl('declEmp',['18%','32%','26%','12%','12%'],26)}
+
+  <div class="sec-inv">Declaración del testigo</div>
+  ${tbl('declTest',['18%','32%','26%','12%','12%'],26)}
+
+  <div class="sig2">
+    <div class="sg"><div style="height:26px"></div>Gerente de la sucursal: ${cam('gerente')||'________________'}<br>Firma y fecha: ${esc(fdate((d.f||{}).fechaGerente)||'')}</div>
+    <div class="sg"><div style="height:26px"></div>Investigador principal: ${cam('investigador')||'________________'}<br>Firma y fecha: ${esc(fdate((d.f||{}).fechaInvestigador)||'')}</div>
+  </div>
+  <div class="foot"><span>Documento controlado · ${esc(d.c)} · Rev. 00</span><span>${esc(DB.org.resp||'')} · ${esc(DB.org.puesto||'')}</span></div>
+  </div></div>`;
+}
+window.hoja_investigacion=hojaInvestigacion;
+
+
 /* @@AUTOGEN-FIN@@ */
 </script>
 <script>
@@ -1824,11 +2059,11 @@ FORMATOS.push(
  nFilas:12,
  firmas:['Coordinación EHS','Jefe de área','Dirección']},
 
-{c:'EHS-F-032',n:'Investigación de incidentes y accidentes de trabajo',nk:'ISO 45001:2018',tipo:'acta',frec:'Por evento',
- p:'Investigación de causa raíz, acciones correctivas y cierre del evento.',
- campos:[['fecha','Fecha del evento','date'],['folio','Folio del evento'],['area','Área'],['lesion','Tipo de lesión / daño'],['st7','¿Requiere aviso ST-7?','sel:Sí|No|Por determinar'],['resp','Investigador']],
- bloques:[{t:'Descripción del evento (qué, cómo, dónde, cuándo, quién)',rows:5},{t:'Causas inmediatas (actos y condiciones inseguras)',rows:4},{t:'Causa raíz (5 porqués / análisis)',rows:4},{t:'Acciones correctivas y preventivas (responsable y fecha)',rows:5},{t:'Verificación de eficacia y cierre',rows:3}],
- firmas:['Investigador','Jefe de área','Coordinación EHS','Gerencia']},
+{c:'EHS-F-032',n:'Investigación de incidentes y accidentes de trabajo',nk:'ISO 45001:2018',tipo:'acta',hoja:'investigacion',frec:'Por evento',
+ p:'Réplica del formato NAF de investigación de accidentes: datos generales, equipo investigador, detalles del evento, cronología, causas contributivas, 5 porqués, notificaciones, acciones de contención y correctivas, evidencias, declaraciones y firmas.',
+ campos:[['folio','Número de control'],['fecha','Fecha del evento','date']],
+ bloques:[],
+ firmas:['Gerente de la sucursal','Investigador principal']},
 
 {c:'EHS-F-033',n:'Programa y registro de auditoría interna EHS',nk:'ISO 45001:2018',tipo:'tabla',frec:'Anual',
  p:'Programación de auditorías internas del sistema de gestión y sus resultados.',
@@ -2445,6 +2680,7 @@ function nuevoDoc(c){
   const d={id:uid(),c:f.c,n:f.n,nk:f.nk,tipo:f.tipo,fecha:hoy(),estado:'Abierto',creado:new Date().toISOString(),f:{fecha:hoy()},it:{},ob:{},tb:[],bl:{}};
   if(f.tipo==='tabla'){ d.tb=Array.from({length:f.nFilas||6},(_,i)=>f.cols.map((c,ci)=>((f.filasFijas&&ci===0&&f.filasFijas[i])||''))); }
   if(f.tipo==='acta'){ f.bloques.forEach((b,i)=>d.bl[i]=''); }
+  if(f.hoja==='investigacion'){ d.tv=invTablas(); d.sel={}; }
   if(f.tipo==='programa'){ d.pm={}; d.pf={}; }
   if(f.tipo==='seleccion'){ d.sel={}; }
   if(f.tipo==='cuestionario'){ d.q={}; d.qx={}; (f.bloques||[]).forEach((b,i)=>d.bl[i]=''); }
@@ -2481,7 +2717,9 @@ function vDoc(){
   const total=Object.keys(d.it||{}).length;
 
   let cuerpo='';
-  if(d.tipo==='check'){
+  if(f.hoja==='investigacion'){
+    cuerpo=vInv(d,f);
+  } else if(d.tipo==='check'){
     cuerpo=(f.sec||[]).map((s,si)=>`
       <div class="card" style="margin-bottom:12px;overflow:hidden">
         <div class="subhead" style="padding:10px 14px;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center">
