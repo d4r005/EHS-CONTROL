@@ -11,6 +11,11 @@ function extraer(nombre) {
   assert.ok(m, "no se encontró " + nombre);
   return JSON.parse(m[1]);
 }
+function extraerObj(nombre) {
+  const m = html.match(new RegExp("const " + nombre + " = (\\{[\\s\\S]*?\\});\\n"));
+  assert.ok(m, "no se encontró " + nombre);
+  return JSON.parse(m[1]);
+}
 const REF = extraer("FORMATOS_REF");
 const DOCS = extraer("DOCUMENTOS");
 
@@ -100,6 +105,22 @@ test("documentos nuevos: acta UIPC y guía de fluidos", () => {
     assert.ok(Array.isArray(d.b) && d.b.length >= 4, d.c + " sin contenido");
   }
   assert.ok(cods.includes("EHS-D-010") && cods.includes("EHS-D-011"));
+});
+
+test("las actualizaciones no pisan el formato equivocado", () => {
+  const UPD = extraerObj("FORMATOS_REF_UPD");
+  const C = extraerObj("FORMATOS_C_UPD");
+  // los códigos por debajo de 045 son formatos originales de la app; el resto debe venir del lote
+  const existe = c => REF.some(f => f.c === c) || +c.slice(6) < 45;
+  Object.keys(UPD).forEach(c => assert.ok(existe(c), "UPD sobre código inexistente: " + c));
+  Object.keys(C).forEach(c => assert.ok(existe(c), "UPD sobre código inexistente: " + c));
+  // el calendario de recorridos conserva su lugar; la investigación vive en EHS-F-065
+  assert.ok(!Object.keys(C).includes("EHS-F-062"), "EHS-F-062 es el calendario de recorridos");
+  const cal = REF.find(f => f.c === "EHS-F-062");
+  assert.strictEqual(cal.tipo, "programa");
+  assert.match(cal.n, /Calendario anual de recorridos/);
+  const inv = C["EHS-F-065"];
+  assert.ok(inv && inv.bloques.length >= 15, "la investigación de accidentes debe tener el reporte completo");
 });
 
 test("brigada de emergencias: integrantes sin duplicados", () => {

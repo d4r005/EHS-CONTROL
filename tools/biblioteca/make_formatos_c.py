@@ -106,7 +106,7 @@ nuevos.append(dict(
  firmas=['Dueño del proceso','Depto. EHS','Gerencia']))
 
 # Reemplaza la investigación de accidentes por la estructura completa del reporte NAF
-upd['EHS-F-062'] = dict(
+upd['EHS-F-065'] = dict(
  n='Reporte de investigación de accidentes e incidentes', tipo='acta', frec='Por evento', orient='portrait',
  p='Investigación completa: datos generales, equipo investigador, detalles y clasificación, cronología, causas contributivas, 5 porqués, notificaciones, acciones de contención y correctivas, fotografías y declaraciones.',
  campos=[['fecha','Fecha del accidente','date'],['folio','Número de control'],['area','Sucursal / centro de trabajo'],['resp','Investigador principal'],['pers','Persona lesionada o involucrada']],
