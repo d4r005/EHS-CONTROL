@@ -1,0 +1,16 @@
+.lbl{border:2px solid #111;border-radius:4px;padding:8px 10px;background:#fff;font-size:11px;line-height:1.3}
+.lbl .lb-co{font-size:9px;text-align:right;color:#444}
+.lbl .lb-t{font-size:11px;font-weight:800;letter-spacing:.4px;text-align:center;margin:2px 0 5px}
+.lbl .lb-n{font-size:13px;font-weight:700;text-align:center;border-bottom:1px solid #111;padding-bottom:4px;margin-bottom:5px}
+.lbl .lb-cas{font-size:10px;text-align:center;margin-bottom:5px}
+.lbl .lb-pic{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;margin-bottom:5px}
+.lbl .lb-pic span{border:1px solid #111;border-radius:3px;padding:1px 4px;font-size:8.5px}
+.lbl .lb-h{font-size:9px;margin-bottom:3px}
+.lbl .lb-fab{font-size:8.5px;color:#333;margin-top:4px;border-top:1px solid #ccc;padding-top:3px}
+.lbl .lb-car{display:flex;gap:4px;justify-content:center;margin-bottom:5px}
+.lbl .lb-car span{width:20px;height:20px;border:1px solid #111;border-radius:3px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:10px;color:#bbb}
+.lbl .lb-car span.on{background:#111;color:#fff}
+.lbl table.lb-f{width:100%;font-size:9px;border-collapse:collapse}
+.lbl table.lb-f td{padding:1px 2px;border-bottom:1px dotted #bbb}
+.lbl-sheet{display:grid;grid-template-columns:1fr 1fr;gap:6mm;page-break-after:always;padding:6mm}
+.lbl-sheet .lbl{min-height:62mm}

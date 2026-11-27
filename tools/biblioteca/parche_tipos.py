@@ -11,6 +11,8 @@ s = re.sub(r'/\* @@TIPOSCSS-INICIO@@ \*/.*?/\* @@TIPOSCSS-FIN@@ \*/\n', '', s, f
 
 def rep(old, new, cnt=1):
     global s
+    if new in s and old not in s:   # ya aplicado en una corrida anterior
+        return
     assert old in s, 'NO ENCONTRADO: ' + old[:90]
     s = s.replace(old, new, cnt)
 
@@ -85,12 +87,14 @@ rep("chip('programa','Programas',tipo==='programa')].join(' ');",
 
 # --- 6. vista Brigadas en navegación, títulos y rutas
 rep("{id:'documentos',t:'Documentos',ico:'❏'},", "{id:'documentos',t:'Documentos',ico:'❏'},\n    {id:'brigadas',t:'Brigadas',ico:'⚑'},")
-rep("documentos:vDocumentos,", "documentos:vDocumentos,brigadas:vBrigadas,")
+rep("documentos:vDocumentos,", "documentos:vDocumentos,brigadas:vBrigadas,etiquetas:vEtiquetas,")
+rep("{id:'brigadas',t:'Brigadas',ico:'⚑'},", "{id:'brigadas',t:'Brigadas',ico:'⚑'},\n    {id:'etiquetas',t:'Etiquetas',ico:'⌘'},")
 rep("documento:['Documento','Lectura e impresión'],",
-    "documento:['Documento','Lectura e impresión'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],")
+    "documento:['Documento','Lectura e impresión'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],")
 
 # --- 7. CSS
 css = open(os.path.join(HERE,'brigadas.css'), encoding='utf-8').read()
+css += open(os.path.join(HERE,'etiquetas.css'), encoding='utf-8').read()
 css += """.pdoc table.sel{width:100%;border-collapse:collapse;font-size:7.8pt;margin-top:2px}
 .pdoc table.sel td{border:1px solid #111;padding:2px 5px}
 .pdoc table.sel td.bx{width:16px;text-align:center;font-weight:700}

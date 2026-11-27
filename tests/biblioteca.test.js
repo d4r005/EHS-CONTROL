@@ -61,6 +61,7 @@ test("el manual de primeros auxilios conserva su extensión", () => {
 });
 
 const C = extraer("FORMATOS_C");
+const D = extraer("FORMATOS_D");
 
 test("segundo lote: códigos únicos desde EHS-F-066 y estructura por tipo", () => {
   const cods = C.map(f => f.c);
@@ -72,6 +73,33 @@ test("segundo lote: códigos únicos desde EHS-F-066 y estructura por tipo", () 
     if (f.tipo === "cuestionario") assert.ok(f.preguntas.length >= 15, f.c);
     if (f.tipo === "tabla") assert.ok(f.cols.length >= 8, f.c);
   }
+});
+
+test("tercer lote: estudios, diagnóstico, químicos, residuos y EPP", () => {
+  const cods = D.map(f => f.c);
+  assert.strictEqual(new Set(cods).size, cods.length);
+  cods.forEach(c => assert.ok(+c.slice(6) >= 70, c));
+  const tipos = new Set(D.map(f => f.tipo));
+  ["tabla", "acta", "check"].forEach(t => assert.ok(tipos.has(t), "falta tipo " + t));
+  for (const f of D) {
+    assert.ok(f.n && f.nk && f.p && f.frec, f.c + " sin metadatos");
+    if (f.tipo === "tabla") assert.ok(f.cols.length >= 4, f.c + " tabla corta");
+    if (f.tipo === "acta") assert.ok(f.bloques.length >= 5, f.c + " acta sin bloques");
+    if (f.tipo === "check") assert.ok(f.sec.every(s => s.it.length >= 3), f.c + " check corto");
+  }
+  assert.ok(D.some(f => f.c === "EHS-F-073"), "falta el diagnóstico de seguridad y salud");
+  assert.ok(D.some(f => f.c === "EHS-F-084"), "falta la minuta de la comisión");
+});
+
+test("documentos nuevos: acta UIPC y guía de fluidos", () => {
+  const cods = DOCS.map(d => d.c);
+  assert.strictEqual(new Set(cods).size, cods.length);
+  assert.strictEqual(DOCS.length, 11);
+  for (const d of DOCS) {
+    assert.ok(d.n && d.nk && d.k && d.p, d.c + " sin metadatos");
+    assert.ok(Array.isArray(d.b) && d.b.length >= 4, d.c + " sin contenido");
+  }
+  assert.ok(cods.includes("EHS-D-010") && cods.includes("EHS-D-011"));
 });
 
 test("brigada de emergencias: integrantes sin duplicados", () => {
@@ -97,6 +125,8 @@ test("la app registra la vista Documentos, Brigadas y los tipos nuevos", () => {
   assert.match(html, /id:'brigadas'/);
   assert.match(html, /tipo==='seleccion'/);
   assert.match(html, /tipo==='cuestionario'/);
+  assert.match(html, /etiquetas:vEtiquetas/);
+  assert.match(html, /id:'etiquetas'/);
 });
 
 test("no se filtran secretos ni la llave de servicio de Supabase", () => {

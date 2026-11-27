@@ -26,3 +26,14 @@ npm test
 ```
 
 `parche_tipos.py` también es idempotente: reemplaza sus bloques `@@TIPOS-*@@`.
+
+## Tercer lote (estudios de riesgo, residuos, etiquetas)
+
+```bash
+python3 tools/biblioteca/make_formatos_d.py   # -> data/biblioteca/formatos_d.json (+ docs_d.json)
+python3 tools/biblioteca/integrar.py
+python3 tools/biblioteca/parche_tipos.py
+npm test
+```
+
+`docs_d.json` guarda los documentos largos del lote para no pelear con comillas en Python.

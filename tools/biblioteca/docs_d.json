@@ -1,0 +1,42 @@
+[
+ {
+  "c": "EHS-D-010",
+  "n": "Acta constitutiva de la Unidad Interna de Protección Civil",
+  "nk": "Ley General de Protección Civil",
+  "k": "Acta",
+  "o": "ACTA-UIPC-2026",
+  "p": "Acta de constitución de la Unidad Interna de Protección Civil: fundamento, integrantes, funciones de cada brigada y compromisos del establecimiento.",
+  "b": [
+   {"h": "Acta constitutiva"},
+   {"p": "En el municipio de General Escobedo, Nuevo León, se reúnen el representante legal, el responsable de seguridad y salud, los integrantes de la Unidad Interna de Protección Civil y el Director de Protección Civil del Estado, con el objeto de constituir formalmente la Unidad Interna del establecimiento."},
+   {"h": "Antecedentes"},
+   {"p": "Como consecuencia de los sismos de 1985, el Gobierno Federal estableció el Sistema Nacional de Protección Civil, que obliga a los centros de trabajo a integrar unidades internas capaces de actuar antes, durante y después de una emergencia."},
+   {"h": "Integrantes y funciones"},
+   {"p": "Jefe de la unidad: coordina la operación del plan y la toma de decisiones. Responsable del plan: mantiene actualizado el plan de emergencias y su documentación. Brigada de evacuación: dirige el desalojo por rutas y salidas definidas y verifica el punto de reunión. Brigada de primeros auxilios: atiende lesionados y coordina el traslado a servicios médicos. Brigada contra incendio: opera extintores y equipos de contención. Brigada de comunicación: notifica a autoridades, brigadas externas y familiares. Brigada de búsqueda y rescate: localiza y rescata personas atrapadas o lesionadas."},
+   {"h": "Compromisos del establecimiento"},
+   {"p": "Proporcionar capacitación anual a la unidad, equipo y materiales para su operación, señalización y rutas de evacuación en buen estado, y realizar simulacros conforme al programa anual, documentando resultados y acciones de mejora."},
+   {"h": "Vigencia y firmas"},
+   {"p": "El acta se firma por los integrantes de la unidad, el representante legal y la autoridad de protección civil que da fe de la constitución, y se revisa cada vez que cambie un integrante o el plan de emergencias."}
+  ]
+ },
+ {
+  "c": "EHS-D-011",
+  "n": "Identificación de riesgos por fluidos conducidos en tuberías",
+  "nk": "NOM-026-STPS-2008",
+  "k": "Guía",
+  "o": "F-SH-026-00",
+  "p": "Elementos del código de identificación de tuberías, clasificación de fluidos peligrosos, colores de seguridad y dimensiones de bandas y letras.",
+  "b": [
+   {"h": "Elementos de la identificación"},
+   {"p": "El código de identificación para tuberías consta de color de seguridad, color contrastante, leyenda y dirección de flujo."},
+   {"h": "Clasificación de fluidos"},
+   {"p": "Un fluido es peligroso cuando así lo establecen sus hojas de datos de seguridad conforme a la NOM-018-STPS-2015, o cuando está sometido a condición extrema de temperatura (más de 50 °C, o baja temperatura que pueda causar lesión al contacto) o de presión (686 kPa o 7 kg/cm2 manométricos, o mayor). Los fluidos de bajo riesgo no son peligrosos por naturaleza y no rebasan esos límites."},
+   {"h": "Aplicación del color de seguridad"},
+   {"p": "Se pinta la tubería a todo lo largo cubriendo toda la circunferencia, o bien con bandas de identificación de 100 mm de ancho como mínimo que cubran toda la circunferencia, incrementándolas en proporción al diámetro exterior."},
+   {"h": "Dimensiones"},
+   {"p": "Para tuberías de hasta 300 mm de diámetro, la altura de las letras se calcula como h = d (π/6), donde d es el diámetro exterior de la tubería y su recubrimiento. Para diámetros mayores de 300 mm, la altura mínima de las letras es de 15 cm y la máxima el valor obtenido con la misma ecuación."},
+   {"h": "Mantenimiento"},
+   {"p": "La identificación se revisa y repinta cuando la tubería se modifica, cambia el fluido que conduce o la señal se deteriora, y se documenta en el programa de mantenimiento de las instalaciones."}
+  ]
+ }
+]
