@@ -1,0 +1,15 @@
+{
+  "autoMode": "enabled",
+  "language": "es",
+  "theme": "default",
+  "permissions": {
+    "allowBash": true,
+    "allowPowerShell": true,
+    "allowNetwork": false,
+    "allowFileOps": true
+  },
+  "hooks": {
+    "onTaskComplete": "notify",
+    "onPermissionPrompt": "remember"
+  }
+}

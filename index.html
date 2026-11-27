@@ -239,7 +239,12 @@ label.fld span{display:block;font-size:11.5px;font-weight:650;color:var(--ink-2)
         <h2 id="pageTitle">Panel</h2>
         <div class="sub" id="pageSub"></div>
       </div>
-      <div class="right" id="topActions"></div>
+      <div class="right" id="topActions">
+        <button class="btn ghost sm" id="themeToggle" title="Cambiar modo oscuro/clear" onclick="toggleTheme()">
+          <span id="themeIcon" class="ico">🌓</span>
+        </button>
+      </div>
+</div>
       <div class="userbox" id="userBox"></div>
     </div>
     <div class="content" id="view"></div>
@@ -1091,7 +1096,7 @@ function renderNav(){
 
 const TITLES={panel:['Panel','Resumen de cumplimiento y pendientes'],formatos:['Formatos','Biblioteca de formatos por norma'],registros:['Registros','Documentos generados y archivados'],hallazgos:['Hallazgos','Condiciones y acciones en seguimiento'],incidentes:['Incidentes','Registro e investigación de eventos'],normas:['Marco normativo','NOM de la STPS vigentes, ISO 14001 / 45001 y trámites IMSS'],comision:['Comisión de seguridad e higiene','NOM-019-STPS-2011'],quimicos:['Sustancias químicas','NOM-005 / NOM-018 — inventario y SDS'],capacitacion:['Capacitación','DC-3 y matriz de necesidades'],datos:['Organización y datos','Configuración y respaldo']};
 
-function go(v){ VIEW=v; try{history.replaceState(null,'','#'+v)}catch(e){} renderNav(); const [t,s]=TITLES[v]||['','']; document.getElementById('pageTitle').textContent=t; document.getElementById('pageSub').textContent=s; document.getElementById('topActions').innerHTML=''; document.getElementById('view').innerHTML=({panel:vPanel,formatos:vFormatos,registros:vRegistros,hallazgos:vHallazgos,incidentes:vIncidentes,normas:vNormas,comision:vComision,quimicos:vQuimicos,capacitacion:vCapacitacion,datos:vDatos}[v]||(()=>''))(); window.scrollTo(0,0); }
+function go(v){ VIEW=v; try{history.replaceState(null,'','#'+v)}catch(e){} renderNav(); const [t,s]=TITLES[v]||['','']; document.getElementById('pageTitle').textContent=t; document.getElementById('pageSub').textContent=s; document.getElementById('topActions').innerHTML=''; document.getElementById('view').innerHTML=({panel:vPanel,formatos:vFormatos,registros:vRegistros,hallazgos:vHallazgos,incidentes:vIncidentes,normas:vNormas,comision:vComision,quimicos:vQuimicos,capacitacion:vCapacitacion,datos:vDatos}[v]||(()=>''))(); const themeBtn=document.getElementById('themeToggle'); if(!themeBtn){const b=document.createElement('button');b.className='btn ghost sm';b.id='themeToggle';b.title='Cambiar modo oscuro/clear';b.onclick=toggleTheme;b.innerHTML='<span class="ico">🌓</span>';document.getElementById('topActions').appendChild(b)} window.scrollTo(0,0); }
 
 /* ============================ PANEL ============================ */
 function vPanel(){
@@ -1217,13 +1222,32 @@ function verNorma(k){
 </script>
 <script>
 /* ============================ FORMATOS ============================ */
+function levenshtein(a,b){if(!a||!b)return 999;const n=a.length,m=b.length;if(n===0)return m;if(m===0)return n;const col=Array(n+1).fill(0).map((_,i)=>i);for(let i=1;i<=m;i++){let prev=col[0];col[0]=i;for(let j=1;j<=n;j++){const temp=col[j];col[j]=Math.min(col[j],prev+1,prev!==undefined?col[j-1]+1:999);prev=temp;}}return col[n];}
+
 function vFormatos(){
   const q=(window.__q||'').toLowerCase();
-  const list=FORMATOS.filter(f=>!q||(f.n+f.c+f.nk).toLowerCase().includes(q));
+  const tipoFiltro=(window.__fmtTipo||'').toLowerCase();
+  const estatusFiltro=(window.__fmtEstatus||'').toLowerCase();
+  // Priority: exact startswith > contains > fuzzy match
+  const fuzzyMatch=f=>{if(!q)return true;const n=(f.n+f.c+f.nk).toLowerCase();if(n===q)return true;if(n.startsWith(q)||n.endsWith(q))return true;if(n.includes(q))return true;// fuzzy: first char match within 3 chars distance
+  const fuzzy=f=> levenshtein(q.substring(0,1),f.n.substring(0,1))<=1&&f.n.includes(q);const hasFuzzy=FORMATOS.some(fuzzy);
+  const list=FORMATOS.filter(f=>{
+    if(!q)return true;
+    const n=(f.n+f.c+f.nk).toLowerCase();
+    const exact=n===q;const starts=n.startsWith(q)||n.endsWith(q);const contains=n.includes(q);
+    if(exact||starts||contains)return true;
+    if(tipoFiltro&&f.tipo!==tipoFiltro)return false;
+    if(estatusFiltro&&f.nk){const n=NORMAS.find(n=>n.k===f.nk);if(n&&n.vigencia.estado!==estatusFiltro)return false;}
+    return fuzzyMatch(f);
+  });
   const grupos=[...new Set(list.map(f=>f.nk))];
+  // Filter UI chips
+  const tipoChips=['check','tabla','acta'].map(t=>`<span class="pill ${t===window.__fmtTipo?'ok':'mute'}" onclick="window.__fmtTipo='${t||''}'";window.__q='';document.getElementById('view').innerHTML=vFormatos()">${t||'Todos'}</span>`).join(' ');
+  const estatusChips=['confirmada','por_validar'].map(e=>`<span class="pill ${e===window.__fmtEstatus?'ok':'mute'}" onclick="window.__fmtEstatus='${e||''}'";window.__q='';document.getElementById('view').innerHTML=vFormatos()">${e||'Todos'}</span>`).join(' ');
   return `<div class="card pad" style="margin-bottom:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
       <input type="text" placeholder="Buscar formato por nombre, código o norma…" value="${esc(window.__q||'')}" oninput="window.__q=this.value;document.getElementById('view').innerHTML=vFormatos()" style="max-width:420px">
       <span class="small muted">${list.length} formatos</span>
+      <div style="margin-left:auto;white-space:nowrap">${tipoChips} ${estatusChips}</div>
       <div style="margin-left:auto"><button class="btn sm" onclick="go('registros')">Ver registros →</button></div>
     </div>`+
   grupos.map(g=>{
@@ -1746,6 +1770,7 @@ function vDatos(){
       <p class="small muted">Los datos se guardan en Supabase y se sincronizan entre equipos al iniciar sesión. El respaldo JSON sirve para conservar una copia fuera del sistema.</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
         <button class="btn primary" onclick="exportar()">Descargar respaldo (.json)</button>
+        <button class="btn" onclick="exportarCSV()">Descargar CSV</button>
         <button class="btn" onclick="document.getElementById('imp').click()">Cargar respaldo</button>
         <input type="file" id="imp" accept=".json" style="display:none" onchange="importar(this)">
       </div>
@@ -1778,6 +1803,55 @@ function exportar(){
   a.download=`ehs-control-respaldo-${hoy()}.json`; a.click(); URL.revokeObjectURL(a.href);
   toast('Respaldo descargado');
 }
+function exportarCSV(){
+  const rows = [];
+  // Header row
+  rows.push(['Fecha', 'Tipo', 'Norma', 'Área', 'Responsable', 'Descripción', 'Estatus']);
+  // Docs
+  DB.docs.forEach(d => {
+    rows.push([
+      d.fecha || '',
+      'Documento',
+      d.nk || '',
+      d.area || '',
+      d.resp || '',
+      d.desc || '',
+      d.estado || ''
+    ]);
+  });
+  // Hallazgos
+  DB.hallazgos.forEach(h => {
+    rows.push([
+      h.fecha || '',
+      'Hallazgo',
+      h.norma || '',
+      h.area || '',
+      h.resp || '',
+      h.descripcion || '',
+      h.estado || ''
+    ]);
+  });
+  // Incidentes
+  DB.incidentes.forEach(i => {
+    rows.push([
+      i.fecha || '',
+      'Incidente',
+      i.tipo || '',
+      i.area || '',
+      i.resp || '',
+      i.desc || '',
+      i.estado || ''
+    ]);
+  });
+  const csvString = rows.map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+  const blob = new Blob([csvString], {type: 'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `ehs-control-datos-${hoy()}.csv`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('CSV descargado');
+}
 function importar(inp){
   const f=inp.files[0]; if(!f) return;
   const r=new FileReader();
@@ -1792,7 +1866,13 @@ function resetAll(){ if(!confirm('Se borrarán todos los registros de la organiz
 /* ============================ INIT ============================ */
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') cerrarModal(); });
 window.EHS={get db(){return DB},set db(v){DB=v},save,get version(){return CENTRO_VERSION},get centro(){return CENTRO_ID},get user(){return SESSION&&SESSION.email}};
-boot();
+
+function toggleTheme(){const html=document.documentElement;const isDark=document.body.dataset.theme==='dark';document.body.dataset.theme=isDark?'':'dark';const ic=document.getElementById('themeIcon');ic.textContent=isDark?'☀️':'🌓';}
+
+/* ============================ THEME ============================ */
+:root[data-theme='dark']{--ink:#f8fafc;--ink-2:#cbd5e1;--muted:#64748b;--line:#33424f;--bg:#0f172a;--card:#1e293b;--accent:#0f766e;--accent-2:#14b8a6;--warn:#b45309;--warn-bg:#fef3c7;--danger:#b91c1c;--danger-bg:#fee2e2;--ok:#15803d;--ok-bg:#dcfce7;--info:#1d4ed8;--info-bg:#dbeafe;--nav:#0e1726;--nav-2:#1a2739}
+body[data-theme='dark']{background:var(--bg);color:var(--ink)}
+
 </script>
 </body>
 </html>
