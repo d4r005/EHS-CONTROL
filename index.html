@@ -2024,20 +2024,6 @@ const VIEWS=[
     {id:'documentos',t:'Documentos',ico:'❏'},
     {id:'brigadas',t:'Brigadas',ico:'⚑'},
     {id:'etiquetas',t:'Etiquetas',ico:'⌘'},
-    {id:'brigadas',t:'Brigadas',ico:'⚑'},
-    {id:'etiquetas',t:'Etiquetas',ico:'⌘'},
-    {id:'brigadas',t:'Brigadas',ico:'⚑'},
-    {id:'etiquetas',t:'Etiquetas',ico:'⌘'},
-    {id:'brigadas',t:'Brigadas',ico:'⚑'},
-    {id:'etiquetas',t:'Etiquetas',ico:'⌘'},
-    {id:'brigadas',t:'Brigadas',ico:'⚑'},
-    {id:'etiquetas',t:'Etiquetas',ico:'⌘'},
-    {id:'brigadas',t:'Brigadas',ico:'⚑'},
-    {id:'etiquetas',t:'Etiquetas',ico:'⌘'},
-    {id:'brigadas',t:'Brigadas',ico:'⚑'},
-    {id:'etiquetas',t:'Etiquetas',ico:'⌘'},
-    {id:'brigadas',t:'Brigadas',ico:'⚑'},
-    {id:'brigadas',t:'Brigadas',ico:'⚑'},
     {id:'registros',t:'Registros',ico:'▣'},
     {id:'hallazgos',t:'Hallazgos',ico:'⚑'},
     {id:'incidentes',t:'Incidentes',ico:'⚠'},
@@ -2081,9 +2067,9 @@ function renderNav(){
   const bs=document.getElementById('brandSub'); if(bs) bs.textContent=(DB.org.nombre||'').split('/')[0].trim()||'Seguridad · Higiene · Ambiente';
 }
 
-const TITLES={panel:['Panel','Resumen de cumplimiento y pendientes'],formatos:['Formatos','Biblioteca de formatos por norma'],documentos:['Documentos','Programas, procedimientos, manuales y planes'],documento:['Documento','Lectura e impresión'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],registros:['Registros','Documentos generados y archivados'],hallazgos:['Hallazgos','Condiciones y acciones en seguimiento'],incidentes:['Incidentes','Registro e investigación de eventos'],normas:['Marco normativo','NOM de la STPS vigentes, ISO 14001 / 45001 y trámites IMSS'],comision:['Comisión de seguridad e higiene','NOM-019-STPS-2011'],quimicos:['Sustancias químicas','NOM-005 / NOM-018 — inventario y SDS'],capacitacion:['Capacitación','DC-3 y matriz de necesidades'],datos:['Organización y datos','Configuración y respaldo']};
+const TITLES={panel:['Panel','Resumen de cumplimiento y pendientes'],formatos:['Formatos','Biblioteca de formatos por norma'],documentos:['Documentos','Programas, procedimientos, manuales y planes'],documento:['Documento','Lectura e impresión'],brigadas:['Brigadas','Organigrama y funciones de la brigada de emergencias'],etiquetas:['Etiquetas','Etiquetas de sustancias químicas y residuos peligrosos'],registros:['Registros','Documentos generados y archivados'],hallazgos:['Hallazgos','Condiciones y acciones en seguimiento'],incidentes:['Incidentes','Registro e investigación de eventos'],normas:['Marco normativo','NOM de la STPS vigentes, ISO 14001 / 45001 y trámites IMSS'],comision:['Comisión de seguridad e higiene','NOM-019-STPS-2011'],quimicos:['Sustancias químicas','NOM-005 / NOM-018 — inventario y SDS'],capacitacion:['Capacitación','DC-3 y matriz de necesidades'],datos:['Organización y datos','Configuración y respaldo']};
 
-function go(v){ VIEW=v; try{history.replaceState(null,'','#'+v)}catch(e){} renderNav(); const [t,s]=TITLES[v]||['','']; document.getElementById('pageTitle').textContent=t; document.getElementById('pageSub').textContent=s; document.getElementById('topActions').innerHTML=''; document.getElementById('view').innerHTML=({panel:vPanel,formatos:vFormatos,documentos:vDocumentos,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,etiquetas:vEtiquetas,brigadas:vBrigadas,brigadas:vBrigadas,registros:vRegistros,hallazgos:vHallazgos,incidentes:vIncidentes,normas:vNormas,comision:vComision,quimicos:vQuimicos,capacitacion:vCapacitacion,datos:vDatos}[v]||(()=>''))(); window.scrollTo(0,0); }
+function go(v){ VIEW=v; try{history.replaceState(null,'','#'+v)}catch(e){} renderNav(); const [t,s]=TITLES[v]||['','']; document.getElementById('pageTitle').textContent=t; document.getElementById('pageSub').textContent=s; document.getElementById('topActions').innerHTML=''; document.getElementById('view').innerHTML=({panel:vPanel,formatos:vFormatos,documentos:vDocumentos,brigadas:vBrigadas,etiquetas:vEtiquetas,registros:vRegistros,hallazgos:vHallazgos,incidentes:vIncidentes,normas:vNormas,comision:vComision,quimicos:vQuimicos,capacitacion:vCapacitacion,datos:vDatos}[v]||(()=>''))(); window.scrollTo(0,0); }
 
 /* ============================ PANEL ============================ */
 function vPanel(){
