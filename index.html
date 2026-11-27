@@ -668,6 +668,231 @@ const FORMATOS = [
  cols:[['mes','Mes'],['fecha','Fecha programada'],['area','Área a recorrer'],['resp','Responsable'],['real','Realizado (fecha)'],['acta','Acta No.'],['obs','Observaciones']],
  nFilas:12,firmas:['Representante del patrón','Representante de las personas trabajadoras','Coordinación EHS']}
 ];
+
+/* =====================================================================
+   CONTENIDO TOMADO DE LOS FORMATOS F-SH DE REFERENCIA
+   (carpeta Formatos: bitácoras, registros y autorizaciones de la empresa)
+   ===================================================================== */
+const REF_CONTENT = {
+  /* F-SH-002-00 Bitácora de inspección a extintores (NOM-002-STPS-2010, 7.3) */
+  'EHS-F-002': {
+    orient:'landscape',
+    p:'Bitácora de inspección a extintores conforme a la NOM-002-STPS-2010, numeral 7.3. Una fila por extintor.',
+    campos:[['fecha','Fecha de revisión','date'],['area','Área'],['resp','Responsable de la revisión'],['puesto','Puesto']],
+    cols:[['id','No. extintor'],['ubi','Localización'],['agente','Agente extintor'],['cap','Capacidad (kg)'],
+      ['visible','Visible, accesible y sin obstáculos'],['croquis','Ubicación coincide con el croquis'],['altura','Altura ≤ 1.50 m'],
+      ['letrero','Cuenta con letrero'],['etiqueta','Etiqueta legible y sin alteraciones'],['aguja','Aguja del manómetro en zona verde'],
+      ['caratula','Carátula del manómetro legible'],['sello','Sello o fleje de garantía sin violar'],
+      ['cuerpo','Cuerpo sin corrosión, escape, golpes, deformación ni exposición al fuego'],
+      ['manguera','Manguera, boquilla o palanca sin roturas, deformaciones ni obstrucciones'],
+      ['obs','Observaciones']],
+    nFilas:10
+  },
+
+  /* F-SH-018-01 Listado de sustancias químicas peligrosas */
+  'EHS-F-005': {
+    p:'Listado de sustancias químicas peligrosas del centro de trabajo, con CAS, clasificación, estado físico, contenedor y área de uso.',
+    cols:[['q','Químico / nombre comercial'],['cas','CAS'],['clas','Clasificación de peligro'],['edo','Estado físico'],
+      ['cont','Tipo de contenedor y capacidad'],['cons','Consumo mensual'],['area','Área de uso'],
+      ['sds','SDS disponible'],['obs','Observaciones']],
+    nFilas:14
+  },
+
+  /* F-SH-006-06 Bitácora de revisión del montacargas */
+  'EHS-F-006': {
+    p:'Revisión del montacargas antes de operar, conforme a la bitácora de la empresa (NOM-006).',
+    campos:[['fecha','Fecha','date'],['equipo','Identificación del montacargas'],['operador','Nombre del operador'],['turno','Turno','sel:Matutino|Vespertino|Nocturno|Mixto']],
+    sec:[
+      {t:'Condición general del equipo',it:[
+        'Llanta, revestimiento y presión de aire',
+        'Todas las luces',
+        'Dispositivos de advertencia',
+        'Número de horas o millaje',
+        'Relojes indicadores',
+        'Daños a la carrocería',
+        'Escapes de aceite, fluido, combustible o agua',
+        'Nivel de aceite de motor',
+        'Nivel de refrigerante',
+        'Nivel de combustible',
+        'Nivel de aceite hidráulico',
+        'Batería',
+        'Puntos de lubricación externa',
+        'Nivel de tanque de gas']},
+      {t:'Sistemas de operación y seguridad',it:[
+        'Claxon',
+        'Dirección hidráulica',
+        'Freno',
+        'Freno de emergencia',
+        'Inclinación de las cuchillas',
+        'Subir y bajar las cuchillas',
+        'Aditamentos hidráulicos',
+        'Estado y seguro de las cuchillas',
+        'Cinturón de seguridad',
+        'Transmisión y dirección',
+        'Equipo de protección contra incendio',
+        'Alarma de reversa']}
+    ],
+    firmas:['Nombre de quien revisa','Operador','Coordinación EHS']
+  },
+
+  /* F-SH-009-00 Autorización para trabajos en altura */
+  'EHS-F-007': {
+    n:'Autorización para trabajos en altura',
+    p:'Autorización por evento conforme a la NOM-009-STPS-2011, numeral 5.4: riesgos potenciales del lugar y datos de la autorización.',
+    campos:[['fecha','Fecha','date'],['area','Área'],['maquina','Máquina o equipo'],['resp','Puesto / solicitante']],
+    sec:[
+      {t:'Riesgos potenciales del lugar',it:[
+        'Oxígeno (O2)',
+        'Características de inflamabilidad',
+        'Concentración de sustancias químicas',
+        'Sustancias que contiene o contuvo',
+        'Manejo y condición de herramienta',
+        'Químicos',
+        'Energías peligrosas',
+        'Físicos',
+        'Biológicos',
+        'Psicosocial',
+        'Disergonómico / ergonómico',
+        'Locativos',
+        'Físico-químico',
+        'Ambiental']},
+      {t:'Datos de la autorización',it:[
+        'a) Nombre del trabajador autorizado',
+        'b) Tipo de trabajo por desarrollar y el área o lugar donde se llevará a cabo',
+        'c) Medidas de seguridad que se deberán aplicar conforme al trabajo en altura por realizar',
+        'd) Fecha y hora de inicio de las actividades, y el tiempo estimado de duración',
+        'e) Nombre y firma del patrón o de la persona que designe para otorgar la autorización']}
+    ],
+    firmas:['Trabajador autorizado','Quien autoriza (patrón o designado)','Coordinación EHS']
+  },
+
+  /* F-SH-017-00 Registro de EPP por puesto de trabajo */
+  'EHS-F-011': {
+    orient:'landscape',
+    p:'Equipo de protección personal que corresponde a cada puesto, conforme a la NOM-017. Marque el EPP asignado.',
+    cols:[['area','Área'],['puesto','Puesto'],
+      ['c1','Casco contra impacto'],['c2','Casco dieléctrico'],['c3','Capucha'],
+      ['o1','Anteojos de protección'],['o2','Goggles'],['o3','Pantalla facial'],['o4','Careta para soldador'],['o5','Gafas para soldador'],
+      ['e1','Tapones auditivos'],['e2','Conchas acústicas'],
+      ['r1','Respirador contra partículas'],['r2','Respirador contra gases y vapores'],['r3','Mascarilla desechable'],['r4','Equipo de respiración autónomo'],
+      ['s1','Guantes contra sustancias químicas'],['s2','Guantes dieléctricos'],['s3','Guantes contra temperaturas extremas'],['s4','Guantes'],['s5','Mangas'],
+      ['t1','Mandil contra altas temperaturas'],['t2','Mandil contra sustancias químicas'],['t3','Overol'],['t4','Bata'],['t5','Ropa contra sustancias peligrosas'],
+      ['i1','Calzado ocupacional'],['i2','Calzado contra impactos'],['i3','Calzado conductivo'],['i4','Calzado dieléctrico'],['i5','Calzado contra sustancias químicas'],['i6','Polainas'],['i7','Botas impermeables'],
+      ['x1','Contra caídas de altura'],['x2','Brigadista contra incendio'],
+      ['obs','Observaciones']],
+    nFilas:10,
+    firmas:['Elaboró','Revisó','Coordinación EHS']
+  },
+
+  /* F-SH-019-0 Acta de recorridos de verificación */
+  'EHS-F-014': {
+    n:'Acta de recorrido de verificación de la comisión',
+    p:'Acta de recorrido de verificación conforme a la NOM-019-STPS-2011, numeral 5.6.',
+    campos:[['fecha','Fecha','date'],['area','Áreas recorridas'],['resp','Quien realiza el recorrido'],['tipo','Tipo de recorrido','sel:Ordinario|Extraordinario']],
+    sec:[
+      {t:'Datos del acta',it:[
+        'Razón social y domicilio completo del centro de trabajo',
+        'Fecha y hora de inicio y término del recorrido',
+        'Número de trabajadores del centro de trabajo',
+        'Tipo de recorrido: ordinario o extraordinario',
+        'Número consecutivo de acta',
+        'Áreas del centro de trabajo en las que se realizó el recorrido']},
+      {t:'Agentes, condiciones peligrosas y actos inseguros',it:[
+        'Se identificaron por área los agentes, condiciones peligrosas o inseguras y actos inseguros',
+        'Cada hallazgo quedó registrado con el área donde se detectó',
+        'Se asignó responsable y fecha compromiso para cada hallazgo',
+        'Se informó al jefe de área y a la comisión']},
+      {t:'Causas identificadas',it:[
+        'Falta de capacitación','Falta de orden y limpieza','No usar EPP','Supervisión inadecuada',
+        'Herramienta o equipo dañado','Negligencia','Trabajo bajo presión','Condiciones del área',
+        'Falta de instructivos','Instructivos inadecuados','Otras causas']}
+    ],
+    firmas:['Presidente de la comisión','Secretario de la comisión','Coordinación EHS']
+  }
+};
+
+/* Formatos de la carpeta de referencia que no existían en la app */
+const NUEVOS_FORMATOS = [
+  {c:'EHS-F-038',n:'Bitácora de inspección a hidrantes',nk:'NOM-002-STPS-2010',tipo:'tabla',frec:'Mensual',
+   p:'Inspección mensual de hidrantes conforme a la NOM-002-STPS-2010, numeral 7.4.',
+   campos:[['fecha','Fecha','date'],['anio','Año de revisión'],['mes','Mes'],['resp','Nombre de quien revisa']],
+   cols:[['p','Punto de inspección'],['ok','Correcto'],['no','Incorrecto'],['obs','Comentarios']],
+   filasFijas:['1. Gabinete / capucha','2. Manguera','3. Chiflón','4. Válvula','5. Señalamiento','6. Llave','7. Daños físicos','8. Acceso libre'],
+   firmas:['Responsable de mantenimiento','Jefe de área','Coordinación EHS']},
+
+  {c:'EHS-F-039',n:'Bitácora de inspección a sistema de rociadores',nk:'NOM-002-STPS-2010',tipo:'tabla',frec:'Semanal / bimensual',
+   p:'Revisión semanal y bimensual del sistema de rociadores conforme a la NOM-002-STPS-2010, numeral 7.4.',
+   campos:[['fecha','Fecha','date'],['area','Área / edificio'],['resp','Nombre de quien revisa'],['turno','Turno','sel:Matutino|Vespertino|Nocturno|Mixto']],
+   cols:[['p','Elemento o condición a comprobar'],['ok','Correcto'],['no','Incorrecto'],['obs','Comentarios']],
+   filasFijas:['A.1 Válvula de bloqueo general abierta y precintada','A.2 Manómetros del puesto de control con lectura correcta',
+     'A.3 Apertura de válvula de prueba de alarma hidráulica','A.4 Alarma remota funcionó en la prueba anterior',
+     'A.5 Distancia de rociadores a materiales y equipos mayor a 50 cm','A.6 Válvula de circuito de alarma abierta y precintada',
+     'B.1 Desprecintar, cerrar y abrir válvula de bloqueo general','B.2 Precintar válvula de bloqueo general en posición abierta',
+     'B.3 Limpiar filtro de entrada de agua'],
+   firmas:['Responsable de mantenimiento','Jefe de área','Coordinación EHS']},
+
+  {c:'EHS-F-040',n:'Bitácora de inspección a alarmas de incendio',nk:'NOM-002-STPS-2010',tipo:'tabla',frec:'Mensual',
+   p:'Prueba de funcionamiento y señalización de las alarmas de incendio (NOM-002-STPS-2010, numeral 7.4).',
+   campos:[['fecha','Fecha de revisión','date'],['area','Área'],['resp','Nombre de quien revisa'],['turno','Turno','sel:Matutino|Vespertino|Nocturno|Mixto']],
+   cols:[['id','No.'],['ubi','Ubicación'],['sonido','Al presionar el botón de prueba emite sonido de alarma'],
+     ['escucha','El sonido es escuchado por el personal del área'],['senal','El dispositivo está señalizado'],['obs','Observaciones / acciones correctivas']],
+   nFilas:12,
+   firmas:['Responsable de mantenimiento','Jefe de área','Coordinación EHS']},
+
+  {c:'EHS-F-041',n:'Bitácora de inspección a sistema de bombeo para incendios',nk:'NOM-002-STPS-2010',tipo:'tabla',frec:'Semanal',
+   p:'Revisión semanal de depósitos, líneas de alimentación y bombas del sistema contra incendio (NOM-002-STPS-2010, 7.4).',
+   campos:[['fecha','Fecha','date'],['area','Casa de bombas'],['resp','Nombre de quien revisa'],['turno','Turno','sel:Matutino|Vespertino|Nocturno|Mixto']],
+   cols:[['p','Elemento o condición a comprobar'],['ok','Correcto'],['no','Incorrecto'],['obs','Comentarios']],
+   filasFijas:['A.1 Estado general de los depósitos','A.2 Nivel de agua','A.3 Estado del sistema de reposición',
+     'B.1 Válvulas de alimentación abiertas y precintadas','C.1 Válvula de aspiración de bomba principal abierta y precintada',
+     'C.2 Válvula de impulsión de bomba principal abierta y precintada','C.3 Válvula de aspiración de bomba Jockey abierta y precintada',
+     'C.4 Válvula de impulsión de bomba Jockey abierta y precintada','C.5 Arranque y parada de bomba Jockey en automático',
+     'C.6 Número de arranques de bomba Jockey normal','C.7 Válvula de corte del colector de pruebas cerrada',
+     'C.8 Sala de bombas limpia y sin materiales combustibles'],
+   firmas:['Responsable de mantenimiento','Jefe de área','Coordinación EHS']},
+
+  {c:'EHS-F-042',n:'Revisión de racks y estanterías',nk:'NOM-006-STPS-2023',tipo:'tabla',frec:'Semestral',
+   p:'Programa de mantenimiento de racks y estanterías: deformaciones, daños, estiba y anclaje.',
+   campos:[['fecha','Fecha de revisión','date'],['area','Almacén / área'],['resp','Personal responsable'],['puesto','Puesto']],
+   cols:[['r','Rack o estantería'],['f','Fecha de revisión'],['def','Deformaciones'],['dan','Dañada, desgastada o en condiciones inseguras'],
+     ['est','Estiba riesgosa'],['mod','Modificación a la estructura sin consultar al fabricante'],['vert','Totalmente vertical'],
+     ['inest','Inestable'],['grietas','Grietas o hundimiento en el suelo'],['sujeta','Sujeta correctamente a la estructura del edificio'],
+     ['esq','Protecciones en esquinas exteriores en buen estado'],['obs','Observaciones']],
+   nFilas:10,
+   firmas:['Personal responsable','Jefe de almacén','Coordinación EHS']},
+
+  {c:'EHS-F-043',n:'Bitácora de residuos peligrosos (almacén temporal)',nk:'ISO 14001:2015',tipo:'tabla',frec:'Por evento',
+   p:'Entradas y salidas del almacén temporal de residuos peligrosos, con generación, manejo y manifiesto.',
+   campos:[['fecha','Fecha','date'],['anio','Año'],['resp','Responsable del almacén'],['registro','Número de registro ambiental']],
+   cols:[['res','Nombre del residuo peligroso'],['cant','Cantidad generada (kg)'],['area','Área de generación'],
+     ['pelig','Característica de peligrosidad (C, R, E, T, Te, Th, Tt, I, B)'],['ing','Fecha de ingreso'],
+     ['sal','Fecha de salida'],['fase','Fase siguiente a la salida del almacén'],['prest','Prestador de servicio'],
+     ['aut','Número de autorización'],['man','Manifiesto']],
+   nFilas:12,
+   firmas:['Responsable del almacén','Coordinación EHS','Gerencia']},
+
+  {c:'EHS-F-044',n:'Bitácora de residuos de manejo especial',nk:'ISO 14001:2015',tipo:'tabla',frec:'Por evento',
+   p:'Entradas y salidas de residuos de manejo especial: recolección, transportista y etapa siguiente de manejo.',
+   campos:[['fecha','Fecha','date'],['anio','Año'],['resp','Responsable'],['aut','Número de autorización de generador']],
+   cols:[['f','Fecha de recolección'],['res','Nombre del residuo'],['cant','Cantidad del residuo'],['prov','Proveedor de recolección'],
+     ['autp','Número de autorización del transportista'],['etapa','Última etapa de manejo (compra-venta, reciclaje, disposición final)'],
+     ['emp','Nombre de la empresa del sitio final'],['autf','Número de autorización del sitio final']],
+   nFilas:12,
+   firmas:['Responsable del almacén','Coordinación EHS','Gerencia']}
+];
+
+/* Vínculo de los formatos nuevos con su norma en el marco normativo */
+const REF_NORMAS = {
+  'NOM-002-STPS-2010':['EHS-F-038','EHS-F-039','EHS-F-040','EHS-F-041'],
+  'NOM-006-STPS-2023':['EHS-F-042'],
+  'ISO 14001:2015':['EHS-F-043','EHS-F-044']
+};
+FORMATOS.forEach(f=>{ const r=REF_CONTENT[f.c]; if(r) Object.assign(f,r); });
+NUEVOS_FORMATOS.forEach(n=>{ if(!FORMATOS.some(f=>f.c===n.c)) FORMATOS.push(n); });
+Object.keys(REF_NORMAS).forEach(k=>{
+  const n=NORMAS.find(x=>x.k===k);
+  if(n){ n.f=n.f||[]; REF_NORMAS[k].forEach(c=>{ if(!n.f.includes(c)) n.f.push(c); }); }
+});
 </script>
 <script>
 FORMATOS.push(
@@ -1448,7 +1673,8 @@ function vFormatos(){
 function previewFormato(c){
   const f=FORMATOS.find(x=>x.c===c); if(!f) return;
   const demo={id:'demo',c:f.c,n:f.n,nk:f.nk,tipo:f.tipo,fecha:hoy(),f:{fecha:hoy()},it:{},ob:{},bl:{}};
-  if(f.tipo==='tabla') demo.tb=Array.from({length:Math.min(f.nFilas||6,8)},()=>f.cols.map(()=>''));
+  const _nFilas=(f.filasFijas&&f.filasFijas.length)||Math.min(f.nFilas||6,10);
+  if(f.tipo==='tabla') demo.tb=Array.from({length:_nFilas},(_,i)=>f.cols.map((c,ci)=>((f.filasFijas&&ci===0&&f.filasFijas[i])||'')));
   if(f.tipo==='acta') f.bloques.forEach((b,i)=>demo.bl[i]='');
   modal(`${f.c} — ${esc(f.n)}`,
     `<div class="sheet-wrap"><div class="sheet-zoom">${sheetHTML(demo,f)}</div></div>
@@ -1461,7 +1687,7 @@ let OPEN=null;
 function nuevoDoc(c){
   const f=FORMATOS.find(x=>x.c===c); if(!f) return;
   const d={id:uid(),c:f.c,n:f.n,nk:f.nk,tipo:f.tipo,fecha:hoy(),estado:'Abierto',creado:new Date().toISOString(),f:{fecha:hoy()},it:{},ob:{},tb:[],bl:{}};
-  if(f.tipo==='tabla'){ d.tb=Array.from({length:f.nFilas||6},()=>f.cols.map(()=>'')); }
+  if(f.tipo==='tabla'){ d.tb=Array.from({length:f.nFilas||6},(_,i)=>f.cols.map((c,ci)=>((f.filasFijas&&ci===0&&f.filasFijas[i])||''))); }
   if(f.tipo==='acta'){ f.bloques.forEach((b,i)=>d.bl[i]=''); }
   DB.docs.push(d); save(); abrirDoc(d.id);
 }
@@ -1596,7 +1822,8 @@ function sheetHTML(d,f){
 
   const firmas=(f.firmas||FIRMAS_BASE).map(x=>`<div class="sg"><span class="l"></span><div class="nm"></div><div>${esc(x)}</div></div>`).join('');
 
-  return `<div class="pdoc" style="--co:${colorEmp()};--co-txt:${textoColor(colorEmp())};--co-soft:${tinte(colorEmp(),.12)}"><div class="sheet">
+  const orient=(f.orient==='landscape')?'<style>@page{size:letter landscape;margin:10mm}</style>':'';
+  return orient+`<div class="pdoc" style="--co:${colorEmp()};--co-txt:${textoColor(colorEmp())};--co-soft:${tinte(colorEmp(),.12)}"><div class="sheet">
     <div class="hdr">
       <img src="${logoSrc()}" alt="">
       <div class="co">
