@@ -155,13 +155,14 @@ Pendiente en el catálogo: EHS-F-076 y EHS-F-077 todavía citan NOM-017-STPS-200
 
 ## Catálogo de verificación (`data/normas.js`)
 
-Módulo independiente con 23 NOM, cada una con su lista de verificación y su estado de vigencia. **Todavía no alimenta la app**: el catálogo que usa `index.html` cubre 35 NOM y 37 formatos con campos propios. Sirve para revisar y después fusionar.
+Módulo independiente con las 35 NOM, cada una con su lista de verificación y su estado de vigencia. Cubre exactamente las mismas NOM que el catálogo de `index.html`; la prueba `tests/catalogo_drift.test.js` falla si se desfasan. ISO 14001, ISO 45001 y los trámites IMSS/STPS solo existen en la app, porque no son NOM.
 
 Pendientes antes de usarlo en auditoría:
 
 - Solo NOM-017-STPS-2024 y NOM-006-STPS-2023 están con vigencia confirmada; el resto está como `por_validar` y hay que contrastarlo con el DOF.
 - Los requisitos están en lenguaje sencillo y falta el numeral de cada uno.
-- Faltan 12 normas para llegar a las 35 del README (003, 007, 008, 012, 013, 014, 016, 023, 031, 034, 037 y las de producto excluidas).
+- Los requisitos de las 12 normas agregadas el 2026-11-27 (003, 008, 012, 013, 014, 016, 023, 028, 031, 032, 034 y 037) se tomaron del texto publicado en el DOF y cada `nota` de vigencia cita su fecha de publicación y los numerales usados; conviene una revisión de fondo antes de usarlas en auditoría.
+- La NOM-003-STPS-2023 abroga la NOM-007-STPS-2000, por eso 007 no aparece en el catálogo.
 
 ```bash
 npm test          # corre las pruebas del catálogo y de la biblioteca
