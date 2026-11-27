@@ -16,7 +16,7 @@ Aplicación web de un solo archivo (`index.html`), sin dependencias externas ni 
 |---|---|
 | Panel | Cobertura de evidencia por norma, hallazgos abiertos/vencidos, incidentes del año, registros y capacitación |
 | Marco normativo | Catálogo completo con aplicabilidad por centro de trabajo, requisitos clave, evidencias y formatos ligados |
-| Formatos | 37 formatos imprimibles (EHS-F-001 a EHS-F-037) en hoja carta con firmas |
+| Formatos | 37 formatos imprimibles (EHS-F-001 a EHS-F-037) en hoja carta con el diseño F-SH: encabezado con logo, barra dorada de título, bloque de control (código, revisión, fecha, página), tabla de verificación C/NC/N/A y firmas |
 | Registros | Documentos llenados, búsqueda, reimpresión y exportación |
 | Hallazgos | Generación automática desde NC en listas de verificación, responsable, fecha compromiso, cierre |
 | Incidentes | Registro, días de incapacidad, control de aviso ST-7 |
@@ -54,6 +54,12 @@ Aplicación web de un solo archivo (`index.html`), sin dependencias externas ni 
 1. Settings → Pages → Source: *Deploy from a branch*.
 2. Branch `main`, carpeta `/ (root)`.
 3. El sitio queda en `https://d4r005.github.io/EHS-CONTROL/`.
+
+## Diseño de los formatos
+
+La hoja impresa sigue el patrón de los formatos F-SH de la empresa: logo en el encabezado, nombre de la razón social y "Seguridad y Salud en el Trabajo", barra dorada (#ECB324) con el nombre del formato y la norma, bloque de control documental, tabla con encabezado dorado claro, bloque de firmas y pie con código y revisión. El logo va embebido como data URI para que el archivo siga siendo autocontenido.
+
+En **Formatos → Ver** se muestra la hoja tal como se imprime, a escala.
 
 ## Acceso
 
